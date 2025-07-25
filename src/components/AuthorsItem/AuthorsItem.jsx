@@ -1,8 +1,15 @@
 import React from 'react'
 
-const AuthorsItem = () => {
+const AuthorsItem = ({ item, onAuthCardClick }) => {
   return (
-    <div>AuthorsItem</div>
+    <div>AuthorsItem
+
+      <div>
+        <img src={item.avatarUrl} alt='' onClick={() => onAuthCardClick()} />
+      </div>
+
+    </div>
+
   )
 }
 
