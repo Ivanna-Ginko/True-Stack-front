@@ -1,4 +1,3 @@
-import './App.css'
 import { Routes, Route } from "react-router-dom";
 import Footer from './components/Footer/Footer.jsx'
 import Outlet from './components/Outlet/Outlet.jsx'
@@ -10,9 +9,6 @@ import ArticlePage from './Pages/ArticlePage/ArticlePage.jsx'
 import AuthorsPage from './Pages/AuthorsPage/AuthorsPage.jsx'
 import AuthorProfilePage from './Pages/AuthorProfilePage/AuthorProfilePage.jsx'
 import CreateArticlePage from './Pages/AuthorProfilePage/AuthorProfilePage.jsx'
-
-
-
 
 function App() {
 
