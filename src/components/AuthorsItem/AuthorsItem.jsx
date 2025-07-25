@@ -1,15 +1,14 @@
 import React from 'react'
 
 const AuthorsItem = ({ item, onAuthCardClick }) => {
+  const handleClick = () => {
+    onAuthCardClick(item._id.$oid);
+  };
   return (
-    <div>AuthorsItem
-
-      <div>
-        <img src={item.avatarUrl} alt='' onClick={() => onAuthCardClick()} />
-      </div>
-
+    <div onClick={handleClick}>
+      <img src={item.avatarUrl} alt={`Фото автора ${item.name}`} />
+      <p>{item.name}</p>
     </div>
-
   )
 }
 

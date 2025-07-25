@@ -2,13 +2,16 @@ import React from 'react'
 import AuthorsItem from '../AuthorsItem/AuthorsItem'
 
 const AuthorsList = ({ authors, onAuthCardClick }) => {
+
+  if (!authors || authors.length === 0) {
+    return <p>Авторів не знайдено</p>
+  }
+
   return (
     <>
-      <h2>AuthorsList</h2>
-
       <ul>
         {authors.map(
-          <li key={item.id}>
+          <li key={item._id.$oid}>
             <div>
               <AuthorsItem item={item} onImageClick={onAuthCardClick} />
             </div>
