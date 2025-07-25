@@ -10,8 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@reduxjs/toolkit": "^2.8.2",
     "axios": "^1.11.0",
+=======
+    "clsx": "^2.1.1",
+    "normalize.css": "^8.0.1",
+>>>>>>> 3c3e22feace018b1e26a7a48abbd5a2f059a8fff
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-redux": "^9.2.0",
