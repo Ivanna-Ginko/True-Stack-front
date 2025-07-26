@@ -23,7 +23,7 @@
   background-color: #374f42;
 }
 
-.button:focus {
+.button:focus-visible {
   box-shadow: 0 0 0 6px #4e46b41f, 0 0 0 2px #fff;
 }
 
