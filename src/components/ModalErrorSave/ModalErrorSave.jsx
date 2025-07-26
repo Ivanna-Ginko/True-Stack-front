@@ -1,0 +1,95 @@
+import React, { useEffect } from "react";
+import Modal from "react-modal";
+import css from "./ModalErrorsave.module.css";
+
+const ModalErrorSave = ({ onClose }) => {
+  useEffect(() => {
+    Modal.setAppElement("#root");
+  }, []);
+
+  return (
+    <Modal
+      isOpen={true}
+      onRequestClose={onClose}
+      className={css.reactModalContent}
+      overlayClassName={css.reactModalOverlay}
+      shouldCloseOnOverlayClick={true}
+    >
+      <div>
+        <button
+          onClick={onClose}
+          style={{
+            position: "absolute",
+            top: 16,
+            right: 32,
+            background: "transparent",
+            border: "none",
+            fontSize: "16px",
+            cursor: "pointer",
+          }}
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M5.25 5.25L12 12M12 12L5.25 18.75M12 12L18.75 18.75M12 12L18.75 5.25"
+              stroke="#070721"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+        <h1 className={css.modalErrorText}>Error while saving</h1>
+        <p className={css.SaveArticle}>
+          To save this article, you need to authorize first
+        </p>
+        <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
+          <button
+            className={css.modalButton}
+            onClick={() => {
+              onClose();
+            }}
+          >
+            Login
+          </button>
+          <button
+            className={css.modalButton}
+            onClick={() => {
+              onClose();
+            }}
+          >
+            Register
+          </button>
+        </div>
+      </div>
+    </Modal>
+  );
+};
+
+export default ModalErrorSave;
+
+// для виклика кнопки
+// import React, { useState } from "react";
+// import ModalErrorSave from "../ModalErrorSave/ModalErrorSave";
+
+// const Header = () => {
+//   const [isModalOpen, setIsModalOpen] = useState(false);
+
+//   const openModal = () => setIsModalOpen(true);
+//   const closeModal = () => setIsModalOpen(false);
+
+//   return (
+//     <>
+//       <h1>Header</h1>
+//       <button onClick={openModal}>Викликати модалку</button>
+
+//       {isModalOpen && <ModalErrorSave onClose={closeModal} />}
+//     </>
+//   );
+// };
+
+// export default Header;
