@@ -54,6 +54,6 @@ const ErrorModal = ({ show }) => {
   );
 };
 
-    //  <ErrorModal show={"open"}/>   need paste to open modal
+    //  <ErrorModal show={"showError"}/>   need paste to open modal
 
 export default ErrorModal;
