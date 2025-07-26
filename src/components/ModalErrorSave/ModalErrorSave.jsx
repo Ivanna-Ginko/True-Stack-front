@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 
 const customStyles = {
@@ -16,41 +16,44 @@ const customStyles = {
   },
 };
 
-const ErrorModal = () => {
-  const [modalIsOpen, setIsOpen] = React.useState(false);
+const ErrorModal = ({ show }) => {
+  const [modalIsOpen, setIsOpen] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     Modal.setAppElement("#root");
   }, []);
 
-  function openModal() {
-    setIsOpen(true);
-  }
+  useEffect(() => {
+    if (show === "showError") {
+      setIsOpen(true);
+    } else {
+      setIsOpen(false);
+    }
+  }, [show]);
 
-  function closeModal() {
+  const closeModal = () => {
     setIsOpen(false);
-  }
+  };
 
   return (
-    <>
-      <button onClick={openModal}>Open Modal</button>
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        style={customStyles}
-      >
+    <Modal
+      isOpen={modalIsOpen}
+      onRequestClose={closeModal}
+      style={customStyles}
+    >
+      <div>
+        <button onClick={closeModal}>X</button>
+        <div>Error while saving</div>
+        <div>To save this article, you need to authorize first</div>
         <div>
-          <button onClick={closeModal}>X</button>
-          <div> Error while saving</div>
-          <div> To save this article, you need to autorize first</div>
-          <div>
-            <button>Login</button>
-            <button>Register</button>
-          </div>
+          <button>Login</button>
+          <button>Register</button>
         </div>
-      </Modal>
-    </>
+      </div>
+    </Modal>
   );
 };
+
+    //  <ErrorModal show={"open"}/>   need paste to open modal
 
 export default ErrorModal;
