@@ -36,7 +36,7 @@ const slice = createSlice({
         isLoading: false,
       }))
       .addCase(registerUser.rejected, (_, action) => ({
-        initialState,
+        ...initialState,
         message: action.payload,
         isLoading: false,
       }))
@@ -51,7 +51,7 @@ const slice = createSlice({
         isLoading: false,
       }))
       .addCase(loginUser.rejected, (_, action) => ({
-        initialState,
+        ...initialState,
         message: action.payload,
         isLoading: false,
       }))
@@ -63,7 +63,7 @@ const slice = createSlice({
         isRefreshing: false,
       }))
       .addCase(authenticateUser.rejected, (_, action) => ({
-        initialState,
+        ...initialState,
         message: action.payload,
         isLoading: false,
         isRefreshing: false,
