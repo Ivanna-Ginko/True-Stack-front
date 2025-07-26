@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ModalErrorSave from '../ModalErrorSave/ModalErrorSave';
-import { addArticleToBookmarks, removeArticleFromBookmarks } from '../../redux/bookmarksSlice'; 
-import { selectIsLoggedIn } from '.src/redux/slice.js'; 
+import { addArticleToBookmarks, removeArticleFromBookmarks } from '../../redux/operations'; 
+import { selectIsLoggedIn } from '../../redux/selectors'; 
 
 const ButtonAddToBookmarks = ({ articleId }) => {
   const [isSaved, setIsSaved] = useState(false);
@@ -30,20 +30,20 @@ const ButtonAddToBookmarks = ({ articleId }) => {
     try {
       if (isSaved) {
         await dispatch(removeArticleFromBookmarks(articleId)).unwrap();
-        toast.success('Стаття успішно видалено!', {
+        toast.success('Article successfully deleted!', {
           position: 'top-right',
           autoClose: 3000,
         });
       } else {
         await dispatch(addArticleToBookmarks(articleId)).unwrap();
-        toast.success('Стаття успішно збережено!', {
+        toast.success('Article successfully saved!', {
           position: 'top-right',
           autoClose: 3000,
         });
       }
       setIsSaved(prev => !prev);
     } catch (error) {
-      toast.error(`Помилка: ${error.message || 'Не вдалося зберегти/видалити статтю'}`, {
+      toast.error(`Помилка: ${error.message || 'Failed to save/delete article'}`, {
         position: 'top-right',
         autoClose: 5000,
       });
