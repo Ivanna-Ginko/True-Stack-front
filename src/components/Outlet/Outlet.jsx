@@ -12,7 +12,6 @@ const Outlet = () => {
       <About />
       <ArticlesList />
       <Creators />
-
     </>
   )
 }
