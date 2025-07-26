@@ -1,5 +1,5 @@
 import React from 'react'
-// import ButtonAddToBookmarks from '../ButtonAddToBookmarks/ButtonAddToBookmarks'
+import ButtonAddToBookmarks from '../ButtonAddToBookmarks/ButtonAddToBookmarks'
 import AppLink from '../AppLink/AppLink'
 import s from '../ArticlesItem/ArticlesItem.module.css'
 
@@ -22,7 +22,7 @@ const ArticlesItem = ({id, image, author, title, description}) => {
       <AppLink size="xl" to={`/articles/${id}`}>
         Learn more
       </AppLink>
-      {/* <ButtonAddToBookmarks articleId={id}/> */}
+      <ButtonAddToBookmarks articleId={id}/>
       </div>
     </li>
   )
