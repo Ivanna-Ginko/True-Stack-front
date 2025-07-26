@@ -3,8 +3,8 @@ import css from './Button.module.css';
 
 export default function Button({
   size = 'md',
-  variant = '',
-  color = '',
+  variant = 'fill',
+  color = 'black',
   onClick,
   children,
 }) {
@@ -13,7 +13,7 @@ export default function Button({
       className={clsx(css.button, css[size], css[variant], css[color])}
       onClick={onClick}
     >
-      <span className={css.content}>{children}</span>
+      {children}
     </button>
   );
 }

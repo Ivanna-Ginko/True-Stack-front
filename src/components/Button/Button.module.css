@@ -11,23 +11,26 @@
   font-weight: 700;
   color: #fff;
   background-color: #649179;
-  transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
+  transition: all 200ms ease-in-out;
 }
 
 .button svg {
+  display: block;
   stroke: currentColor;
+  width: 24px;
+  height: 24px;
 }
 
-.button:hover {
+.fill:hover {
   color: #f7fffb;
   background-color: #374f42;
 }
 
-.button:focus-visible {
+.fill:focus-visible {
   box-shadow: 0 0 0 6px #4e46b41f, 0 0 0 2px #fff;
 }
 
-.button:disabled {
+.fill:disabled {
   box-shadow: 0 0 0 6px #4e46b41f, 0 0 0 2px #fff;
   opacity: 0.3;
 }
@@ -53,20 +56,43 @@
   font-size: 18px;
 }
 
-.secondary {
+.outline {
   background-color: transparent;
   border: 1px solid currentColor;
 }
 
-.secondary:hover {
-  color: unset;
-  background-color: unset;
+.outline:hover {
+  background-color: #a8c7b5;
 }
 
-.secondary.green {
+.outline:focus-visible {
+  border-color: transparent;
+  box-shadow: 0 0 0 6px #4e46b41f, 0 0 0 2px #fff;
+}
+
+.outline.green {
   color: #374f42;
 }
 
-.secondary.black {
+.outline.black {
   color: #070721;
+}
+
+.link {
+  border: none;
+  color: #374f42;
+  background-color: transparent;
+}
+
+.link:hover,
+.link:focus-visible {
+  opacity: 0.5;
+}
+
+.link:disabled {
+  opacity: 0.2;
+}
+
+.link:active {
+  border-bottom: 1px solid #374f42;
 }

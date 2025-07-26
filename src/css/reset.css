@@ -57,6 +57,11 @@ a {
   color: inherit;
 }
 
+a:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 button {
   background: none;
   border: none;

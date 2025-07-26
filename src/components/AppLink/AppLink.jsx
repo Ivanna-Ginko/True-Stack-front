@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 
 export default function AppLink({
   size = 'md',
-  variant = '',
-  color = '',
+  variant = 'fill',
+  color = 'black',
   to,
   onClick,
   children,
@@ -16,7 +16,7 @@ export default function AppLink({
       className={clsx(css.button, css[size], css[variant], css[color])}
       onClick={onClick}
     >
-      <span className={css.content}>{children}</span>
+      {children}
     </Link>
   );
 }
