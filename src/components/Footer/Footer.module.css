@@ -1,6 +1,6 @@
 .footer {
     background-color: #eaf4f0;
-    padding: 32px 20px;
+    padding: 32px 0;
     text-align: center;
 }
 .wrapper {
@@ -31,13 +31,12 @@
     color: #2a6355;
 }
 .rights {
-    margin-top: 24px;
     font-size: 14px;
     color: #7a8f8b;
 }
 @media screen and (min-width: 768px) {
     .footer {
-        padding: 40px 60px;
+        padding: 40px 0;
         text-align: left;
     }
     .wrapper {
@@ -52,13 +51,12 @@
         gap: 32px;
     }
     .rights {
-        margin-top: 32px;
         text-align: left;
     }
 }
 @media screen and (min-width: 1280px) {
     .footer {
-        padding: 48px 100px;
+        padding: 48px 0;
     }
     .wrapper {
         flex-direction: row;
