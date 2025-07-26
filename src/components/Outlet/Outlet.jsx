@@ -13,7 +13,6 @@ const Outlet = () => {
       <Hero />
       <About />
       <ArticlesList />
-      <ErrorModal show={"showError"}/>
       <Creators />
     </>
   );
