@@ -6,12 +6,12 @@ import Creators from '../../components/Creators/Creators'
 
 const Outlet = () => {
   return (
-    <>
+    <div>
       <Hero />
       <About />
       <ArticlesList />
       <Creators />
-    </>
+    </div>
   )
 }
 
