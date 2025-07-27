@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Select from 'react-select';
 
 const options = [
@@ -43,15 +43,25 @@ const customStyles = {
   }),
 };
 
-const CustomSelect = () => {
+const ArticleListSelect = ({ onChange }) => {
+  const [selectedOption, setSelectedOption] = useState({ value: 'Popular', label: 'Popular' });
+
+  const handleChange = (selected) => {
+    setSelectedOption(selected);
+    if (onChange) {
+      onChange(selectedOption.value); 
+    }
+  };
+  
   return (
     <Select
       options={options}
       defaultValue={options[1]}
+      onChange={handleChange}
       styles={customStyles}
       isSearchable={false}
     />
   );
 };
 
-export default CustomSelect;
+export default ArticleListSelect;
