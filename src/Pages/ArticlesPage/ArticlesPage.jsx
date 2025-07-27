@@ -1,14 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ArticlesList from '../../components/ArticlesList/ArticlesList'
 import SectionTitle from '../../components/SectionTitle/SectionTitle'
 import css from './ArticlesPage.module.css'
-import CustomSelect from '../../components/CustomSelect/CustomSelect'
+import ArticleListSelect from '../../components/ArticleListSelect/ArticleListSelect'
 import Container from '../../components/container/Container'
 
 
 const ArticlesPage = () => {
   const title = 'Articles';
-  
+  const [selectedFilter, setSelectedFilter] = useState('Popular'); 
+
+  const handleSelectChange = (value) => {
+    setSelectedFilter(value); // "Popular" або "All"
+    console.log('Фільтр:', selectedFilter);
+  };
 
   return (
     <>
@@ -17,7 +22,7 @@ const ArticlesPage = () => {
         <div className={css.box}>
           <p className={css.quantity}>?? articles</p>
           <div style={{ width: '169px' }}>
-            <CustomSelect />
+            <ArticleListSelect onChange={handleSelectChange}/>
           </div>
         </div>
         <ArticlesList />
