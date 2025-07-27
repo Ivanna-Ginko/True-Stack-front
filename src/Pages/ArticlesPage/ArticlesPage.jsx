@@ -11,7 +11,7 @@ const ArticlesPage = () => {
   const [selectedFilter, setSelectedFilter] = useState('Popular'); 
 
   const handleSelectChange = (value) => {
-    setSelectedFilter(value); // "Popular" або "All"
+    setSelectedFilter(value); 
     console.log('Фільтр:', selectedFilter);
   };
 
@@ -25,11 +25,12 @@ const ArticlesPage = () => {
             <ArticleListSelect onChange={handleSelectChange}/>
           </div>
         </div>
-        <ArticlesList />
+        <ArticlesList filter={selectedFilter}/>
       </Container>
     </>
   )
 }
+
 
 
 
