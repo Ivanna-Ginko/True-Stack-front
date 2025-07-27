@@ -1,6 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
 import Footer from './components/Footer/Footer.jsx';
-import Outlet from './components/Outlet/Outlet.jsx';
 import Header from './components/Header/Header.jsx';
 import RegisterPage from './Pages/RegisterPage/RegisterPage.jsx';
 import LoginPage from './Pages/LoginPage/LoginPage.jsx';
@@ -12,6 +11,7 @@ import CreateArticlePage from './Pages/AuthorProfilePage/AuthorProfilePage.jsx';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { authenticateUser } from './redux/operations.js';
+import HomePage from './Pages/HomePage/HomePage.jsx'
 
 function App() {
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ function App() {
         />
         <Route
           path='/'
-          element={<Outlet />}
+          element={<HomePage/>}
         />
         <Route
           path='/articles'

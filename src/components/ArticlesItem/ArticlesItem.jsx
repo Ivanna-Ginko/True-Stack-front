@@ -19,7 +19,7 @@ const ArticlesItem = ({id, image, author, title, description}) => {
         </p>
       </div>
       <div className= {s.bottom}>
-      <AppLink size="xl" to={`/articles/${id}`}>
+      <AppLink variant='outline' size='md' color='green' to={`/articles/${id}`}>
         Learn more
       </AppLink>
       <ButtonAddToBookmarks articleId={id}/>
