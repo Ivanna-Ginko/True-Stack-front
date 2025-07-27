@@ -1,9 +1,43 @@
-import React from 'react'
+import React, { useState } from 'react';
+import s from './Header.module.css';
+import { Link } from 'react-router-dom';
+import logo from '../../assets/icon-header/harmoniq-header.svg';
+import UserNav from './UserNav';
+import GuestNav from './GuestNav';
+import { useSelector } from 'react-redux';
+import Container from '../container/Container';
+import burgerIcon from '../../assets/icons/menu.svg';
 
 const Header = () => {
+  const isAuthenticated = useSelector(state => state.user?.isLoggedIn);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const toggleMenu = () => {
+    setIsMenuOpen(prev => !prev);
+  };
   return (
-    <h1>Header</h1>
-  )
-}
+    <header className={s.header}>
+      <Container>
+        <div className={s.container}>
+          <Link to="/" className={s.logoLink}>
+            <img src={logo} alt="Harmoniq logo" className={s.logo} />
+          </Link>
+          <div className={s.rightSide}>
+            <nav className={`${s.nav} ${isMenuOpen ? s.navOpen : ''}`}>
+              {isAuthenticated ? <UserNav /> : <GuestNav />}
+            </nav>
+            {!isAuthenticated && (
+              <Link to="/register" className={s.joinBtn}>
+                Join now
+              </Link>
+            )}
+            <button className={s.burgerBtn} onClick={toggleMenu}>
+              <img src={burgerIcon} alt="Menu" />
+            </button>
+          </div>
+        </div>
+      </Container>
+    </header>
+  );
+};
 
-export default Header
+export default Header;
