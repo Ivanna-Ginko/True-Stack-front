@@ -1,7 +1,7 @@
 import React from 'react'
 import Hero from '../../components/Hero/Hero'
 import About from '../../components/About/About'
-import ArticlesList from '../../components/ArticlesList/ArticlesList'
+import PopularArticles from '../../components/PopularArticles/PopularArticles'
 import Creators from '../../components/Creators/Creators'
 
 const Outlet = () => {
@@ -9,7 +9,7 @@ const Outlet = () => {
     <>
       <Hero />
       <About />
-      <ArticlesList />
+      <PopularArticles />
       <Creators />
     </>
   )

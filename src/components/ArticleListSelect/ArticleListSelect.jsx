@@ -39,7 +39,14 @@ const customStyles = {
   }),
   menu: (base) => ({
     ...base,
+    marginTop: 0, 
     zIndex: 10,
+  }),
+      menuList: (base) => ({
+    ...base,
+    paddingTop: 0, 
+    paddingBottom: 0,
+    marginTop: 0,
   }),
 };
 
@@ -49,7 +56,7 @@ const ArticleListSelect = ({ onChange }) => {
   const handleChange = (selected) => {
     setSelectedOption(selected);
     if (onChange) {
-      onChange(selectedOption.value); 
+      onChange(selected.value); 
     }
   };
   
