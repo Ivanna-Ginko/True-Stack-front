@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Modal from "react-modal";
 import css from "./ModalErrorsave.module.css";
+import { NavLink } from "react-router-dom";
 
 const ModalErrorSave = ({ onClose }) => {
   useEffect(() => {
@@ -43,11 +44,18 @@ const ModalErrorSave = ({ onClose }) => {
             />
           </svg>
         </button>
-        <h1 className={css.modalErrorText}>Error while saving</h1>
-        <p className={css.SaveArticle}>
+        <div className={css.modalErrorText}>
+        <h1 className={css.ErrorFont}>Error while saving</h1>
+        </div>
+         <div className={css.saveArticle}>
+        <p className={css.SaveArticleFont} >
           To save this article, you need to authorize first
         </p>
+        </div>
         <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
+           <NavLink
+              to="/login"
+            >
           <button
             className={css.modalButton}
             onClick={() => {
@@ -56,6 +64,10 @@ const ModalErrorSave = ({ onClose }) => {
           >
             Login
           </button>
+              </NavLink>
+              <NavLink
+              to="/register"
+            >
           <button
             className={css.modalButton}
             onClick={() => {
@@ -64,6 +76,7 @@ const ModalErrorSave = ({ onClose }) => {
           >
             Register
           </button>
+      </NavLink>
         </div>
       </div>
     </Modal>

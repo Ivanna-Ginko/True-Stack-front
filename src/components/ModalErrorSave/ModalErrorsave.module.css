@@ -18,7 +18,7 @@
   margin-bottom: 20px;
   padding-top: 56px;
 }
-.SaveArticle {
+.saveArticle {
   margin-bottom: 20px;
 }
 
@@ -45,4 +45,18 @@
   width: 420px;
   height: 268px;
   text-align: center;
+}
+
+.ErrorFont{
+  font-family: Manrope;
+  font-size: 32px;
+  font-weight: 700px;
+  font-weight: bold;
+}
+
+.SaveArticleFont{
+font-family: Manrope;
+  font-size: 16px;
+  font-weight: 400px;
+
 }
