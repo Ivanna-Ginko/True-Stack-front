@@ -6,8 +6,8 @@ import divider from '../../assets/icons/divider.svg';
 import logoutIcon from '../../assets/icons/exit.svg';
 import AppLink from '../AppLink/AppLink';
 
-const UserNav = ({user}) => {
-    // const user = useSelector(state => state.auth.user);
+const UserNav = () => {
+    const user = useSelector(state => state.auth.user);
     const handleLogout = () => {
         console.log('Logout clicked');
     }
