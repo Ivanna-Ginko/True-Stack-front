@@ -24,7 +24,7 @@ const AuthorsPage = () => {
 
         setAuthors(normalizedAuthors);
       } catch (error) {
-        console.error('Помилка при завантаженні авторів:', error);
+        console.error('Помилка при завантаженні авторів :', error);
       }
     };
     getAuthors();
