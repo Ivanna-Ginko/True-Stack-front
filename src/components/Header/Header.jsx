@@ -9,12 +9,12 @@ import Container from '../container/Container';
 import burgerIcon from '../../assets/icons/menu.svg';
 
 const Header = () => {
-  const isAuthenticated = useSelector(state => state.user?.isLoggedIn);
-  // const isAuthenticated = true;
-  // const userName = {
-  //   name: 'TestUser',
-  //   avatarUrl: 'https://i.pravatar.cc/40',
-  // };
+  // const isAuthenticated = useSelector(state => state.user?.isLoggedIn);
+  const isAuthenticated = true;
+  const userName = {
+    name: 'TestUser',
+    avatarUrl: 'https://i.pravatar.cc/40',
+  };
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => {
     setIsMenuOpen(prev => !prev);
@@ -28,7 +28,7 @@ const Header = () => {
           </Link>
           <div className={s.rightSide}>
             <nav className={`${s.nav} ${isMenuOpen ? s.navOpen : ''}`}>
-              {isAuthenticated ? <UserNav /> : <GuestNav />}
+              {isAuthenticated ? <UserNav user={userName} /> : <GuestNav />}
             </nav>
             {isAuthenticated && (
               <Link to="/create-article" className={`${s.createBtn} ${s.tabletOnly}`}>
