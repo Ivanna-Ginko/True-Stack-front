@@ -1,11 +1,16 @@
 .titleContainer{
     display: flex;
     column-gap: 720px;
-    
+    align-items: center;
 }
 
 .title{
     font-weight: 700;
     font-size: 40px;
     min-width: 309px;
+}
+
+.linkContainer{
+    width: 195px;
+    height: 24px;
 }
