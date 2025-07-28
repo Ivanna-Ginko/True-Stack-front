@@ -1,10 +1,9 @@
 import axios from 'axios'
 
-const url = 'https://truestack.onrender.com/articles'
 
 
 export const fetchArticles = async () => {
-    const response = await axios.get(url);
+    const response = await axios.get("https://truestack.onrender.com/articles");
       return response
     }
 
@@ -14,7 +13,7 @@ const config = {
      }
     }
 export const fetchPopularArticles = async () => {
-    const response = await axios.get(url, config);
+    const response = await axios.get("https://truestack.onrender.com/articles", config);
       return response
     }
 
