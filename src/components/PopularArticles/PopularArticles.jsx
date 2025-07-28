@@ -5,13 +5,16 @@ import ArticlesItem from '../ArticlesItem/ArticlesItem'
 import s from './PopularArticles.module.css'
 import Container from '../container/Container'
 import SectionTitle from '../SectionTitle/SectionTitle';
+import { useSelector } from 'react-redux';
+import { selectSavedArticles } from '../../redux/selectors';
 
 const PopularArticles = () => {
+    const savedArticles = useSelector(selectSavedArticles);
     const [articles, setArticles] = useState([]);
     useEffect(()=>{
         const fetchPopularArticles = async () =>{
             try{
-                const res = await axios.get();
+                const res = await axios.get(/articles/popular);
                 setArticles(res.data);
             }
             catch(error){
@@ -36,7 +39,7 @@ const PopularArticles = () => {
                 </div>
                 <ul>
                     {articles.map(article => (
-                        <ArticlesItem ket={article.id} id={article.id} image={article.image} author={article.author} title={article.title} description={article.description}/>
+                        <ArticlesItem key={article.id} id={article.id} image={article.image} author={article.author} title={article.title} description={article.description} isSaved={savedArticles.includes(article.id)}/>
                     ))}
                 </ul>
             </Container>
