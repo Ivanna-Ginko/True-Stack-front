@@ -3,7 +3,7 @@ import ButtonAddToBookmarks from '../ButtonAddToBookmarks/ButtonAddToBookmarks'
 import AppLink from '../AppLink/AppLink'
 import s from '../ArticlesItem/ArticlesItem.module.css'
 
-const ArticlesItem = ({id, image, author, title, description, isSaved='false', isAuthor='false'}) => {
+const ArticlesItem = ({id, image, author, title, description, isSaved=false, isAuthor=false}) => {
     return (
     <li className= {s.card}>
       <img src={image} alt={title} className={s.image}/>
