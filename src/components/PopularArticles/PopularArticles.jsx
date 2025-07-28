@@ -14,7 +14,7 @@ const PopularArticles = () => {
     useEffect(()=>{
         const fetchPopularArticles = async () =>{
             try{
-                const res = await axios.get(/articles/popular);
+                const res = await axios.get('########');
                 setArticles(res.data);
             }
             catch(error){
