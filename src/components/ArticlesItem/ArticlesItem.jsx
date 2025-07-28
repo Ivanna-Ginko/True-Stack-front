@@ -5,7 +5,7 @@ import s from '../ArticlesItem/ArticlesItem.module.css'
 
 const ArticlesItem = ({id, image, author, title, description, isSaved=false, isAuthor=false}) => {
     return (
-    <li className= {s.card}>
+    <li key={id} className= {s.card}>
       <img src={image} alt={title} className={s.image}/>
       <div className={s.content}>
         <p className={s.author}>
