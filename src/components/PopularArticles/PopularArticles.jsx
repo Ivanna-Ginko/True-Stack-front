@@ -27,7 +27,7 @@ const PopularArticles = () => {
         <>
             <Container>
                 <div className= {s.titleContainer}>
-                    <SectionTitle title='Popular Articles'/>
+                    <h2 className='s.title'>Popular Articles</h2>
                     <div className={s.linkContainer}>
                         <AppLink variant='link' size='lg' to='/articles'> 
                             Go to all Articles

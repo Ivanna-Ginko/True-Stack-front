@@ -1,16 +1,36 @@
 .titleContainer{
     display: flex;
-    column-gap: 720px;
-    align-items: center;
+    flex-direction: column;
+    align-items: start;
+    
+}
+
+.linkContainer{
+    margin-left: -16px;
 }
 
 .title{
     font-weight: 700;
-    font-size: 40px;
     min-width: 309px;
+    font-size: 32px;
 }
 
-.linkContainer{
-    width: 195px;
-    height: 24px;
+
+@media only screen and (min-width: 768px) {
+    .titleContainer{
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .linkContainer{
+        margin-left: 0;
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    .title{
+        font-weight: 700;
+        font-size: 40px;
+    }
 }
