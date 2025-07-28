@@ -38,12 +38,16 @@
 .nav {
     display: none;
 }
+.createBtn {
+    display: none;
+}
+.desktopOnly
+.tabletOnly {
+    display: none;
+}
 @media screen and (min-width: 768px) {
     .header {
         padding: 24px 0;
-    }
-    .logo {
-        width: 110px;
     }
     .joinBtn {
         border-radius: 64px;
@@ -56,13 +60,28 @@
         font-size: 16px;
         display: block;
     }
+    .createBtn {
+        border-radius: 64px;
+        padding: 12px 16px;
+        width: 161px;
+        height: 46px;
+        background-color: #649179;
+        color: #F7FFFB;
+        font-weight: 700;
+        font-size: 16px;
+        display: block;
+        display: inline-flex;
+    }
+    .userBlock {
+        display: none;
+    }
+    .tabletOnly {
+        display: block;
+    }
 }
 @media screen and (min-width: 1440px) {
     .header {
         padding: 28px 0;
-    }
-    .logo {
-        width: 120px;
     }
     .nav {
         display: flex;
@@ -72,14 +91,25 @@
         flex-wrap: wrap;
     }
     .navLink {
-        border-radius: 8px;
+        position: relative;
         padding: 0px 0px 4px 0px;
         font-weight: 700;
-        font-size: 12px;
         color: #374F42;
     }
     .activeLink {
-        border-bottom: 2px solid #204d45;
+        position: relative;
+        padding-bottom: 4px;
+        font-weight: 700;
+        color: #374F42;
+    }
+    .activeLink::after{
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 2px;
+        background-color: #374F42;
     }
     .userBlock {
         display: flex;
@@ -98,6 +128,12 @@
         font-size: 14px;
     }
     .burgerBtn {
+        display: none;
+    }
+    .desktopOnly {
+        display: block;
+    }
+    .tabletOnly {
         display: none;
     }
 }

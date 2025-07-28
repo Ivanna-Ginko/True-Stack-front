@@ -1,7 +1,7 @@
 import React from "react";
 import s from './Header.module.css';
 import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import divider from '../../assets/icons/divider.svg';
 import logoutIcon from '../../assets/icons/exit.svg';
 
@@ -10,17 +10,17 @@ const UserNav = () => {
     const handleLogout = () => {
         console.log('Logout clicked');
     }
-    const navLinkClass = ({ isActive }) =>
+    const navLink = ({ isActive }) =>
         isActive ? s.activeLink : s.navLink;
     return (
         <nav className={s.nav}>
-            <NavLink to="/" className={navLinkClass}>Home</NavLink>
-            <NavLink to="/articles" className={navLinkClass}>Articles</NavLink>
-            <NavLink to="/creators" className={navLinkClass}>Creators</NavLink>
-            <NavLink to="/profile" className={navLinkClass}>My Profile</NavLink>
-            <NavLink to="/create-article" className={`${s.navLinkClass} ${s.createBtn}`}>
-                Create an article
-            </NavLink>
+            <NavLink to="/" className={navLink}>Home</NavLink>
+            <NavLink to="/articles" className={navLink}>Articles</NavLink>
+            <NavLink to="/creators" className={navLink}>Creators</NavLink>
+            <NavLink to="/profile" className={navLink}>My Profile</NavLink>
+            <Link to="/create-article" className={`${s.createBtn} ${s.desktopOnly}`}>
+              Create an article
+            </Link>
             {user && (
                 <div className={s.userBlock}>
                     {user.avatarUrl && (
