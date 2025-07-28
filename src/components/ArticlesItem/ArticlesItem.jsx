@@ -22,7 +22,7 @@ const ArticlesItem = ({id, image, author, title, description, isSaved='false', i
       <AppLink variant='outline' size='md' color='green' to={`/articles/${id}`}>
         Learn more
       </AppLink>
-      { isAuthor ? <Button/> : isSaved ? <Button2/> :
+      { isAuthor ? <Button1/> : isSaved ? <Button2/> :
         <ButtonAddToBookmarks articleId={id}/>}
       </div>
     </li>
