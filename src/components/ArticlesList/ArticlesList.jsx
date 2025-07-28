@@ -2,26 +2,38 @@ import React from 'react'
 import ArticlesItem from '../ArticlesItem/ArticlesItem'
 import LoadMore from '../LoadMore/LoadMore'
 import css from './ArticlesList.module.css'
+import { useSelector } from 'react-redux'
+import { selectUser } from '../../Redux/selectors.js'
 
 
 const ArticlesList = ({ list }) => {
 
-  
+  const user = useSelector(selectUser)
+  console.log(user)
+
+
+
 
   return (
     <>
         <ul className={css.list}>
           {!list && <p>wait....</p>}
-       {list && 
-            list.map(article => (
+          {list && 
+            list.map(article => {
+              const isAuthor = article.author === user?.user?.id;
+              const isSaved = isAuthor && user.savedArticles?.includes(article.id);
+                return (
                 <ArticlesItem
                   key={article.id}
                   id={article.id}
                   title={article.title}
                   author={article.author}
                   description={article.description}
-                  image={article.image} />
-            ))}
+                  image={article.image}
+                  isAuthor = {isAuthor}
+                  saved = {isSaved}/>
+            )}
+          )}
         </ul>
     </>
   )
