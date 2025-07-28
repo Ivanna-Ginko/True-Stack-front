@@ -1,37 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import ArticlesItem from '../ArticlesItem/ArticlesItem'
 import LoadMore from '../LoadMore/LoadMore'
 import css from './ArticlesList.module.css'
-import Container from '../container/Container'
-import fetchArticles from '../../services/api.js'
 
 
-const ArticlesList = () => {
+const ArticlesList = ({ list }) => {
 
-  const [articleList, setarticleList] = useState ([]);
-
-    useEffect(() => {
-      const getArticles = async () => {
-        try {
-          const articles = await fetchArticles()
-          setarticleList(articles.data.data.data)
-          console.log(articles.data.data.data)
-        }
-        catch (err) {
-          console.log (err)
-        }
-      }
-      getArticles()
-  }, []);
-
-  console.log (articleList)
+  
 
   return (
     <>
-      <Container>
         <ul className={css.list}>
-          {
-            articleList.map(article => (
+          {!list && <p>wait....</p>}
+       {list && 
+            list.map(article => (
                 <ArticlesItem
                   key={article.id}
                   id={article.id}
@@ -41,8 +23,6 @@ const ArticlesList = () => {
                   image={article.image} />
             ))}
         </ul>
-        <LoadMore />
-      </Container>
     </>
   )
 }
