@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import LoadMore from '../../components/LoadMore/LoadMore'
 import AuthorsList from '../../components/AuthorsList/AuthorsList'
 import { useNavigate } from 'react-router-dom';
+import { fetchAuthors } from '../../services/api';
 
 
 const AuthorsPage = () => {
@@ -10,16 +11,23 @@ const AuthorsPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchAuthors = async () => {
+    const getAuthors = async () => {
       try {
-        const response = await fetch('');
-        const data = await response.json();
-        setAuthors(data);
+        const data = await fetchAuthors();
+
+        console.log('API response:', data);
+
+        const normalizedAuthors = data.data.map((item) => ({
+          ...item,
+          _id: item._id?.$oid || item._id,
+        }));
+
+        setAuthors(normalizedAuthors);
       } catch (error) {
         console.error('Помилка при завантаженні авторів:', error);
       }
     };
-    fetchAuthors();
+    getAuthors();
   }, [])
 
 
