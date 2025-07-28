@@ -3,7 +3,7 @@ import ArticlesItem from '../ArticlesItem/ArticlesItem'
 import LoadMore from '../LoadMore/LoadMore'
 import css from './ArticlesList.module.css'
 import { useSelector } from 'react-redux'
-import { selectUser } from '../../Redux/selectors.js'
+import { selectUser } from '../../redux/selectors'
 
 
 const ArticlesList = ({ list }) => {
