@@ -1,0 +1,159 @@
+@media only screen and (max-width: 392px) {
+    .hero_background {
+        background-size: contain;
+    }
+}
+
+.innercontainer {
+    padding-top: 15px;
+    padding-bottom: 36px;
+}
+
+
+.hero_reg_btn {
+    border: 1px solid #374f42;
+    border-radius: 64px;
+    padding: 16px;
+    height: 57px;
+    font-weight: 700;
+    font-size: 18px;
+    color: #374f42;
+    background: transparent;
+    margin-top: 24px;
+    width: 100%;
+}
+
+.hero_span {
+    font-family: "Merienda", sans-serif;
+}
+
+.hero_articles_btn {
+    border-radius: 64px;
+    padding: 16px;
+    width: 361px;
+    width: 100%;
+    font-weight: 700;
+    font-size: 18px;
+    color: #f7fffb;
+    background: #649179;
+    margin-top: 30px;
+}
+
+.hero_header {
+    font-weight: 700;
+    font-size: 40px;
+    color: #374f42;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+
+.hero_background {
+    background-image: url('../../assets/images/normal/Hero/hero-small-1x.png');
+    /* fallback */
+    background-image: image-set(url('../../assets/images/normal/Hero/hero-small-1x.png') 1x,
+            url('../../assets/images/retina/Hero/hero-small-2x.png') 2x);
+    background-position: top center;
+    background-repeat: no-repeat;
+}
+
+.hero_inner {
+    padding-top: 338px;
+}
+
+@media only screen and (min-width: 768px) {
+    .hero_header {
+        width: 372px;
+        padding-top: 22px;
+    }
+
+    .innercontainer {
+        padding-top: 0;
+    }
+
+    .hero_inner {
+        padding-top: 0;
+    }
+
+    .hero_background {
+        background-image: url('../../assets/images/normal/Hero/hero-tablet-1x.png');
+        background-image: image-set(url('../../assets/images/normal/Hero/hero-tablet-1x.png') 1x,
+                url('../../assets/images/retina/Hero/hero-tablet-2x.png') 2x);
+        background-position: right center;
+        background-repeat: no-repeat;
+        height: 427px;
+    }
+
+    .hero_articles_btn {
+        border-radius: 64px;
+        padding: 16px;
+        width: 249px;
+        height: 57px;
+        margin-top: 0;
+    }
+
+    .hero_reg_btn {
+        border: 1px solid #374f42;
+        border-radius: 64px;
+        padding: 16px;
+        width: 249px;
+        height: 57px;
+    }
+
+    .hero_buttons_container {
+        display: flex;
+        flex-direction: column;
+        padding-top: 160px;
+        width: 249px;
+        height: 138px;
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    .hero_background {
+        background-image: url('../../assets/images/normal/Hero/hero-desktop-1x.png');
+        background-image: image-set(url('../../assets/images/normal/Hero/hero-desktop-1x.png') 1x,
+                url('../../assets/images/retina/Hero/hero-desktop-2x.png') 2x);
+        background-position: right bottom;
+        background-repeat: no-repeat;
+        height: 609px;
+    }
+
+    .hero_header {
+        font-weight: 800;
+        font-size: 92px;
+        line-height: 100%;
+        letter-spacing: -0.02em;
+        width: 599px;
+        height: 276px;
+        padding-top: 35px;
+        padding-top: 48px;
+        /* text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25); */
+    }
+
+
+    .hero_buttons_container {
+        flex-direction: row;
+        gap: 24px;
+        padding-top: 140px;
+        align-items: center;
+        justify-content: center;
+        width: 392px;
+        height: 57px;
+    }
+
+    .hero_articles_btn {
+        border-radius: 64px;
+        padding: 16px;
+        width: 184px;
+        height: 57px;
+    }
+
+    .hero_reg_btn {
+        border-radius: 64px;
+        padding: 16px;
+        width: 184px;
+        height: 57px;
+        margin-top: 0;
+    }
+}

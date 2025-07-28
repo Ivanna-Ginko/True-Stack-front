@@ -1,0 +1,12 @@
+
+
+
+    .list {
+        display: flex;
+        gap: 24px;
+        flex-wrap: wrap;
+        padding-top: 16px;
+    }
+
+
+    

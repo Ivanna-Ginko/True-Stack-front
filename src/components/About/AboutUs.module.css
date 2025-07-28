@@ -1,0 +1,94 @@
+.ab_info {
+    border-radius: 32px;
+    padding: 32px;
+    background-color: #d1e0d8;
+}
+
+.ab_header {
+    font-weight: 700;
+    font-size: 32px;
+    padding-bottom: 32px;
+    color: #070721;
+}
+
+.innercontainer {
+    padding: 36px 0;
+}
+
+.ab_paragraph {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 155%;
+    color: #070721;
+}
+
+.ab_yoga_img {
+    display: none;
+    /* should appear in desktop */
+}
+
+.ab_img {
+    border-radius: 32px;
+    width: 361px;
+    height: 365px;
+    margin-top: 24px;
+}
+
+@media only screen and (min-width: 768px) {
+    .inner_info_flower {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 24px;
+    }
+
+    .ab_info {
+        width: 431px;
+        height: 326px;
+    }
+
+    .flower_img {
+        margin-top: 0;
+        width: 249px;
+        height: 326px;
+    }
+
+    .ab_people_img {
+        width: 704px;
+        height: 398px;
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    .ab_yoga_img {
+        display: block;
+        width: 392px;
+        height: 398px;
+        margin-left: 24px;
+    }
+
+    .ab_people_img {
+        width: 808px;
+        height: 398px;
+    }
+
+    .inner_people_yoga {
+        display: flex;
+    }
+
+    .inner_info_flower {
+        justify-content: flex-start;
+    }
+
+    .ab_info {
+        width: 496px;
+    }
+
+    .flower_img {
+        width: auto;
+    }
+
+    .ab_header {
+        font-size: 40px;
+    }
+}
