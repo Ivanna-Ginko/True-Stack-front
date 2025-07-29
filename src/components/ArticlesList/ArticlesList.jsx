@@ -29,7 +29,7 @@ const ArticlesList = ({ list }) => {
                   title={article.title}
                   author={article.author}
                   description={article.description}
-                  image={article.image}
+                  image={article.img}
                   isAuthor = {isAuthor}
                   saved = {isSaved}/>
             )}
