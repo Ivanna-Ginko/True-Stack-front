@@ -1,5 +1,6 @@
 import React from 'react'
 import ArticlesItem from '../ArticlesItem/ArticlesItem'
+import LoadMore from '../LoadMore/LoadMore'
 import css from './ArticlesList.module.css'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../redux/selectors'
@@ -28,7 +29,7 @@ const ArticlesList = ({ list }) => {
                   title={article.title}
                   author={article.author}
                   description={article.description}
-                  image={article.image}
+                  image={article.img}
                   isAuthor = {isAuthor}
                   saved = {isSaved}/>
             )}
