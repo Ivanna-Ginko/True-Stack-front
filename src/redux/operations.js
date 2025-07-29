@@ -1,117 +1,161 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import * as api from '../services/api';
+import { authActions } from './slice';
 
-axios.defaults.baseURL = '%%%%%%%%%%%%%';
-
-const setAuthorizationHeader = token =>
-  (axios.defaults.headers.common.Authorization = token);
-
-const deleteAuthorizationHeader = () =>
-  delete axios.defaults.headers.common.Authorization;
-
+/**
+ * @param {formData}
+ * @returns {Promise<{user: {id: string, name: string, avatar: string}, accessToken: string}>}
+ * @throws {{message: string} | Array<{message: string, field: string}>}
+ */
 export const registerUser = createAsyncThunk(
   'user/register',
-  async (formData, thunkAPI) => {
-    const { name, email, password, photo } = formData;
-    const bodyData = { name, email, password, photo };
-
+  async (formData, { rejectWithValue }) => {
     try {
-      const response = await axios.post('register endpoint', bodyData);
-      const { name, photo, token } = response.data;
+      const data = await api.registerUser(formData);
+      const {
+        user: { _id: id, name, avatar },
+        accessToken,
+      } = data;
 
-      return { user: { name, photo }, token };
-    } catch (err) {
-      const message = err.message;
+      api.setAuthorizationHeader(accessToken);
 
-      return thunkAPI.rejectWithValue(message);
+      return {
+        user: { id, name, avatar },
+        accessToken,
+      };
+    } catch (axiosError) {
+      const errStatus = axiosError.response?.status;
+      const apiError = axiosError.response?.data;
+
+      if (errStatus === 409) {
+        return rejectWithValue({ message: apiError.message });
+      }
+
+      const errors = apiError.data;
+
+      if (errStatus === 400 && Array.isArray(errors)) {
+        const fieldErrorObjects = errors.map(err => ({
+          message: err.message,
+          field: err.path[0],
+        }));
+
+        return rejectWithValue([fieldErrorObjects]);
+      }
+
+      return rejectWithValue({
+        message: 'Something went wrong. Try again later.',
+      });
     }
   }
 );
 
+/**
+ * @param {formData}
+ * @returns {Promise<{user: {id: string, name: string, avatar: string}, accessToken: string}>}
+ * @throws {{message: string} | Array<{message: string, field: string}>}
+ */
 export const loginUser = createAsyncThunk(
   'user/login',
-  async (formData, thunkAPI) => {
-    const { email, password } = formData;
-    const bodyData = { email, password };
-
+  async (formData, { rejectWithValue }) => {
     try {
-      const response = await axios.post('login endpoint', bodyData);
-      const { name, photo, token } = response.data;
+      const data = await api.loginUser(formData);
+      const {
+        user: { _id: id, name, avatar },
+        accessToken,
+      } = data;
 
-      return { user: { name, photo }, token };
-    } catch (err) {
-      const message = err.message;
+      api.setAuthorizationHeader(accessToken);
 
-      return thunkAPI.rejectWithValue(message);
+      return {
+        user: { id, name, avatar },
+        accessToken,
+      };
+    } catch (axiosError) {
+      const errStatus = axiosError.response?.status;
+      const apiError = axiosError.response?.data;
+
+      if (errStatus === 404 || errStatus === 401) {
+        return rejectWithValue({ message: apiError.message });
+      }
+
+      const errors = apiError.data;
+
+      if (errStatus === 400 && Array.isArray(errors)) {
+        const fieldErrorObjects = errors.map(err => ({
+          message: err.message,
+          field: err.path[0],
+        }));
+
+        return rejectWithValue([fieldErrorObjects]);
+      }
+
+      return rejectWithValue({
+        message: 'Something went wrong. Try again later.',
+      });
     }
   }
 );
 
-export const authenticateUser = createAsyncThunk(
-  'user/authenticate',
+export const logoutUserThunk = () => dispatch => {
+  api.logoutUser();
+  api.deleteAuthorizationHeader();
+  dispatch(authActions.logoutUser());
+};
+
+export const refreshUser = createAsyncThunk(
+  'user/refreshUser',
   async (_, thunkAPI) => {
-    const token = localStorage.getItem('token');
-
-    if (!token) return thunkAPI.rejectWithValue('');
-
-    setAuthorizationHeader(token);
-
     try {
-      const response = await axios.get('authenticate endpoint');
-      const { name, photo, token } = response.data;
+      const data = await api.refreshUser();
+      const {
+        user: { _id: id, name, avatar },
+        accessToken,
+      } = data;
 
-      return { user: { name, photo }, token };
-    } catch (err) {
-      const message = err.message;
+      api.setAuthorizationHeader(accessToken);
 
-      return thunkAPI.rejectWithValue(message);
+      return {
+        user: { id, name, avatar },
+        accessToken,
+      };
+    } catch {
+      thunkAPI.dispatch(logoutUserThunk());
     }
   }
 );
 
-export const logoutUser = createAsyncThunk(
-  'user/logout',
-  async (_, thunkAPI) => {
-    try {
-      await axios.get('logout endpoint');
-
-      deleteAuthorizationHeader();
-    } catch (err) {
-      const message = err.message;
-
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-
+/**
+ * @param {string}
+ * @returns {Promise<Array<string>>}
+ * @throws {{message: string}}
+ */
 export const addArticleToBookmarks = createAsyncThunk(
   'user/addArticleToBookmarks',
-  async (id, thunkAPI) => {
+  async (articleId, { rejectWithValue }) => {
     try {
-      const response = await axios.post('save article endpoint', { id });
-      const savedArticles = response.data;
-
-      return savedArticles;
-    } catch (err) {
-      const message = err.message;
-
-      return thunkAPI.rejectWithValue(message);
+      return await api.addArticleToBookmarks(articleId);
+    } catch {
+      return rejectWithValue({
+        message: 'Something went wrong. Try again later.',
+      });
     }
   }
 );
 
+/**
+ * @param {string}
+ * @returns {Promise<Array<string>>}
+ * @throws {{message: string}}
+ */
 export const removeArticleFromBookmarks = createAsyncThunk(
   'user/removeArticleFromBookmarks',
-  async (id, thunkAPI) => {
+  async (articleId, { rejectWithValue }) => {
     try {
-      const response = await axios.post('remove article from endpoint', { id });
-      const savedArticles = response.data;
-
-      return savedArticles;
-    } catch (err) {
-      const message = err.message;
-
-      return thunkAPI.rejectWithValue(message);
+      return await api.deleteArticleFromBookmarks(articleId);
+    } catch {
+      return rejectWithValue({
+        message: 'Something went wrong. Try again later.',
+      });
     }
   }
 );
