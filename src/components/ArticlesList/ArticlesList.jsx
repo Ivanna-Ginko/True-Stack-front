@@ -5,14 +5,11 @@ import css from './ArticlesList.module.css'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../redux/selectors'
 
+//уточнити, помилка через імпорт селектора редакс
 
 const ArticlesList = ({ list, hideFourthOnDesktop = false }) => {
-
   const user = useSelector(selectUser)
   console.log(user)
-
-
-
 
   return (
     <>
@@ -41,10 +38,5 @@ const ArticlesList = ({ list, hideFourthOnDesktop = false }) => {
 
 export default ArticlesList
 
-  //const filteredArticles = filter === 'Popular'
-    //? allArticles.filter(article => article.isPopular)
-   // : allArticles;
 
- //articleList.map(article => (
-            
 
