@@ -10,23 +10,29 @@ export const deleteAuthorizationHeader = () =>
 
 export const fetchArticles = async () => {
   const response = await axios.get('/articles');
-  return response;
-};
+
+  return response
+}
 
 const config = {
   params: {
-    sortBy: 'rate',
-  },
-};
+    'sortBy': 'rate',
+  }
+}
 export const fetchPopularArticles = async () => {
   const response = await axios.get('/articles', config);
-  return response;
-};
+  return response
+}
 
 export const registerUser = async formData => {
   const response = await axios.post('/auth/register', formData);
 
-  return response.data.data;
+  return response.data.data
+}
+
+export const fetchAuthors = async () => {
+  const response = await axios.get('/authors');
+  return response.data;
 };
 
 export const loginUser = async formData => {
@@ -60,3 +66,4 @@ export const deleteArticleFromBookmarks = async articleId  => {
 
   return response.data.data
 }
+

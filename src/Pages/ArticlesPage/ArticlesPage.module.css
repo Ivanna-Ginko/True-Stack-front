@@ -6,20 +6,19 @@
 }
 
 .quantity {
+    font-family: "Manrope", sans-serif;
     font-weight: 700;
     font-size: 18px;
+    margin: 16px 0;
+    padding: 4px 0;
 }
 
 /* Styles for Tablet devices */
 @media only screen and (min-width: 768px) {
-    .box {
-    padding: 0 32px;
-}
+
 }
 
 /* Styles for Desktop devices */
 @media only screen and (min-width: 1440px) {
-    .box {
-    padding-left: 0 108px;
-}
+
 }
