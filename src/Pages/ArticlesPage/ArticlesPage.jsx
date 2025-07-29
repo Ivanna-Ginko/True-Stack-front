@@ -5,7 +5,7 @@ import css from './ArticlesPage.module.css'
 import ArticleListSelect from '../../components/ArticleListSelect/ArticleListSelect'
 import Container from '../../components/container/Container'
 import { fetchArticles, fetchPopularArticles } from '../../services/api.js'
-import LoadMore from '../../components/LoadMore/LoadMore.jsx'
+import Pagination from '../../components/Pagination/Pagination'
 
 
 const ArticlesPage = () => {
@@ -48,7 +48,7 @@ const ArticlesPage = () => {
           </div>
         </div>
         <ArticlesList filter={selectedFilter} list={articlesArr}/>
-        <LoadMore />
+        <Pagination />
       </Container>
     </>
   )
