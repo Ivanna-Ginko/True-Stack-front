@@ -7,19 +7,22 @@ import ArticlesPage from './Pages/ArticlesPage/ArticlesPage.jsx';
 import ArticlePage from './Pages/ArticlePage/ArticlePage.jsx';
 import AuthorsPage from './Pages/AuthorsPage/AuthorsPage.jsx';
 import AuthorProfilePage from './Pages/AuthorProfilePage/AuthorProfilePage.jsx';
-import CreateArticlePage from './Pages/CreateArticlePage/CreateArticlePage.jsx';
-import { useDispatch } from 'react-redux';
+import CreateArticlePage from './Pages/AuthorProfilePage/AuthorProfilePage.jsx';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { authenticateUser } from './redux/operations.js';
-import HomePage from './Pages/HomePage/HomePage.jsx'
+import { refreshUser } from './redux/operations.js';
+import HomePage from './Pages/HomePage/HomePage.jsx';
+import { selectIsFetchingUser } from './redux/selectors.js';
 
 function App() {
   const dispatch = useDispatch();
+  const isFetchingUser = useSelector(selectIsFetchingUser);
 
   useEffect(() => {
-    dispatch(authenticateUser());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    dispatch(refreshUser());
+  }, [dispatch]);
+
+  if (isFetchingUser) return null;
 
   return (
     <>
@@ -35,7 +38,7 @@ function App() {
         />
         <Route
           path='/'
-          element={<HomePage/>}
+          element={<HomePage />}
         />
         <Route
           path='/articles'
