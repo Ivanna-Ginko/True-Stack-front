@@ -4,6 +4,7 @@ import s from './PopularArticles.module.css'
 import Container from '../container/Container'
 import ArticlesList from '../ArticlesList/ArticlesList';
 import { fetchPopularArticles } from '../../services/api';
+import svg from '../../assets/icons/arrow.svg'
 
 const PopularArticles = () => {
     const [articles, setArticles] = useState([]);
@@ -23,15 +24,13 @@ const PopularArticles = () => {
     return (
         <>
             <Container>
-                <div className={s.innerContainer}>
+                <div id="popularArticles"  className={s.innerContainer}>
                     <div className= {s.titleContainer}>
                         <h2 className={s.title}>Popular Articles</h2>
                         <div className={s.linkContainer}>
                             <AppLink variant='link' size='lg' to='/articles'> 
                                 Go to all Articles
-                                <svg width={14.25} height={14.25}>
-                                    <use href='/src/assets/icons/arrow.svg#icon-arrow'></use>
-                                </svg>
+                                <img src={svg} alt="arrow icon"/>
                             </AppLink>
                         </div>
                     </div>
