@@ -1,5 +1,5 @@
 import React from 'react'
-import CreateArticleForm from '../../components/AddArticleForm'
+import AddArticleForm from '../../components/AddArticleForm/AddArticleForm'
 
 const CreateArticlePage = () => {
   return (
