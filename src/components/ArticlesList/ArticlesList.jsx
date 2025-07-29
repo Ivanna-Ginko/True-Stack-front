@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux'
 import { selectUser } from '../../redux/selectors'
 
 
+//уточнити, помилка через імпорт селектора редакс
+
 const ArticlesList = ({ list }) => {
 
   const user = useSelector(selectUser)
@@ -41,10 +43,5 @@ const ArticlesList = ({ list }) => {
 
 export default ArticlesList
 
-  //const filteredArticles = filter === 'Popular'
-    //? allArticles.filter(article => article.isPopular)
-   // : allArticles;
 
- //articleList.map(article => (
-            
 
