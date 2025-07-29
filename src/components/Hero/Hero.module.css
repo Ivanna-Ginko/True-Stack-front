@@ -5,7 +5,8 @@
 }
 
 .innercontainer {
-    padding: 36px 0;
+    padding-top: 15px;
+    padding-bottom: 36px;
 }
 
 
@@ -42,8 +43,8 @@
     font-weight: 700;
     font-size: 40px;
     color: #374f42;
-    height: 112px;
-    width: 372px;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 
@@ -63,8 +64,11 @@
 @media only screen and (min-width: 768px) {
     .hero_header {
         width: 372px;
-        height: 112px;
-        padding-top: 23px;
+        padding-top: 22px;
+    }
+
+    .innercontainer {
+        padding-top: 0;
     }
 
     .hero_inner {
@@ -99,7 +103,7 @@
     .hero_buttons_container {
         display: flex;
         flex-direction: column;
-        padding-top: 130px;
+        padding-top: 160px;
         width: 249px;
         height: 138px;
     }
@@ -123,13 +127,15 @@
         width: 599px;
         height: 276px;
         padding-top: 35px;
+        padding-top: 48px;
         /* text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25); */
     }
+
 
     .hero_buttons_container {
         flex-direction: row;
         gap: 24px;
-        padding-top: 75px;
+        padding-top: 140px;
         align-items: center;
         justify-content: center;
         width: 392px;

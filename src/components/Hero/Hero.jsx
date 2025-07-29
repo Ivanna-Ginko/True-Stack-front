@@ -1,7 +1,9 @@
 import Container from '../container/Container'
 import s from "./Hero.module.css"
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
   return (
     <>
       <Container>
@@ -11,7 +13,12 @@ const Hero = () => {
               <h1 className={s.hero_header}>Find your <span className={s.hero_span}>harmony</span> in community</h1>
               <div className={s.hero_buttons_container}>
                 <button className={s.hero_articles_btn}><a href="#popularArticles">Go to Articles</a></button>
-                <button className={s.hero_reg_btn}>Register</button> {/* use navigate */}
+                <button
+                  className={s.hero_reg_btn}
+                  onClick={() => navigate("/register")}
+                >
+                  Register
+                </button>
               </div>
             </div>
           </div>

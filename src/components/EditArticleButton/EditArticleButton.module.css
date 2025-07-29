@@ -1,0 +1,51 @@
+.button {
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  border-radius: 64px;
+  border: 1px solid #374f42;
+  background-color: #d1e0d8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s, border-color 0.3s;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #649179;
+}
+
+.button:active {
+  background-color: #649179;
+}
+
+.saved {
+  background-color: #649179;
+  border-color: transparent;
+}
+
+.icon {
+  width: 15px;
+  height: 15px;
+  display: block;
+  stroke: #374f42;
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  overflow: visible;
+}
+
+.savedIcon {
+  stroke: #ffffff;
+}
+
+.button:hover,
+.button:active {
+  background-color: #649179;
+}
+
+.button:hover svg path,
+.button:active svg path {
+  stroke: #ffffff;
+}

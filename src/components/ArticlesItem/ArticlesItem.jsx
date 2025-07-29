@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ButtonAddToBookmarks from '../ButtonAddToBookmarks/ButtonAddToBookmarks'
 import AppLink from '../AppLink/AppLink'
 import s from '../ArticlesItem/ArticlesItem.module.css'
 
-const ArticlesItem = ({id, image, author, title, description}) => {
-    return (
-    <li className= {s.card}>
+const ArticlesItem = ({id, image, author, title, description, isSaved=false, isAuthor=false}) => {
+  const [saved, setSaved] = useState(isSaved);
+
+  const handleToggle = ()=>{
+    setSaved(!saved);
+  };
+  return (
+    <li key={id} className= {s.card}>
       <img src={image} alt={title} className={s.image}/>
       <div className={s.content}>
         <p className={s.author}>
@@ -19,10 +24,23 @@ const ArticlesItem = ({id, image, author, title, description}) => {
         </p>
       </div>
       <div className= {s.bottom}>
-      <AppLink size="xl" to={`/articles/${id}`}>
+      <AppLink variant='outline' size='md' color='green' to={`/articles/${id}`}>
         Learn more
       </AppLink>
-      <ButtonAddToBookmarks articleId={id}/>
+      { isAuthor ? (
+        <Button articleId={id}/>
+      ) : saved ? (
+      <ButtonAddToBookmarks 
+        articleId={id} 
+        onClick={handleToggle}
+        variant="saved"
+      /> 
+      ) : (
+      <ButtonAddToBookmarks 
+        articleId={id} 
+        onClick={handleToggle}
+      />
+      )}
       </div>
     </li>
   )
