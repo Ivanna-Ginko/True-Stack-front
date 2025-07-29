@@ -1,3 +1,8 @@
+.innerContainer{
+    padding-top: 36px;
+    padding-bottom: 36px;
+}
+
 .titleContainer{
     display: flex;
     flex-direction: column;

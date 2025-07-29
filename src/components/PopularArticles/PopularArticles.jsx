@@ -1,47 +1,42 @@
 import React, { useEffect, useState } from 'react'
 import AppLink from '../AppLink/AppLink'
-import axios from 'axios';
-import ArticlesItem from '../ArticlesItem/ArticlesItem'
 import s from './PopularArticles.module.css'
 import Container from '../container/Container'
-import SectionTitle from '../SectionTitle/SectionTitle';
-import { useSelector } from 'react-redux';
-import { selectSavedArticles } from '../../redux/selectors';
+import ArticlesList from '../ArticlesList/ArticlesList';
+import { fetchPopularArticles } from '../../services/api';
 
 const PopularArticles = () => {
-    const savedArticles = useSelector(selectSavedArticles);
     const [articles, setArticles] = useState([]);
     useEffect(()=>{
-        const fetchPopularArticles = async () =>{
-            try{
-                const res = await axios.get('########');
-                setArticles(res.data);
-            }
-            catch(error){
-                console.error('❌ Помилка при завантаженні статей:', error.message);
+        const getPopularArticles = async () =>{
+            try {
+                const response = await fetchPopularArticles();
+                console.log(response);
+                const popular = response.data.data.data?.slice(0, 3) || [];
+                setArticles(popular);
+            } catch (err) {
+                console.log('❌ Помилка при завантаженні популярних статей:', err.message);
             }
         };
-        fetchPopularArticles();
+        getPopularArticles();
     },[]);
     return (
         <>
             <Container>
-                <div className= {s.titleContainer}>
-                    <h2 className='s.title'>Popular Articles</h2>
-                    <div className={s.linkContainer}>
-                        <AppLink variant='link' size='lg' to='/articles'> 
-                            Go to all Articles
-                            <svg width={14.25} height={14.25}>
-                                <use href='/src/assets/icons/arrow.svg#icon-arrow'></use>
-                            </svg>
-                        </AppLink>
+                <div className={s.innerContainer}>
+                    <div className= {s.titleContainer}>
+                        <h2 className={s.title}>Popular Articles</h2>
+                        <div className={s.linkContainer}>
+                            <AppLink variant='link' size='lg' to='/articles'> 
+                                Go to all Articles
+                                <svg width={14.25} height={14.25}>
+                                    <use href='/src/assets/icons/arrow.svg#icon-arrow'></use>
+                                </svg>
+                            </AppLink>
+                        </div>
                     </div>
+                    <ArticlesList list={articles}/>
                 </div>
-                <ul>
-                    {articles.map(article => (
-                        <ArticlesItem key={article.id} id={article.id} image={article.image} author={article.author} title={article.title} description={article.description} isSaved={savedArticles.includes(article.id)}/>
-                    ))}
-                </ul>
             </Container>
         </>
     )
