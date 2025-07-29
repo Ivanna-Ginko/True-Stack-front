@@ -1,0 +1,29 @@
+.button {
+  width: 40px;
+  height: 40px;
+  border-radius: 64px;
+  padding: 8px;
+  gap: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #374f42;
+  background-color: #d1e0d8;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.buttonSaved {
+  background-color: #374f42;
+  border: none;
+}
+
+.button:hover,
+.button:active {
+  background-color: #374f42;
+}
+
+.button:hover svg path,
+.button:active svg path {
+  stroke: #ffffff;
+}

@@ -1,8 +1,14 @@
 import React from 'react'
 
-const AuthorsItem = () => {
+const AuthorsItem = ({ item, onAuthCardClick }) => {
+  const handleClick = () => {
+    onAuthCardClick(item._id);
+  };
   return (
-    <div>AuthorsItem</div>
+    <div onClick={handleClick}>
+      <img src={item.avatarUrl} alt={`Фото автора ${item.name}`} />
+      <p>{item.name}</p>
+    </div>
   )
 }
 
