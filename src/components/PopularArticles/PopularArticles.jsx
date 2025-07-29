@@ -13,7 +13,7 @@ const PopularArticles = () => {
             try {
                 const response = await fetchPopularArticles();
                 console.log(response);
-                const popular = response.data.data.data?.slice(0, 3) || [];
+                const popular = response.data.data.data?.slice(0, 4) || [];
                 setArticles(popular);
             } catch (err) {
                 console.log('❌ Помилка при завантаженні популярних статей:', err.message);
@@ -34,7 +34,7 @@ const PopularArticles = () => {
                             </AppLink>
                         </div>
                     </div>
-                    <ArticlesList list={articles}/>
+                    <ArticlesList list={articles} hideFourthOnDesktop/>
                 </div>
             </Container>
         </>

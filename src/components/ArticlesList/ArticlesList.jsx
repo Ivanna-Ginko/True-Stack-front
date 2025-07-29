@@ -5,20 +5,15 @@ import css from './ArticlesList.module.css'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../redux/selectors'
 
-
 //уточнити, помилка через імпорт селектора редакс
 
-const ArticlesList = ({ list }) => {
-
+const ArticlesList = ({ list, hideFourthOnDesktop = false }) => {
   const user = useSelector(selectUser)
   console.log(user)
 
-
-
-
   return (
     <>
-        <ul className={css.list}>
+        <ul className={`${css.list} ${hideFourthOnDesktop ? css.hideFourth : ''}`}>
           {!list && <p>wait....</p>}
           {list && 
             list.map(article => {
