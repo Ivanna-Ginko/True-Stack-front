@@ -7,7 +7,7 @@ import ArticlesPage from './Pages/ArticlesPage/ArticlesPage.jsx';
 import ArticlePage from './Pages/ArticlePage/ArticlePage.jsx';
 import AuthorsPage from './Pages/AuthorsPage/AuthorsPage.jsx';
 import AuthorProfilePage from './Pages/AuthorProfilePage/AuthorProfilePage.jsx';
-import CreateArticlePage from './Pages/AuthorProfilePage/AuthorProfilePage.jsx';
+import CreateArticlePage from './Pages/CreateArticlePage/CreateArticlePage.jsx';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { authenticateUser } from './redux/operations.js';
