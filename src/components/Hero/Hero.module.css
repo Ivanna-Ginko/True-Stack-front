@@ -49,11 +49,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 200ms ease-in-out;
 }
 
 .hero_articles_btn:hover {
     background-color: #374f42;
-    transition: all 200ms ease-in-out;
 }
 
 .hero_articles_btn:focus {

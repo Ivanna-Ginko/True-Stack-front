@@ -7,6 +7,7 @@ import Container from '../container/Container'
 import s from './UploadForm.module.css'
 import placeholderImg from '../../assets/images/normal/UploadPhoto/up-camera-test.png'
 import closeIcon from '../../assets/icons/close.svg'
+import { toast } from 'react-toastify'
 
 const UploadForm = ({ formData }) => {
   const [image, setImage] = useState(null)
@@ -27,10 +28,14 @@ const UploadForm = ({ formData }) => {
   const handleImageClick = () => {
     inputRef.current.click()
   }
-  /* MAX 1MB IMAGE SIZE */
+
   const handleFileChange = (e) => {
     const file = e.target.files[0]
     if (file) {
+      if (file.size > 1024 * 1024) {
+        toast.error('Image must be less than 1MB.')
+        return
+      }
       setFile(file)
       const reader = new FileReader()
       reader.onloadend = () => {
@@ -40,10 +45,11 @@ const UploadForm = ({ formData }) => {
     }
   }
 
-  const handleSubmit = (e) => {
+
+  const addAvatar = (e) => {
     e.preventDefault()
     if (!file) {
-      //  here will be toast
+      toast.error('No file selected!')
       return
     }
     // Prepare FormData for dispatch
@@ -57,9 +63,21 @@ const UploadForm = ({ formData }) => {
     dispatch(registerUser(formDataInstance))
   }
 
+  const skipAvatar = () => {
+    const formDataInstance = new FormData()
+
+    Object.entries(formData).forEach(([key, value]) => {
+      formDataInstance.append(key, value)
+    })
+
+    formDataInstance.append('avatar', '')
+
+    dispatch(registerUser(formDataInstance))
+  }
+
   return (
     <Container>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={addAvatar} className={s.up_form}>
         <div className={s.up_container}>
           <h1 className={s.up_header}>Upload your photo</h1>
           <div className={s.up_inner_container}>
@@ -79,7 +97,7 @@ const UploadForm = ({ formData }) => {
             />
           </div>
           <button disabled={!image} className={s.up_submit_btn} type='submit'>Save</button>
-          <button className={s.up_close_button} type="button">
+          <button className={s.up_close_button} type="button" onClick={skipAvatar}>
             <img src={closeIcon} alt="Close" width="24" height="24" />
           </button>
         </div>

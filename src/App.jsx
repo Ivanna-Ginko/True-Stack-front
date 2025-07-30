@@ -14,6 +14,8 @@ import { useEffect } from 'react';
 import { refreshUser } from './redux/operations.js';
 import HomePage from './Pages/HomePage/HomePage.jsx';
 import { selectIsFetchingUser } from './redux/selectors.js';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const dispatch = useDispatch();
@@ -36,7 +38,7 @@ function App() {
         <Route
           path='/photo'
           element={<UploadPhoto />}
-        />                      
+        />
         <Route
           path='/login'
           element={<LoginPage />}
@@ -67,6 +69,7 @@ function App() {
         />
       </Routes>
       <Footer />
+      <ToastContainer position="top-right" autoClose={3000} theme="colored" />
     </>
   );
 }
