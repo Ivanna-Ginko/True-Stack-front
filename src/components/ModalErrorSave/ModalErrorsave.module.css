@@ -9,6 +9,16 @@
   transition: background 0.3s ease;
 }
 
+.buttonExit {
+  position: absolute;
+  top: 16px;
+  right: 32px;
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
 .modalButton:hover {
   background: #d1e0d8;
   color: black;
@@ -32,10 +42,10 @@
 }
 
 .navButton {
-   display:flex;
-   flex-direction: column;
-    justify-content: center;
-     gap: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
 }
 
 .reactModalContent {
@@ -54,40 +64,35 @@
   text-align: center;
 }
 
-.ErrorFont{
+.ErrorFont {
   font-family: Manrope;
   font-size: 32px;
   font-weight: 700px;
   font-weight: bold;
 }
 
-.SaveArticleFont{
-font-family: Manrope;
+.SaveArticleFont {
+  font-family: Manrope;
   font-size: 16px;
   font-weight: 400px;
-
 }
 @media screen and (min-width: 768px) {
-  .reactModalContent{
-       
-      width: 499px;
-      height: 305px;
+  .reactModalContent {
+    width: 499px;
+    height: 305px;
   }
 
-  .navButton{
-  flex-direction: row;
+  .navButton {
+    flex-direction: row;
   }
   .modalButton {
     width: 164.5px;
   }
 }
 
-
 @media screen and (min-width: 1440px) {
-  .reactModalContent{
-      
-      width: 420px;
-      height: 268px;
+  .reactModalContent {
+    width: 420px;
+    height: 268px;
   }
-  
 }
