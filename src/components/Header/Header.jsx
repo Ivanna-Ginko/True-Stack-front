@@ -24,7 +24,7 @@ const Header = () => {
     <header className={s.header}>
       <Container>
         <div className={s.container}>
-          <Link to="/" className={s.logoLink}>
+          <Link to="/" className={s.logoLink} onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
             <img src={logo} alt="Harmoniq logo" className={s.logo} />
           </Link>
           <div className={s.rightSide}>

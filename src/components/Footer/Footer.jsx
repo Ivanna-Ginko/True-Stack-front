@@ -10,7 +10,7 @@ const Footer = () => {
     <footer className={s.footer}>
       <Container>
         <div className={s.wrapper}>
-            <Link to="/">
+            <Link to="/" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
               <img src={logo} alt="Harmoniq logo" className={s.logo} />
             </Link>
             <p className={s.rights}>&copy; 2025 Harmoniq. All rights reserved.</p>
