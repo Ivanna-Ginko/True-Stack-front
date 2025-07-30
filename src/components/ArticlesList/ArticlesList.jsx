@@ -5,25 +5,33 @@ import css from './ArticlesList.module.css'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../redux/selectors'
 import { fetchArticles } from '../../services/api.js'
+import toast, { Toaster } from 'react-hot-toast';
 
 //уточнити, помилка через імпорт селектора редакс
 
 const ArticlesList = ({ config, onTotalItemsChange }) => {
   const [articleList, setArticleList] = useState ([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState (false)
+
   const user = useSelector(selectUser)
   
   useEffect(() => {
   const getArticles = async () => {
     try {
+      setIsLoading(true);
       const articles = await fetchArticles(config);
       setArticleList(articles.data.data);
       console.log(articles.data.data)
       if (onTotalItemsChange) {
         onTotalItemsChange(articles.data.data.totalItems);}
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      setIsError(true);
+      toast.error('Please, try again')
+    } finally {
+      setIsLoading(false);
+      }
     }
-  };
   getArticles();
 }, [config]);
 
