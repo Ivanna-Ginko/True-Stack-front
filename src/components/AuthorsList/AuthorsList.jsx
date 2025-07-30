@@ -13,7 +13,7 @@ const AuthorsList = ({ authors, onAuthCardClick }) => {
         {authors.map((item) => (
           <li key={item._id}>
             <div>
-              <AuthorsItem item={item} onImageClick={onAuthCardClick} />
+              <AuthorsItem item={item} onAuthCardClick={onAuthCardClick} />
             </div>
           </li>
 

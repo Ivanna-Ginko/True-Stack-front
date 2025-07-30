@@ -31,7 +31,7 @@ export const registerUser = async formData => {
 }
 
 export const fetchAuthors = async () => {
-  const response = await axios.get('/authors');
+  const response = await axios.get('/user');
   return response.data;
 };
 
@@ -63,13 +63,13 @@ export const fetchUserData = async () => {
   axios.get('/user/')
 }
 
-export const addArticleToBookmarks = async articleId  => {
-  const response = await axios.post('/saved-articles/add-article', {articleId})
+export const addArticleToBookmarks = async articleId => {
+  const response = await axios.post('/saved-articles/add-article', { articleId })
 
   return response.data.data
 }
 
-export const deleteArticleFromBookmarks = async articleId  => {
+export const deleteArticleFromBookmarks = async articleId => {
   const response = await axios.delete(`/saved-articles/${articleId}`)
 
   return response.data.data
