@@ -58,7 +58,6 @@ const UploadForm = ({ formData }) => {
     Object.entries(formData).forEach(([key, value]) => {
       formDataInstance.append(key, value)
     })
-    // Append avatar file
     formDataInstance.append('avatar', file)
     dispatch(registerUser(formDataInstance))
   }
