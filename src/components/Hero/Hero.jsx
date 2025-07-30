@@ -12,7 +12,7 @@ const Hero = () => {
             <div className={s.hero_inner}>
               <h1 className={s.hero_header}>Find your <span className={s.hero_span}>harmony</span> in community</h1>
               <div className={s.hero_buttons_container}>
-                <button className={s.hero_articles_btn}><a href="#popularArticles">Go to Articles</a></button>
+                <a href="#popularArticles" className={s.hero_articles_btn}>Go to Articles</a>
                 <button
                   className={s.hero_reg_btn}
                   onClick={() => navigate("/register")}

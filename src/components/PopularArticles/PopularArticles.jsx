@@ -8,8 +8,8 @@ import svg from '../../assets/icons/arrow.svg'
 
 const PopularArticles = () => {
     const [articles, setArticles] = useState([]);
-    useEffect(()=>{
-        const getPopularArticles = async () =>{
+    useEffect(() => {
+        const getPopularArticles = async () => {
             try {
                 const response = await fetchPopularArticles();
                 console.log(response);
@@ -20,21 +20,21 @@ const PopularArticles = () => {
             }
         };
         getPopularArticles();
-    },[]);
+    }, []);
     return (
         <>
             <Container>
-                <div id="popularArticles"  className={s.innerContainer}>
-                    <div className= {s.titleContainer}>
+                <div id="popularArticles" className={s.innerContainer}>
+                    <div className={s.titleContainer}>
                         <h2 className={s.title}>Popular Articles</h2>
                         <div className={s.linkContainer}>
-                            <AppLink variant='link' size='lg' to='/articles'> 
+                            <AppLink variant='link' size='lg' to='/articles'>
                                 Go to all Articles
-                                <img src={svg} alt="arrow icon"/>
+                                <img src={svg} alt="arrow icon" />
                             </AppLink>
                         </div>
                     </div>
-                    <ArticlesList list={articles} hideFourthOnDesktop/>
+                    <ArticlesList list={articles} hideFourthOnDesktop />
                 </div>
             </Container>
         </>
