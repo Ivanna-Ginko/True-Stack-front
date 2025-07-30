@@ -70,9 +70,7 @@ const LoginForm = () => {
   return (
     <div className={css.container}>
       <h1 className={css.header}>Login</h1>
-      <p className={css.text}>
-        Join our community of mindfulness and wellbeing!
-      </p>
+
       <Formik
         initialValues={initialValues}
         validationSchema={LoginSchema}
