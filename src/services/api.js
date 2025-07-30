@@ -47,8 +47,8 @@ export const refreshUser = async () => {
   return response.data.data;
 };
 
-export const logoutUser = () => {
-  axios.post('/auth/logout');
+export const logoutUser = async() => {
+  await axios.post('/auth/logout');
 };
 
 export const fetchUserData = async () => {
