@@ -1,7 +1,7 @@
 .container {
   border-radius: 32px;
   padding: 48px 32px;
-  max-width: 360px;
+  /* width: 360px; */
   /* height: 632px; */
   height: 100%;
   background-color: #d1e0d8;
@@ -154,30 +154,5 @@
 
   .field {
     min-width: 328px;
-  }
-}
-
-.progressBar {
-  width: 100%;
-  height: 6px;
-  background: #f7fffb;
-  margin-top: 12px;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.progressInner {
-  height: 100%;
-  width: 100%;
-  background: linear-gradient(to right, #649179, #374f42);
-  animation: progressAnim 2s infinite linear;
-}
-
-@keyframes progressAnim {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
   }
 }

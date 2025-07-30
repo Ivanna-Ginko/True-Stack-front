@@ -1,36 +1,21 @@
 import { Form, Formik, Field, ErrorMessage } from "formik";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import React from "react";
-import { useDispatch } from "react-redux";
-import { registerUser } from "../../redux/operations";
+// import { useDispatch } from "react-redux";
+// import { registerUser } from "../../redux/operations";
 import css from "./RegisterForm.module.css";
+// import { toast } from "react-toastify";
 
 const RegisterForm = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  const navigate = useNavigate();
   const initialValues = {
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
   };
-
-  const handleSubmit = async (values, actions) => {
-    try {
-      // Успішна реєстрація — редірект
-      await dispatch(registerUser(values)).unwrap();
-      <Navigate to="/photo" />;
-    } catch (error) {
-      console.log("registration:", error);
-      actions.setSubmitting(false);
-      // Обробка помилки від backend тут за потреби
-    }
-  };
-
-  // const handleSubmit = (values, options) => {
-  //   console.log(values);
-  //   dispatch(registerUser(values));
-  // };
 
   const RegisterSchema = Yup.object({
     name: Yup.string()
@@ -50,20 +35,45 @@ const RegisterForm = () => {
       .required("Repeat your password"),
   });
 
+  const handleSubmit = async (values) => {
+    navigate("/photo", { state: { formData: values } });
+  };
+
+  //////// for testing purposes, registration is realised on upload form. uncomment for testing
+  // const handleSubmit = async (values, actions) => {
+  //   try {
+  //     const { name, email, password } = values;
+  //     console.log("Waiting:", values);
+  //     const result = await dispatch(
+  //       registerUser({ name, email, password })
+  //     ).unwrap();
+  //     console.log("Registration:", result);
+  //     navigate("/photo");
+  //   } catch (error) {
+  //     console.error("Registration error:", error);
+  //     toast.error(error?.message || "Registration failed");
+  //     actions.setSubmitting(false);
+  //   }
+  // };
+  ////////
+
   return (
     <div className={css.container}>
       <h1 className={css.header}>Register</h1>
       <p className={css.text}>
         Join our community of mindfulness and wellbeing!
       </p>
-      <div>
-        <Formik
-          initialValues={initialValues}
-          validationSchema={RegisterSchema}
-          onSubmit={handleSubmit}
-        >
+
+      <Formik
+        initialValues={initialValues}
+        validationSchema={RegisterSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ isSubmitting, isValid }) => (
           <Form className={css.formContainer}>
-            <label className={css.labelName}>Enter your name</label>
+            <label className={css.label} htmlFor="name">
+              Enter your name
+            </label>
             <Field name="name">
               {({ field, meta }) => (
                 <input
@@ -76,9 +86,12 @@ const RegisterForm = () => {
                 />
               )}
             </Field>
-            <ErrorMessage className={css.errMsg} name="name" component="div" />
+            <ErrorMessage name="name" component="div" className={css.errMsg} />
 
-            <label className={css.label}>Enter your email address</label>
+            <label className={css.label} htmlFor="email">
+              Enter your email address
+            </label>
+
             <Field name="email">
               {({ field, meta }) => (
                 <input
@@ -91,9 +104,13 @@ const RegisterForm = () => {
                 />
               )}
             </Field>
-            <ErrorMessage className={css.errMsg} name="email" component="div" />
 
-            <label className={css.label}>Create a strong password</label>
+            <ErrorMessage name="email" component="div" className={css.errMsg} />
+
+            <label className={css.label} htmlFor="password">
+              Create a strong password
+            </label>
+
             <Field name="password">
               {({ field, meta }) => (
                 <input
@@ -107,12 +124,14 @@ const RegisterForm = () => {
               )}
             </Field>
             <ErrorMessage
-              className={css.errMsg}
               name="password"
               component="div"
+              className={css.errMsg}
             />
 
-            <label className={css.label}>Repeat your password</label>
+            <label className={css.label} htmlFor="repeatPwd">
+              Repeat your password
+            </label>
             <Field name="repeatPwd">
               {({ field, meta }) => (
                 <input
@@ -126,16 +145,30 @@ const RegisterForm = () => {
               )}
             </Field>
             <ErrorMessage
-              className={css.errMsg}
               name="repeatPwd"
               component="div"
+              className={css.errMsg}
             />
-            <button className={css.btn} type="submit">
+
+            {isSubmitting && (
+              <div className={css.progressBar}>
+                <div className={css.progressInner}></div>
+              </div>
+            )}
+
+            <button
+              className={`${css.btn} ${
+                !isValid || isSubmitting ? css.disabledBtn : ""
+              }`}
+              disabled={!isValid || isSubmitting}
+              type="submit"
+            >
               Create account
             </button>
           </Form>
-        </Formik>
-      </div>
+        )}
+      </Formik>
+
       <div className={css.helpText}>
         <p>Already have an account?&nbsp;</p>
         <Link className={css.linkToLogin} to="/login">
