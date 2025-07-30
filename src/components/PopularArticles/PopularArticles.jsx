@@ -3,7 +3,6 @@ import AppLink from '../AppLink/AppLink'
 import s from './PopularArticles.module.css'
 import Container from '../container/Container'
 import ArticlesList from '../ArticlesList/ArticlesList';
-import { fetchPopularArticles } from '../../services/api';
 import svg from '../../assets/icons/arrow.svg'
 
 const PopularArticles = () => {

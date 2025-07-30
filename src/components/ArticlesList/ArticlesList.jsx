@@ -1,22 +1,39 @@
-import React from 'react'
+import React, {  useEffect, useState  } from 'react'
 import ArticlesItem from '../ArticlesItem/ArticlesItem'
-import LoadMore from '../LoadMore/LoadMore'
 import css from './ArticlesList.module.css'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../redux/selectors'
+import { fetchArticles } from '../../services/api.js'
 
-//уточнити, помилка через імпорт селектора редакс
 
-const ArticlesList = ({ list, hideFourthOnDesktop = false }) => {
+const ArticlesList = ({ config }) => {
+
+const [articleList, setArticleList] = useState ([]);
+
+   useEffect(() => {
+    const getArticles = async () => {
+      try {
+        const articles = await fetchArticles(config);
+        setArticleList(articles.data.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+      getArticles()
+  }, [config]);
+
   const user = useSelector(selectUser)
   console.log(user)
 
+
+
+
   return (
     <>
-        <ul className={`${css.list} ${hideFourthOnDesktop ? css.hideFourth : ''}`}>
-          {!list && <p>wait....</p>}
-          {list && 
-            list.map(article => {
+        <ul className={css.list}>
+          {!articleList && <p>wait....</p>}
+          {articleList && 
+            articleList.map(article => {
               const isAuthor = article.author === user?.user?.id;
               const isSaved = isAuthor && user.savedArticles?.includes(article.id);
                 return (

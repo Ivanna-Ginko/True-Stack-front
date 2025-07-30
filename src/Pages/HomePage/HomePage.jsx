@@ -9,7 +9,7 @@ const Outlet = () => {
     <>
       <Hero />
       <About />
-      <PopularArticles />
+      
       <Creators />
     </>
   )
