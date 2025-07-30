@@ -5,6 +5,7 @@ import {
   loginUser,
   registerUser,
   removeArticleFromBookmarks,
+  logoutUser,
 } from './operations';
 
 const initialState = {
@@ -35,6 +36,15 @@ const slice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => ({
         ...state,
         ...action.payload,
+      }))
+
+      .addCase(logoutUser.fulfilled, () => ({
+        ...initialState,
+        isFetchingUser: false,
+      }))
+      .addCase(logoutUser.rejected, () => ({
+        ...initialState,
+        isFetchingUser: false,
       }))
 
       .addCase(refreshUser.fulfilled, (state, action) => ({

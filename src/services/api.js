@@ -8,21 +8,12 @@ export const setAuthorizationHeader = token =>
 export const deleteAuthorizationHeader = () =>
   delete axios.defaults.headers.common.Authorization;
 
-export const fetchArticles = async () => {
-  const response = await axios.get('/articles');
-
-  return response
-}
-
-const config = {
-  params: {
-    'sortBy': 'rate',
-  }
-}
-export const fetchPopularArticles = async () => {
+export const fetchArticles = async (config = {}) => {
   const response = await axios.get('/articles', config);
   return response
 }
+
+
 
 export const registerUser = async formData => {
   const response = await axios.post('/auth/register', formData);
@@ -31,9 +22,17 @@ export const registerUser = async formData => {
 }
 
 export const fetchAuthors = async () => {
-  const response = await axios.get('/authors');
+  const response = await axios.get('/user');
   return response.data;
 };
+
+//Add function to get TopCreators - not sure
+export const fetchPopularAuthors = async () => {
+  const response = await axios.get('/authors', {
+    params: { sortBy: 'articlesAmount' }
+  });
+  return response.data;
+}
 
 export const loginUser = async formData => {
   const response = await axios.post('/auth/login', formData);
@@ -47,21 +46,21 @@ export const refreshUser = async () => {
   return response.data.data;
 };
 
-export const logoutUser = () => {
-  axios.post('/auth/logout');
+export const logoutUser = async() => {
+  await axios.post('/auth/logout');
 };
 
 export const fetchUserData = async () => {
   axios.get('/user/')
 }
 
-export const addArticleToBookmarks = async articleId  => {
-  const response = await axios.post('/saved-articles/add-article', {articleId})
+export const addArticleToBookmarks = async articleId => {
+  const response = await axios.post('/saved-articles/add-article', { articleId })
 
   return response.data.data
 }
 
-export const deleteArticleFromBookmarks = async articleId  => {
+export const deleteArticleFromBookmarks = async articleId => {
   const response = await axios.delete(`/saved-articles/${articleId}`)
 
   return response.data.data

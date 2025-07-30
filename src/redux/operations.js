@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import * as api from '../services/api';
-import { authActions } from './slice';
 
 /**
  * @param {formData}
@@ -96,11 +95,16 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-export const logoutUserThunk = () => dispatch => {
-  api.logoutUser();
-  api.deleteAuthorizationHeader();
-  dispatch(authActions.logoutUser());
-};
+export const logoutUser = createAsyncThunk(
+  'user/logout',
+  async (_, {rejectWithValue}) => {
+    try {
+      await api.logoutUser()
+    } catch {
+      return rejectWithValue('')
+    }
+  }
+)
 
 export const refreshUser = createAsyncThunk(
   'user/refreshUser',
@@ -119,7 +123,7 @@ export const refreshUser = createAsyncThunk(
         accessToken,
       };
     } catch {
-      thunkAPI.dispatch(logoutUserThunk());
+      await thunkAPI.dispatch(logoutUser());
     }
   }
 );
