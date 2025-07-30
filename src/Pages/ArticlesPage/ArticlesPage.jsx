@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import ArticlesList from '../../components/ArticlesList/ArticlesList'
 import SectionTitle from '../../components/SectionTitle/SectionTitle'
 import css from './ArticlesPage.module.css'
@@ -12,6 +12,9 @@ const ArticlesPage = () => {
   const [config, setConfig] = useState({});
   console.log(selectedFilter)
   const [totalItems, setTotalItems] = useState(0);
+  const [hasMore, setHasMore] = useState(false);
+
+  const loadMoreRef = useRef(null);
 
   const handleSelectChange = (value) => {
   setSelectedFilter(value);
@@ -27,9 +30,19 @@ const ArticlesPage = () => {
   }
 }, [selectedFilter]);
 
-const handleTotalItemsChange = (count) => {
-  setTotalItems(count);
-};
+  const handleTotalItemsChange = (count) => {
+    setTotalItems(count);  
+  };
+
+  const handleHasMoreChange = (hasMoreFlag) => {
+    setHasMore(hasMoreFlag);
+  };
+  
+  const handleExternalLoadMore = () => {
+    if (loadMoreRef.current) {
+      loadMoreRef.current();
+    }
+  };
 
   return (
     <>
@@ -41,8 +54,13 @@ const handleTotalItemsChange = (count) => {
             <ArticleListSelect onChange={handleSelectChange}/>
           </div>
         </div>
-        <ArticlesList config={config} onTotalItemsChange={handleTotalItemsChange}/>
-        <LoadMore />        
+        <ArticlesList
+          config={config}
+          onTotalItemsChange={handleTotalItemsChange}
+          onHasMoreChange={handleHasMoreChange}
+          onLoadMore={(callback) => (loadMoreRef.current = callback)}
+        />
+        {hasMore && <LoadMore onClick={handleExternalLoadMore} />}
       </Container>
     </>
   )
