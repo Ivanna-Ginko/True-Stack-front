@@ -14,8 +14,6 @@ import { useEffect } from 'react';
 import { refreshUser } from './redux/operations.js';
 import HomePage from './Pages/HomePage/HomePage.jsx';
 import { selectIsFetchingUser } from './redux/selectors.js';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const dispatch = useDispatch();
