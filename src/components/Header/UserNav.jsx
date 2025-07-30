@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import divider from '../../assets/icons/divider.svg';
 import logoutIcon from '../../assets/icons/exit.svg';
+import AppLink from '../AppLink/AppLink';
 
 const UserNav = () => {
     const user = useSelector(state => state.auth.user);
@@ -18,19 +19,23 @@ const UserNav = () => {
             <NavLink to="/articles" className={navLink}>Articles</NavLink>
             <NavLink to="/creators" className={navLink}>Creators</NavLink>
             <NavLink to="/profile" className={navLink}>My Profile</NavLink>
-            <Link to="/create-article" className={`${s.createBtn} ${s.desktopOnly}`}>
-              Create an article
-            </Link>
+            <div  className={`${s.createBtn} ${s.desktopOnly}`}>
+                <AppLink variant="fill" size="lg" to="/create-article" > 
+                    Create an article
+                </AppLink>
+            </div>
             {user && (
                 <div className={s.userBlock}>
-                    {user.avatarUrl && (
-                        <img
-                            src={user.avatarUrl}
-                            alt={user.name}
-                            className={s.avatar}
-                        />
-                    )}
-                    <span className={s.userName}>{user?.name}</span>
+                    <AppLink variant='link' to={`/authors/${user.id}`}>
+                        {user.avatarUrl && (
+                            <img
+                                src={user.avatarUrl}
+                                alt={user.name}
+                                className={s.avatar}
+                            />
+                        )}
+                        <span className={s.userName}>{user?.name}</span>
+                    </AppLink>
                     <img src={divider} alt="divider" className={s.divider} />
                     <button className={s.logoBtn} onClick={handleLogout}>
                         <img src={logoutIcon} alt="Logout" className={s.logoutImg} />
