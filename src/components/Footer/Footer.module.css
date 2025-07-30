@@ -19,18 +19,6 @@
     flex-direction: column;
     gap: 40px;
 }
-.footerLink {
-    color: #204d45;
-    text-decoration: none;
-    font-size: 16px;
-    transition: color 0.3s ease;
-    padding: 0;
-    height: auto;
-    gap: 0;
-}
-.footerLink:hover {
-    color: #2a6355;
-}
 .rights {
     font-size: 14px;
     color: #7a8f8b;
@@ -54,9 +42,6 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-    }
-    .footerLink {
-        font-size: 18px;
     }
     .rights {
         font-size: 15px;

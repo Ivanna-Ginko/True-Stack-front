@@ -15,10 +15,10 @@ const Footer = () => {
             </Link>
             <p className={s.rights}>&copy; 2025 Harmoniq. All rights reserved.</p>
             <nav className={s.nav}>
-              <AppLink to="/articles" variant="link" size="md" className={s.footerLink}>
+              <AppLink to="/articles" variant="link" size="md">
               Articles
               </AppLink>
-              <AppLink to="/account" variant="link" size="md" className={s.footerLink}>
+              <AppLink to="/account" variant="link" size="md">
               Account
               </AppLink>
             </nav>
