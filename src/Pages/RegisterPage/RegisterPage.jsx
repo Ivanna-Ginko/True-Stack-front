@@ -1,14 +1,19 @@
-import React from 'react'
-import RegisterForm from '../../components/RegisterForm/RegisterForm'
+import React from "react";
+import RegisterForm from "../../components/RegisterForm/RegisterForm";
+// import { useSelector } from "react-redux";
+// import { selectIsLoggedIn } from "../../redux/selectors";
+// import { Navigate } from "react-router-dom";
 
 const RegisterPage = () => {
+  // const IsLoggedIn = useSelector(selectIsLoggedIn);
+  // if (IsLoggedIn) {
+  //   return <Navigate to="/" />;
+  // }
   return (
     <>
-        <h1>RegisterPage</h1>
-        < RegisterForm />
-
+      <RegisterForm />
     </>
-  )
-}
+  );
+};
 
-export default RegisterPage
+export default RegisterPage;

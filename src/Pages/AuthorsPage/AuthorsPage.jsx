@@ -37,6 +37,7 @@ const AuthorsPage = () => {
 
   return (
     <>
+      <h1>Authors</h1>
       <AuthorsList authors={authors} onAuthCardClick={handleAuthorClick} />
       <LoadMore />
     </>
