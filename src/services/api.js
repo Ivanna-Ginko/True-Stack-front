@@ -8,21 +8,12 @@ export const setAuthorizationHeader = token =>
 export const deleteAuthorizationHeader = () =>
   delete axios.defaults.headers.common.Authorization;
 
-export const fetchArticles = async () => {
-  const response = await axios.get('/articles');
-
-  return response
-}
-
-const config = {
-  params: {
-    'sortBy': 'rate',
-  }
-}
-export const fetchPopularArticles = async () => {
+export const fetchArticles = async ({ config }) => {
   const response = await axios.get('/articles', config);
   return response
 }
+
+
 
 export const registerUser = async formData => {
   const response = await axios.post('/auth/register', formData);
