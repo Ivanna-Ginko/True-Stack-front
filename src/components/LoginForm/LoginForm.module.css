@@ -45,12 +45,14 @@
   border: 1px solid #9f9f9f;
   border-radius: 8px;
   padding: 8px;
-  max-width: 296px;
+  width: 100%;
+  /* max-width: 296px; */
   height: 41px;
 }
 
 .is-invalid {
   border: 1.5px solid #ad6a6c !important;
+  color: #ad6a6c;
 }
 
 .field.is-invalid::placeholder {
@@ -123,9 +125,9 @@
   .container {
     min-width: 522px;
   }
-  .field {
+  /* .field {
     max-width: 458px;
-  }
+  } */
   .text {
     justify-self: center;
     max-width: 278px;
@@ -155,4 +157,25 @@
   .field {
     min-width: 328px;
   }
+}
+
+.pwdField {
+  display: flex;
+}
+
+.iconWrap {
+  display: flex;
+  justify-content: space-around;
+  justify-items: center;
+}
+
+.eyeIcon {
+  position: absolute;
+  align-self: center;
+  margin-right: 45px;
+}
+
+.pwdField .field.is-invalid + .iconWrap .eyeIcon {
+  filter: brightness(0) saturate(100%) invert(39%) sepia(24%) saturate(1118%)
+    hue-rotate(316deg) brightness(91%) contrast(93%);
 }
