@@ -1,26 +1,17 @@
-import React, { useEffect, useState } from 'react'
 import AppLink from '../AppLink/AppLink'
 import s from './PopularArticles.module.css'
 import Container from '../container/Container'
 import ArticlesList from '../ArticlesList/ArticlesList';
-import { fetchPopularArticles } from '../../services/api';
 import svg from '../../assets/icons/arrow.svg'
 
 const PopularArticles = () => {
-    const [articles, setArticles] = useState([]);
-    useEffect(()=>{
-        const getPopularArticles = async () =>{
-            try {
-                const response = await fetchPopularArticles();
-                console.log(response);
-                const popular = response.data.data.data?.slice(0, 4) || [];
-                setArticles(popular);
-            } catch (err) {
-                console.log('❌ Помилка при завантаженні популярних статей:', err.message);
-            }
-        };
-        getPopularArticles();
-    },[]);
+
+    const config = {
+        params: {
+            'sortBy': 'rate',
+            'perPage': 4
+        }
+    }
     return (
         <>
             <Container>
@@ -34,7 +25,7 @@ const PopularArticles = () => {
                             </AppLink>
                         </div>
                     </div>
-                    <ArticlesList list={articles} hideFourthOnDesktop/>
+                    <ArticlesList hideFourthOnDesktop config={config}/>
                 </div>
             </Container>
         </>
