@@ -1,0 +1,176 @@
+.formWrapper {
+    width: 100%;
+    max-width: 1226px;
+    min-height: 656px;
+    margin: 40px auto 0 auto;
+    background: #F7FFFB;
+    border-radius: 16px;
+    padding: 42px 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.heading {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 24px;
+    text-align: left;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 24px;
+}
+
+@media only screen and (min-width: 1440px) {
+    .form {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 40px;
+        height: 100%;
+    }
+}
+
+.left {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+    width: 100%;
+    max-width: 700px;
+}
+
+.label {
+    font-size: 1.1rem;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.input {
+    width: 100%;
+    border: 1.5px solid #bccbbf;
+    border-radius: 8px;
+    background-color: #fff;
+    padding: 12px 16px;
+    font-size: 18px;
+    outline: none;
+}
+
+.input::placeholder {
+    color: #9f9f9f;
+    font-size: 18px;
+}
+
+.textarea {
+    width: 100%;
+    min-height: 393px;
+    border: 1.5px solid #bccbbf;
+    border-radius: 8px;
+    background-color: #fff;
+    padding: 12px 16px;
+    font-size: 18px;
+    resize: none;
+    overflow: hidden;
+    line-height: 1.5;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.textarea::placeholder {
+    color: #9f9f9f;
+    font-size: 18px;
+}
+
+.button {
+    width: 100%;
+    border-radius: 64px;
+    padding: 12px 16px;
+    background-color: #5a8769;
+    color: #fff;
+    border: none;
+    font-size: 16px;
+    margin-top: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.button:hover {
+    background-color: #437a5a;
+}
+
+.imageBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    height: 233px;
+    border-radius: 16px;
+    background-color: #bccbbf;
+    cursor: pointer;
+    overflow: hidden;
+    margin-top: 0;
+    max-width: 391px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media only screen and (min-width: 1440px) {
+    .imageBox {
+        width: 391px;
+        height: 233px;
+        margin-top: 29px;
+    }
+}
+
+.imageInput {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    cursor: pointer;
+    outline: none;
+}
+
+.cameraIcon {
+    width: 48px;
+    height: 48px;
+    color: #787878;
+    z-index: 1;
+}
+
+.error {
+    color: #e74c3c;
+    font-size: 0.95rem;
+    margin-top: 2px;
+    margin-left: 8px;
+}
+
+.errorImg {
+    color: #e74c3c;
+    font-size: 0.95rem;
+    margin-top: 6px;
+    text-align: center;
+}
+
+@media only screen and (max-width: 1439px) {
+    .imageBox {
+        width: 100%;
+        min-width: 220px;
+        max-width: 391px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
