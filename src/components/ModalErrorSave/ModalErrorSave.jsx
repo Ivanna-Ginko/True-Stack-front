@@ -52,7 +52,7 @@ const ModalErrorSave = ({ onClose }) => {
             To save this article, you need to authorize first
           </p>
         </div>
-        <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
+        <div className={css.navButton}>
           <NavLink to="/login">
             <button
               className={css.modalButton}

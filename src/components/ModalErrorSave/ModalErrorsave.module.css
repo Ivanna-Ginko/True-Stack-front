@@ -31,6 +31,13 @@
   bottom: 0;
 }
 
+.navButton {
+   display:flex;
+   flex-direction: column;
+    justify-content: center;
+     gap: 10px;
+}
+
 .reactModalContent {
   position: absolute;
   top: 50%;
@@ -62,9 +69,13 @@ font-family: Manrope;
 }
 @media screen and (min-width: 768px) {
   .reactModalContent{
-      
+       
       width: 499px;
       height: 305px;
+  }
+
+  .navButton{
+  flex-direction: row;
   }
 }
 
