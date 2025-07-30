@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import { loginUser } from "../../redux/operations";
 import { selectIsLoading } from "../../redux/selectors";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import css from "./LoginForm.module.css";
 
 const LoginSchema = Yup.object({
@@ -40,13 +40,13 @@ const LoginForm = () => {
             setFieldError(err.field, err.message);
           });
         } else if (error?.message) {
-          toast.error(error.message);
+          alert(error.message);
         } else {
-          toast.error("Unauthorized error");
+          alert("Unauthorized error");
         }
       }
     } catch {
-      toast.error("Something went wrong");
+      alert("Something went wrong");
     }
   };
 
