@@ -1,0 +1,28 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0;
+}
+
+.button {
+    background-color: #649179;
+    font-family: "Manrope", sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: #f7fffb;
+    padding: 12px 36px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover:not(:disabled) {
+    background-color: #374f42;
+}
+
+.button:disabled {
+    box-shadow: 0 0 0 6px rgba(78, 70, 180, 0.12), 0 0 0 2px #fff;
+    background: #649179;
+    color: #f7fffb;
+    cursor: not-allowed; }

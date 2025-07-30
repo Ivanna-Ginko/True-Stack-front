@@ -4,8 +4,7 @@ import SectionTitle from '../../components/SectionTitle/SectionTitle'
 import css from './ArticlesPage.module.css'
 import ArticleListSelect from '../../components/ArticleListSelect/ArticleListSelect'
 import Container from '../../components/container/Container'
-import Pagination from '../../components/Pagination/Pagination'
-
+import LoadMore from '../../components/LoadMore/LoadMore'
 
 const ArticlesPage = () => {
   const title = 'Articles';
@@ -32,7 +31,6 @@ const handleTotalItemsChange = (count) => {
   setTotalItems(count);
 };
 
-
   return (
     <>
       <Container>
@@ -44,13 +42,10 @@ const handleTotalItemsChange = (count) => {
           </div>
         </div>
         <ArticlesList config={config} onTotalItemsChange={handleTotalItemsChange}/>
-        <Pagination />
+        <LoadMore />        
       </Container>
     </>
   )
 }
 
-
-
-
-export default ArticlesPage
+export default ArticlesPage;

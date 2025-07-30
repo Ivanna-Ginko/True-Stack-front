@@ -12,7 +12,7 @@ import toast, { Toaster } from 'react-hot-toast';
 const ArticlesList = ({ config, onTotalItemsChange, hideFourthOnDesktop }) => {
   const [articleList, setArticleList] = useState ([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState (false)
+  const [isError, setIsError] = useState(false);
 
   const user = useSelector(selectUser)
   
@@ -33,11 +33,10 @@ const ArticlesList = ({ config, onTotalItemsChange, hideFourthOnDesktop }) => {
       }
     }
   getArticles();
-}, [config]);
+  }, [config]);
 
-  const articlesArr = articleList.data
+  const articlesArr = articleList.data;
   
-
   return (
     <>
         <ul className={`${css.list} ${hideFourthOnDesktop ? css.hideFourth : ''} }`}>
@@ -63,7 +62,4 @@ const ArticlesList = ({ config, onTotalItemsChange, hideFourthOnDesktop }) => {
   )
 }
 
-export default ArticlesList
-
-
-
+export default ArticlesList;
