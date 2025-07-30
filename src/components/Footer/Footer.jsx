@@ -3,20 +3,29 @@ import s from './Footer.module.css';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/icons-footer/harmoniq.svg'
 import Container from '../container/Container';
+import AppLink from '../AppLink/AppLink';
 
 const Footer = () => {
   return (
     <footer className={s.footer}>
       <Container>
         <div className={s.wrapper}>
-          <Link to="/">
-            <img src={logo} alt="Harmoniq logo" className={s.logo} />
-          </Link>
-          <p className={s.rights}>&copy; 2025 Harmoniq. All rights reserved.</p>
-          <nav className={s.nav}>
-            <Link to="/articles">Articles</Link>
-            <Link to="/account">Account</Link>
-          </nav>
+            <Link to="/" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
+              <img src={logo} alt="Harmoniq logo" className={s.logo} />
+            </Link>
+            <p className={s.rights}>&copy; 2025 Harmoniq. All rights reserved.</p>
+            <ul className={s.nav}>
+              <li>
+                <AppLink to="/articles" variant="link" size="md">
+                Articles
+                </AppLink>
+              </li>
+              <li>
+                <AppLink to="/account" variant="link" size="md">
+                Account
+                </AppLink>
+              </li>
+            </ul>
         </div>
       </Container>
     </footer>

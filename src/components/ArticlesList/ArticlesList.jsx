@@ -1,21 +1,19 @@
 import React from 'react'
 import ArticlesItem from '../ArticlesItem/ArticlesItem'
+import LoadMore from '../LoadMore/LoadMore'
 import css from './ArticlesList.module.css'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../redux/selectors'
 
+//уточнити, помилка через імпорт селектора редакс
 
-const ArticlesList = ({ list }) => {
-
+const ArticlesList = ({ list, hideFourthOnDesktop = false }) => {
   const user = useSelector(selectUser)
   console.log(user)
 
-
-
-
   return (
     <>
-        <ul className={css.list}>
+        <ul className={`${css.list} ${hideFourthOnDesktop ? css.hideFourth : ''}`}>
           {!list && <p>wait....</p>}
           {list && 
             list.map(article => {
@@ -27,8 +25,8 @@ const ArticlesList = ({ list }) => {
                   id={article.id}
                   title={article.title}
                   author={article.author}
-                  description={article.description}
-                  image={article.image}
+                  description={article.title}
+                  image={article.img}
                   isAuthor = {isAuthor}
                   saved = {isSaved}/>
             )}
@@ -40,10 +38,5 @@ const ArticlesList = ({ list }) => {
 
 export default ArticlesList
 
-  //const filteredArticles = filter === 'Popular'
-    //? allArticles.filter(article => article.isPopular)
-   // : allArticles;
 
- //articleList.map(article => (
-            
 
