@@ -60,7 +60,12 @@ const ArticlesPage = () => {
           onHasMoreChange={handleHasMoreChange}
           onLoadMore={(callback) => (loadMoreRef.current = callback)}
         />
-        {hasMore && <LoadMore onClick={handleExternalLoadMore} />}
+        
+          <LoadMore
+            onClick={handleExternalLoadMore}
+            disabled={!hasMore}
+          />
+        
       </Container>
     </>
   )

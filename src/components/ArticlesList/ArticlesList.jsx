@@ -20,7 +20,7 @@ const ArticlesList = ({
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [page, setPage] = useState(1);
-  const [totalItems, setTotalItems] = useState(0);
+  //const [totalItems, setTotalItems] = useState(0);
 
   const user = useSelector(selectUser);
   const bottomRef = useRef(null);
@@ -49,12 +49,12 @@ const ArticlesList = ({
         const total = data.totalItems;
         const newArticleList = page === 1 ? articles : [...articleList, ...articles];
         setArticleList(newArticleList);        
-        setTotalItems(total);
+        //setTotalItems(total);
 
         if (onTotalItemsChange) {
           onTotalItemsChange(total);
         }
-        
+
         const hasMore = newArticleList.length < total;
         if (onHasMoreChange) {
           onHasMoreChange(hasMore);
