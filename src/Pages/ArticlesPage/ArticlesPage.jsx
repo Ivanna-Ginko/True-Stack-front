@@ -12,6 +12,7 @@ const ArticlesPage = () => {
   const [selectedFilter, setSelectedFilter] = useState('Popular'); 
   const [config, setConfig] = useState({});
   console.log(selectedFilter)
+  const [totalItems, setTotalItems] = useState(0);
 
   const handleSelectChange = (value) => {
   setSelectedFilter(value);
@@ -27,7 +28,9 @@ const ArticlesPage = () => {
   }
 }, [selectedFilter]);
 
-
+const handleTotalItemsChange = (count) => {
+  setTotalItems(count);
+};
 
 
   return (
@@ -35,12 +38,12 @@ const ArticlesPage = () => {
       <Container>
         <SectionTitle title={title}/>
         <div className={css.box}>
-          <p className={css.quantity}> articles</p>
+          <p className={css.quantity}>{totalItems} articles</p>
           <div style={{ width: '169px' }}>
             <ArticleListSelect onChange={handleSelectChange}/>
           </div>
         </div>
-        <ArticlesList config={config}/>
+        <ArticlesList config={config} onTotalItemsChange={handleTotalItemsChange}/>
         <Pagination />
       </Container>
     </>

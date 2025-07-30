@@ -8,7 +8,7 @@ import { fetchArticles } from '../../services/api.js'
 
 //уточнити, помилка через імпорт селектора редакс
 
-const ArticlesList = ({ config }) => {
+const ArticlesList = ({ config, onTotalItemsChange }) => {
   const [articleList, setArticleList] = useState ([]);
   const user = useSelector(selectUser)
   
@@ -17,6 +17,9 @@ const ArticlesList = ({ config }) => {
     try {
       const articles = await fetchArticles(config);
       setArticleList(articles.data.data);
+      console.log(articles.data.data)
+      if (onTotalItemsChange) {
+        onTotalItemsChange(articles.data.data.totalItems);}
     } catch (err) {
       console.log(err);
     }
@@ -25,6 +28,7 @@ const ArticlesList = ({ config }) => {
 }, [config]);
 
   const articlesArr = articleList.data
+  
 
   return (
     <>
