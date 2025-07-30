@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import { loginUser } from "../../redux/operations";
 import { selectIsLoading } from "../../redux/selectors";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 import css from "./LoginForm.module.css";
+
+import hidePwd from "../../assets/icons/crossed-eye.svg";
+import showPwd from "../../assets/icons/eye.svg";
 
 const LoginSchema = Yup.object({
   email: Yup.string().email("Wrong email").required("Required"),
@@ -40,16 +43,30 @@ const LoginForm = () => {
             setFieldError(err.field, err.message);
           });
         } else if (error?.message) {
-          alert(error.message);
+          toast.error(error.message);
         } else {
-          alert("Unauthorized error");
+          toast.error("Unauthorized error");
         }
       }
     } catch {
-      alert("Something went wrong");
+      toast.error("Something went wrong");
+    }
+  };
+  // hide show pwd
+  const [type, setType] = useState("password");
+  const [icon, setIcon] = useState(hidePwd);
+
+  const handleToggle = () => {
+    if (type === "password") {
+      setIcon(showPwd);
+      setType("text");
+    } else {
+      setIcon(hidePwd);
+      setType("password");
     }
   };
 
+  //
   return (
     <div className={css.container}>
       <h1 className={css.header}>Login</h1>
@@ -83,7 +100,36 @@ const LoginForm = () => {
             <label htmlFor="password" className={css.label}>
               Enter a password
             </label>
+
             <Field name="password">
+              {({ field, meta }) => (
+                <div className={css.pwdField}>
+                  <input
+                    {...field}
+                    type={type}
+                    placeholder="*********"
+                    className={`${css.field} ${
+                      meta.touched && meta.error ? css["is-invalid"] : ""
+                    }`}
+                  />
+                  <span className={css.iconWrap}>
+                    <img
+                      src={icon}
+                      alt="Toggle visibility"
+                      onClick={handleToggle}
+                      className={css.eyeIcon}
+                    />
+                  </span>
+                </div>
+              )}
+            </Field>
+            <ErrorMessage
+              name="password"
+              component="div"
+              className={css.errMsg}
+            />
+
+            {/* <Field name="password">
               {({ field, meta }) => (
                 <input
                   {...field}
@@ -99,7 +145,7 @@ const LoginForm = () => {
               className={css.errMsg}
               name="password"
               component="div"
-            />
+            /> */}
 
             <button
               type="submit"
@@ -113,7 +159,6 @@ const LoginForm = () => {
           </Form>
         )}
       </Formik>
-
       <div className={css.helpText}>
         <p>Don't have an account?&nbsp;</p>
         <Link className={css.linkToLogin} to="/register">
