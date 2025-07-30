@@ -19,9 +19,11 @@ const UserNav = () => {
             <NavLink to="/articles" className={navLink}>Articles</NavLink>
             <NavLink to="/creators" className={navLink}>Creators</NavLink>
             <NavLink to="/profile" className={navLink}>My Profile</NavLink>
-            <Link to="/create-article" className={`${s.createBtn} ${s.desktopOnly}`}>
-              Create an article
-            </Link>
+            <div  className={`${s.createBtn} ${s.desktopOnly}`}>
+                <AppLink variant="fill" size="lg" to="/create-article" > 
+                    Create an article
+                </AppLink>
+            </div>
             {user && (
                 <div className={s.userBlock}>
                     <AppLink variant='link' to={`/authors/${user.id}`}>

@@ -7,6 +7,7 @@ import GuestNav from './GuestNav';
 import { useSelector } from 'react-redux';
 import Container from '../container/Container';
 import burgerIcon from '../../assets/icons/menu.svg';
+import AppLink from '../AppLink/AppLink';
 
 const Header = () => {
   const isAuthenticated = useSelector(state => state.user?.isLoggedIn);
@@ -31,14 +32,18 @@ const Header = () => {
               {isAuthenticated ? <UserNav /> : <GuestNav />}
             </nav>
             {isAuthenticated && (
-              <Link to="/create-article" className={`${s.createBtn} ${s.tabletOnly}`}>
-                Create an article
-              </Link>
+              <div className={`${s.createBtn} ${s.tabletOnly}`}>
+                <AppLink variant="fill" size="lg" to="/create-article" >
+                  Create an article
+                </AppLink>
+              </div>
             )}
             {!isAuthenticated && (
-              <Link to="/register" className={s.joinBtn}>
-                Join now
-              </Link>
+              <div className={s.joinBtn}>
+                <AppLink variant="fill" size="lg" to="/register">
+                  Join now
+                  </AppLink>
+              </div>
             )}
             <button className={s.burgerBtn} onClick={toggleMenu}>
               <img src={burgerIcon} alt="Menu" />
