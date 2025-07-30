@@ -14,14 +14,18 @@ const Footer = () => {
               <img src={logo} alt="Harmoniq logo" className={s.logo} />
             </Link>
             <p className={s.rights}>&copy; 2025 Harmoniq. All rights reserved.</p>
-            <nav className={s.nav}>
-              <AppLink to="/articles" variant="link" size="md">
-              Articles
-              </AppLink>
-              <AppLink to="/account" variant="link" size="md">
-              Account
-              </AppLink>
-            </nav>
+            <ul className={s.nav}>
+              <li>
+                <AppLink to="/articles" variant="link" size="md">
+                Articles
+                </AppLink>
+              </li>
+              <li>
+                <AppLink to="/account" variant="link" size="md">
+                Account
+                </AppLink>
+              </li>
+            </ul>
         </div>
       </Container>
     </footer>
