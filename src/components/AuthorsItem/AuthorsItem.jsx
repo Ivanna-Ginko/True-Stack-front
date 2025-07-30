@@ -1,5 +1,3 @@
-import React from 'react'
-
 const AuthorsItem = ({ item, onAuthCardClick }) => {
   const handleClick = () => {
     onAuthCardClick(item._id);
