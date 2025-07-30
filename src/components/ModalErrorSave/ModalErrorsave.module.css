@@ -1,6 +1,6 @@
 .modalButton {
   padding: 8px 12px;
-  width: 164.5px;
+  width: 297px;
   background: #649179;
   color: white;
   border: 1px solid #649179;
@@ -76,6 +76,9 @@ font-family: Manrope;
 
   .navButton{
   flex-direction: row;
+  }
+  .modalButton {
+    width: 164.5px;
   }
 }
 
