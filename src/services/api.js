@@ -26,6 +26,14 @@ export const fetchAuthors = async () => {
   return response.data;
 };
 
+//Add function to get TopCreators - not sure
+export const fetchPopularAuthors = async () => {
+  const response = await axios.get('/authors', {
+    params: { sortBy: 'articlesAmount' }
+  });
+  return response.data;
+}
+
 export const loginUser = async formData => {
   const response = await axios.post('/auth/login', formData);
 
