@@ -4,21 +4,28 @@ import AppLink from '../AppLink/AppLink';
 import Container from '../container/Container';
 import AuthorsList from '../AuthorsList/AuthorsList';
 import svg from '../../assets/icons/arrow.svg';
-import { fetchPopularAuthors } from '../../services/api';
+//import { fetchPopularAuthors } from '../../services/api';
+import { fetchAuthors } from '../../services/api';
 
 const TopCreators = () => {
   const [topCreators, setTopCreators] = useState([]);
   useEffect(()=>{
     const getTopCreators = async () =>{
       try {
-        const response = await fetchPopularAuthors();        
-        setTopCreators(response.data.data?.slice(0, 6) || []);
+        // const response = await fetchPopularAuthors();        
+        const response = await fetchAuthors();                
+        setTopCreators(response.data?.slice(0, 6) || []);        
+        //console.log('Response = ', response);
+        //console.log('topCreators =', topCreators);
       } catch (err) {
         console.log('Error loading TopCreators', err.message);
       }
     };
     getTopCreators();
   }, []);
+  useEffect(() => {
+    console.log('topCreators =', topCreators);
+  }, [topCreators]);
   
   return (
     <>
@@ -33,7 +40,7 @@ const TopCreators = () => {
               </AppLink>
             </div>
           </div>
-          <AuthorsList list={topCreators} /> 
+          <AuthorsList authors={topCreators} /> 
         </div> 
       </Container>
     </>    
