@@ -3,7 +3,7 @@
   height: 40px;
   padding: 8px;
   border-radius: 64px;
-  border: 1px solid #374f42;
+  border: 1px solid #649179;
   background-color: #d1e0d8;
   display: flex;
   align-items: center;
@@ -20,7 +20,7 @@
   background-color: #649179;
 }
 
-.saved {
+.edit {
   background-color: #649179;
   border-color: transparent;
 }
@@ -36,7 +36,7 @@
   overflow: visible;
 }
 
-.savedIcon {
+.editIcon {
   stroke: #ffffff;
 }
 

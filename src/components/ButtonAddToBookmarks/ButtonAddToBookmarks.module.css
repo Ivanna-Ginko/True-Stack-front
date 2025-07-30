@@ -7,20 +7,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #374f42;
+  border: 1px solid #649179;
   background-color: #d1e0d8;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .buttonSaved {
-  background-color: #374f42;
+  background-color: #649179;
   border: none;
 }
 
 .button:hover,
 .button:active {
-  background-color: #374f42;
+  background-color: #649179;
 }
 
 .button:hover svg path,
