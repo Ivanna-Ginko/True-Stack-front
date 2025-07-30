@@ -129,24 +129,6 @@ const LoginForm = () => {
               className={css.errMsg}
             />
 
-            {/* <Field name="password">
-              {({ field, meta }) => (
-                <input
-                  {...field}
-                  type="password"
-                  placeholder="*********"
-                  className={`${css.field} ${
-                    meta.touched && meta.error ? css["is-invalid"] : ""
-                  }`}
-                />
-              )}
-            </Field>
-            <ErrorMessage
-              className={css.errMsg}
-              name="password"
-              component="div"
-            /> */}
-
             <button
               type="submit"
               disabled={!isValid || isSubmitting}

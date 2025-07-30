@@ -138,7 +138,7 @@ const RegisterForm = () => {
                   <span className={css.iconWrap}>
                     <img
                       src={showPassword ? showPwd : hidePwd}
-                      alt="Toggle visibility"
+                      alt={showPassword ? "Hide password" : "Show password"}
                       onClick={togglePassword}
                       className={css.eyeIcon}
                     />
@@ -170,7 +170,7 @@ const RegisterForm = () => {
                   <span className={css.iconWrap}>
                     <img
                       src={showRepeat ? showPwd : hidePwd}
-                      alt="Toggle visibility"
+                      alt={showPassword ? "Hide password" : "Show password"}
                       onClick={toggleRepeat}
                       className={css.eyeIcon}
                     />
