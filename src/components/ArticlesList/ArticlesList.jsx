@@ -41,7 +41,7 @@ const ArticlesList = ({ config, onTotalItemsChange }) => {
   return (
     <>
         <ul className={`${css.list} }`}>
-          {!articlesArr && <p>wait....</p>}
+          {!articleList && <p>wait....</p>}
           {articlesArr && 
             articlesArr.map(article => {
               const isAuthor = article.author === user?.user?.id;
