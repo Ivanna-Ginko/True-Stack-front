@@ -38,19 +38,25 @@ const ArticlePage = () => {
 
   if (isLoading) return <Loader />;
   if (isError || !article) return <p className={s.error}>Error loading article</p>;
-
+  
   return (
     <Container>
       <h2 className={s.title}>{article.title}</h2>
       <img src={article.img} alt={article.title} className={s.image} />
-      <p className={s.articleText}>{article.article}</p>
-
-      <YouCanAlsoInterested
-        id={id}
-        config={config}
-        author={article.author}
-        publishDate={article.date}
-      />
+      <div className={s.flexContainer}>
+        <div className={s.articleText}>
+          {article.article.replace(/\/n/g, '\n').split('\n').map((line, i) => (
+            <p key={i}>{line.trim()}</p>
+          ))}
+        </div>
+  
+        <YouCanAlsoInterested
+          id={id}
+          config={config}
+          author={article.author}
+          publishDate={article.date}
+        />
+      </div>
     </Container>
   );
 };
