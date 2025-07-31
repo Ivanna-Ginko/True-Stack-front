@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import s from './AuthorProfilePage.module.css';
+import s from "./AuthorProfilePage.module.css";
 import LoadMore from "../../components/LoadMore/LoadMore";
 import ArticlesList from "../../components/ArticlesList/ArticlesList";
 import Container from "../../components/container/Container";
@@ -40,14 +40,15 @@ const AuthorProfilePage = () => {
       <Container>
         {isMyPage ? <SectionTitle title={title} /> : null}
         {authorData && (
-          <div>
+          <div className={s.aboutAuthor}>
             <img
+              className={s.authorAvatar}
               src={authorData.avatarUrl}
               alr={`Фото автора ${authorData.name}`}
             />
-            <div>
-              <h2>{authorData.name}</h2>
-              <p>{articlesAmount} articles</p>
+            <div className={s.authorInfo}>
+              <h2 className={s.authorName}>{authorData.name}</h2>
+              <p className={s.articlesAmount}>{articlesAmount} articles</p>
             </div>
           </div>
         )}
