@@ -1,5 +1,5 @@
-export const selectIsLoggedIn = state => !!state.token;
-export const selectIsLoading = state => state.isLoading;
-export const selectIsRefreshing = state => state.isRefreshing;
-export const selectSavedArticles = state => state.savedArticles;
-export const selectUser = state => state.user;
+export const selectIsLoggedIn = state => !!state.user.accessToken;
+export const selectIsLoading = state => state.user.isLoading;
+export const selectIsFetchingUser = state => state.user.isFetchingUser;
+export const selectSavedArticles = state => state.user.savedArticles;
+export const selectUser = state => state.user.user;

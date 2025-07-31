@@ -1,104 +1,87 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   addArticleToBookmarks,
-  authenticateUser,
+  refreshUser,
   loginUser,
   registerUser,
   removeArticleFromBookmarks,
+  logoutUser,
 } from './operations';
 
 const initialState = {
   user: {
     id: '',
     name: '',
-    photo: '',
+    avatar: '',
   },
   savedArticles: [],
-  token: '',
+  accessToken: '',
   isLoading: false,
-  isRefreshing: true,
-  message: '',
+  isFetchingUser: true,
 };
 
 const slice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    logoutUser: () => ({ ...initialState, isFetchingUser: false }),
+  },
   extraReducers: builder => {
     builder
-      .addCase(registerUser.pending, state => ({
-        ...state,
-        isLoading: true,
-      }))
       .addCase(registerUser.fulfilled, (state, action) => ({
         ...state,
         ...action.payload,
-        isLoading: false,
-      }))
-      .addCase(registerUser.rejected, (_, action) => ({
-        ...initialState,
-        message: action.payload,
-        isLoading: false,
       }))
 
-      .addCase(loginUser.pending, state => ({
-        ...state,
-        isLoading: true,
-      }))
       .addCase(loginUser.fulfilled, (state, action) => ({
         ...state,
         ...action.payload,
-        isLoading: false,
-      }))
-      .addCase(loginUser.rejected, (_, action) => ({
-        ...initialState,
-        message: action.payload,
-        isLoading: false,
       }))
 
-      .addCase(authenticateUser.fulfilled, (state, action) => ({
+      .addCase(logoutUser.fulfilled, () => ({
+        ...initialState,
+        isFetchingUser: false,
+      }))
+      .addCase(logoutUser.rejected, () => ({
+        ...initialState,
+        isFetchingUser: false,
+      }))
+
+      .addCase(refreshUser.fulfilled, (state, action) => ({
         ...state,
         ...action.payload,
-        isLoading: false,
-        isRefreshing: false,
-      }))
-      .addCase(authenticateUser.rejected, (_, action) => ({
-        ...initialState,
-        message: action.payload,
-        isLoading: false,
-        isRefreshing: false,
+        isFetchingUser: false,
       }))
 
-      .addCase(addArticleToBookmarks.pending, state => ({
-        ...state,
-        isLoading: true,
-      }))
       .addCase(addArticleToBookmarks.fulfilled, (state, action) => ({
         ...state,
         savedArticles: action.payload,
-        isLoading: false,
-      }))
-      .addCase(addArticleToBookmarks.rejected, (state, action) => ({
-        ...state,
-        message: action.payload,
-        isLoading: false,
       }))
 
-      .addCase(removeArticleFromBookmarks.pending, state => ({
-        ...state,
-        isLoading: true,
-      }))
       .addCase(removeArticleFromBookmarks.fulfilled, (state, action) => ({
         ...state,
         savedArticles: action.payload,
-        isLoading: false,
       }))
-      .addCase(removeArticleFromBookmarks.rejected, (state, action) => ({
-        ...state,
-        message: action.payload,
-        isLoading: false,
-      }));
+
+      .addMatcher(
+        action => action.type.endsWith('/pending'),
+        state => ({
+          ...state,
+          isLoading: true,
+        })
+      )
+      .addMatcher(
+        action =>
+          action.type.endsWith('/fulfilled') ||
+          action.type.endsWith('/rejected'),
+        state => ({
+          ...state,
+          isLoading: false,
+        })
+      );
   },
 });
 
-export default slice.reducer
+export const authActions = slice.actions;
+
+export default slice.reducer;

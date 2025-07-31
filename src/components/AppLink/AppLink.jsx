@@ -13,7 +13,8 @@ export default function AppLink({
   return (
     <Link
       to={to}
-      className={clsx(css.button, css[size], css[variant], css[color])}
+      className={clsx(css.button, css[size], css[variant], css[color])
+      }
       onClick={onClick}
     >
       {children}

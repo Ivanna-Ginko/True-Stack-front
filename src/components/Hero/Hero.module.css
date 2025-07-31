@@ -21,6 +21,18 @@
     background: transparent;
     margin-top: 24px;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero_reg_btn:hover {
+    background-color: #f7fffb;
+}
+
+.hero_reg_btn:focus {
+    background-color: #f7fffb;
+    box-shadow: 0 0 0 6px rgba(78, 70, 180, 0.12), 0 0 0 2px #fff;
 }
 
 .hero_span {
@@ -37,6 +49,22 @@
     color: #f7fffb;
     background: #649179;
     margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 200ms ease-in-out;
+}
+
+.hero_reg_btn_none {
+    visibility: hidden;
+}
+
+.hero_articles_btn:hover {
+    background-color: #374f42;
+}
+
+.hero_articles_btn:focus {
+    box-shadow: 0 0 0 6px rgba(78, 70, 180, 0.12), 0 0 0 2px #fff;
 }
 
 .hero_header {
