@@ -8,7 +8,7 @@ export const setAuthorizationHeader = token =>
 export const deleteAuthorizationHeader = () =>
   delete axios.defaults.headers.common.Authorization;
 
-export const fetchArticles = async ({ config }) => {
+export const fetchArticles = async (config = {}) => {
   const response = await axios.get('/articles', config);
   return response
 }
@@ -25,6 +25,14 @@ export const fetchAuthors = async () => {
   const response = await axios.get('/user');
   return response.data;
 };
+
+//Add function to get TopCreators - not sure
+export const fetchPopularAuthors = async () => {
+  const response = await axios.get('/authors', {
+    params: { sortBy: 'articlesAmount' }
+  });
+  return response.data;
+}
 
 export const loginUser = async formData => {
   const response = await axios.post('/auth/login', formData);

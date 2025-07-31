@@ -4,7 +4,7 @@ import { selectUser } from '../../redux/selectors' */
 import Hero from '../../components/Hero/Hero'
 import About from '../../components/About/About'
 import PopularArticles from '../../components/PopularArticles/PopularArticles'
-import Creators from '../../components/Creators/Creators'
+import TopCreators from '../../components/TopCreators/TopCreators'
 
 const Outlet = () => {
   /* const user = useSelector(selectUser) */
@@ -24,7 +24,7 @@ const Outlet = () => {
       <Hero />
       <About />
       <PopularArticles />
-      <Creators />
+      <TopCreators />
     </>
   )
 }

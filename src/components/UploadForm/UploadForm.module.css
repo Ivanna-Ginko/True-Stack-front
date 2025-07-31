@@ -1,3 +1,9 @@
+.up_form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .up_container {
     width: 360px;
     height: 322px;
@@ -7,7 +13,10 @@
     margin-bottom: 128px;
     border-radius: 32px;
     position: relative;
+    display: flex;
+    flex-direction: column;
 }
+
 
 .up_header {
     font-weight: 700;
@@ -32,8 +41,22 @@
     color: #f7fffb;
     font-weight: 700;
     font-size: 16px;
-    /* box-shadow: 0 0 0 6px rgba(78, 70, 180, 0.12), 0 0 0 2px #fff; */
     background-color: #649179;
+    transition: all 200ms ease-in-out;
+}
+
+.up_submit_btn:hover {
+    background-color: #374f42;
+}
+
+.up_submit_btn:focus {
+    box-shadow: 0 0 0 6px rgba(78, 70, 180, 0.12), 0 0 0 2px #fff;
+}
+
+.up_submit_btn:disabled {
+    box-shadow: 0 0 0 6px rgba(78, 70, 180, 0.12), 0 0 0 2px #fff;
+    opacity: 0.3;
+    cursor: not-allowed;
 }
 
 .up_image_upload {
@@ -50,4 +73,31 @@
     position: absolute;
     top: 16px;
     right: 16px;
+}
+
+@media only screen and (min-width: 768px) {
+    .up_container {
+        width: 522px;
+        height: 354px;
+        padding: 48px 32px;
+        margin-top: 136px;
+        margin-bottom: 136px;
+    }
+
+    .up_submit_btn {
+        width: 458px;
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    .up_container {
+        width: 392px;
+        padding: 48px 32px;
+        margin-top: 189px;
+        margin-bottom: 189px;
+    }
+
+    .up_submit_btn {
+        width: 328px;
+    }
 }

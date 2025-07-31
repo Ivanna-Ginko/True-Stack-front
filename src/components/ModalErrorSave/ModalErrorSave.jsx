@@ -3,32 +3,29 @@ import Modal from "react-modal";
 import css from "./ModalErrorsave.module.css";
 import { NavLink } from "react-router-dom";
 
-const ModalErrorSave = ({ onClose }) => {
+const ModalNotification = ({
+  isOpen,
+  onClose,
+  title,
+  text,
+  onConfirm,
+  logOut,
+  ErrorSave,
+}) => {
   useEffect(() => {
     Modal.setAppElement("#root");
   }, []);
 
   return (
     <Modal
-      isOpen={true}
+      isOpen={isOpen}
       onRequestClose={onClose}
       className={css.reactModalContent}
       overlayClassName={css.reactModalOverlay}
       shouldCloseOnOverlayClick={true}
     >
       <div>
-        <button
-          onClick={onClose}
-          style={{
-            position: "absolute",
-            top: 16,
-            right: 32,
-            background: "transparent",
-            border: "none",
-            fontSize: "16px",
-            cursor: "pointer",
-          }}
-        >
+        <button onClick={onClose} className={css.buttonExit}>
           <svg
             width="24"
             height="24"
@@ -45,60 +42,59 @@ const ModalErrorSave = ({ onClose }) => {
           </svg>
         </button>
         <div className={css.modalErrorText}>
-          <h1 className={css.ErrorFont}>Error while saving</h1>
+          <h1 className={css.ErrorFont}>{title}</h1>
         </div>
         <div className={css.saveArticle}>
-          <p className={css.SaveArticleFont}>
-            To save this article, you need to authorize first
-          </p>
+          <p className={css.SaveArticleFont}>{text}</p>
         </div>
-        <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
-          <NavLink to="/login">
+        {logOut && (
+          <div className={css.navButton}>
+            <button
+              className={css.modalButton}
+              onClick={() => {
+                onConfirm();
+                onClose();
+              }}
+            >
+              Log out
+            </button>
             <button
               className={css.modalButton}
               onClick={() => {
                 onClose();
               }}
             >
-              Login
+              Cansel
             </button>
-          </NavLink>
-          <NavLink to="/register">
-            <button
-              className={css.modalButton}
-              onClick={() => {
-                onClose();
-              }}
-            >
-              Register
-            </button>
-          </NavLink>
-        </div>
+          </div>
+        )}
+        {ErrorSave && (
+          <div className={css.navButton}>
+            <NavLink to="/login">
+              <button
+                className={css.modalButton}
+                onClick={() => {
+                  onClose();
+                }}
+              >
+                Login
+              </button>
+            </NavLink>
+            <NavLink to="/register">
+              <button
+                className={css.modalButton}
+                onClick={() => {
+                  onClose();
+                }}
+              >
+                Register
+              </button>
+            </NavLink>
+          </div>
+        )}
       </div>
     </Modal>
   );
 };
 
-export default ModalErrorSave;
-
-// для виклика кнопки
-// import React, { useState } from "react";
-// import ModalErrorSave from "../ModalErrorSave/ModalErrorSave";
-
-// const Header = () => {
-//   const [isModalOpen, setIsModalOpen] = useState(false);
-
-//   const openModal = () => setIsModalOpen(true);
-//   const closeModal = () => setIsModalOpen(false);
-
-//   return (
-//     <>
-//       <h1>Header</h1>
-//       <button onClick={openModal}>Викликати модалку</button>
-
-//       {isModalOpen && <ModalErrorSave onClose={closeModal} />}
-//     </>
-//   );
-// };
-
-// export default Header;
+export default ModalNotification;
