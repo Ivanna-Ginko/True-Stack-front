@@ -7,6 +7,7 @@ import logoutIcon from '../../assets/icons/exit.svg';
 import AppLink from '../AppLink/AppLink';
 import { logoutUser } from '../../redux/operations';
 import { toast } from "react-toastify";
+import ModalNotification from "../ModalErrorSave/ModalErrorSave";
 
 const UserNav = () => {
     const dispatch = useDispatch();
@@ -14,6 +15,8 @@ const UserNav = () => {
     const user = useSelector(state => state.user?.user);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
 
     const handleLogout = async () => {
         try {
@@ -26,8 +29,6 @@ const UserNav = () => {
             navigate("/login");
         }
     };
-    const openModal = () => setIsModalOpen(true);
-    const closeModal = () => setIsModalOpen(false);
 
     const navLink = ({ isActive }) =>
         isActive ? s.activeLink : s.navLink;
@@ -39,7 +40,7 @@ const UserNav = () => {
                 <NavLink to="/creators" className={navLink}>Creators</NavLink>
                 <NavLink to="/profile" className={navLink}>My Profile</NavLink>
                 <div  className={`${s.createBtn} ${s.desktopOnly}`}>
-                    <AppLink variant="fill" size="lg" to="/create-article" > 
+                    <AppLink variant="fill" size="lg"  to={'/create'} > 
                         Create an article
                     </AppLink>
                 </div>
