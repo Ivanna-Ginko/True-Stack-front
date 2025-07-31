@@ -4,6 +4,7 @@ import { fetchArticleById, fetchArticles } from '../../services/api';
 import toast from 'react-hot-toast';
 import ButtonAddToBookmarks from '../ButtonAddToBookmarks/ButtonAddToBookmarks';
 import s from './YouCanAlsoInterested.module.css'
+import { Loader } from '../Loader/Loader';
 
 const YouCanAlsoInterested = ({ id, isSaved=false, config}) => {
     const [articlesList, setArticlesList] = useState([]);
@@ -40,14 +41,15 @@ const YouCanAlsoInterested = ({ id, isSaved=false, config}) => {
     const originalDate = articles.date;
     return (
         <div>
+            {isError && <p className={s.error}>Something went wrong. Please try again later.</p>}
             <div className={s.body}>
                 <div className={s.topBody}>
-                    <p><span className={s.span}>Author:</span> <span className={s.spanAuthor}>{articles.author}</span></p>
-                    <p><span className={s.span}>Publication date:</span> {articles.date ? formatDate(originalDate) : ''}</p>
+                    <p><span className={s.span}>Author:</span> {isLoading ? <Loader/> : <span className={s.spanAuthor}>{articles.author}</span>}</p>
+                    <p><span className={s.span}>Publication date:</span> {isLoading ? <Loader /> : articles.date ? formatDate(originalDate) : ''}</p>
                     <h3>You may also interested</h3>
                 </div>
                 <ul className={s.list}>
-                    { articlesList.map(article => {
+                    { isLoading ? <Loader /> : articlesList.map(article => {
                         return(<BlogCard key={article._id} title={article.title} author={article.author} linkId={article._id}/>)
                     })
                     }
