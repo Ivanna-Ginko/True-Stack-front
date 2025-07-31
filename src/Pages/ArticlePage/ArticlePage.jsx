@@ -1,11 +1,22 @@
 import React from 'react'
-import ArticlesItem from '../../components/ArticlesItem/ArticlesItem'
+import { useParams } from 'react-router-dom'
+import YouCanAlsoInterested from '../../components/YouCanAlsoInterested/YouCanAlsoInterested'
+import Container from '../../components/container/Container'
 
 const ArticlePage = () => {
+  const { id } = useParams();
+  const config = {
+      params: {
+          'sortBy': 'rate',
+          'perPage': 3
+      }
+  }
   return (
     <>
-    <h2>ArticlePage</h2>
-    <ArticlesItem/>
+    <Container>
+      <h2>ArticlePage</h2>
+      <YouCanAlsoInterested id={id} config={config}/>
+    </Container>
     </>
   )
 }

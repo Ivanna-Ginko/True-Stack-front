@@ -13,7 +13,10 @@ export const fetchArticles = async (config = {}) => {
   return response
 }
 
-
+export const fetchArticleById = async (id) =>{
+  const response = await axios.get(`/articles/${id}`);
+  return response
+}
 
 export const registerUser = async formData => {
   const response = await axios.post('/auth/register', formData);

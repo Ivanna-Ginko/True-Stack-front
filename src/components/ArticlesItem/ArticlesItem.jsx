@@ -24,6 +24,7 @@ const ArticlesItem = ({id, image, author, title, description, isSaved=false, isA
         </p>
       </div>
       <div className= {s.bottom}>
+        {console.log(`Your Id - ${id}`)}
       <AppLink variant='outline' size='md' color='green' to={`/articles/${id}`}>
         Learn more
       </AppLink>

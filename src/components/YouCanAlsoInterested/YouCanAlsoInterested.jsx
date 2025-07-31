@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import BlogCard from '../BlogCard/BlogCard'
-import { fetchArticles } from '../../services/api';
+import { fetchArticleById, fetchArticles } from '../../services/api';
 import toast from 'react-hot-toast';
+import ButtonAddToBookmarks from '../ButtonAddToBookmarks/ButtonAddToBookmarks';
+import s from './YouCanAlsoInterested.module.css'
 
-const YouCanAlsoInterested = ({ id, author, publishDate, isSaved=false, config}) => {
+const YouCanAlsoInterested = ({ id, isSaved=false, config}) => {
+    const [articlesList, setArticlesList] = useState([]);
     const [articles, setArticles] = useState([]);
     const [saved, setSaved] = useState(isSaved);
     const handleToggle = ()=>{
@@ -15,8 +18,10 @@ const YouCanAlsoInterested = ({ id, author, publishDate, isSaved=false, config})
         const getArticles = async () => {
             try{
                 setIsLoading(true);
-                const article = await fetchArticles(config);
-                setArticles(article.data.data);
+                const articles = await fetchArticles(config);
+                setArticlesList(articles.data.data.data);
+                const articleById = await fetchArticleById(id);
+                setArticles(articleById.data.data)
             
             }catch(error){
                 setIsError(true);
@@ -26,19 +31,29 @@ const YouCanAlsoInterested = ({ id, author, publishDate, isSaved=false, config})
             }
         }
         getArticles(); 
-    }, [config]);
-    const articlesArr = articles.data
+    }, [config, id]);
+    // const isSavedBtn = isAuthor && user.savedArticles?.includes(article.id);
+    const formatDate = (dateStr) => {
+        const [year, month, day] = dateStr.split('-');
+        return `${day}.${month}.${year}`;
+    };
+    const originalDate = articles.date;
     return (
         <div>
-            <p>Author: <span>{author}</span></p>
-            <p>Publication date: {publishDate}</p>
-            <h3>You may also interested</h3>
-            <ul>
-                { articlesArr.map(article => 
-                    { return(<BlogCard key={article.id} title={article.title} author={article.author} linkId={article.id}/>)
-                })
-                }
-            </ul>
+            <div className={s.body}>
+                <div className={s.topBody}>
+                    <p><span className={s.span}>Author:</span> <span className={s.spanAuthor}>{articles.author}</span></p>
+                    <p><span className={s.span}>Publication date:</span> {articles.date ? formatDate(originalDate) : ''}</p>
+                    <h3>You may also interested</h3>
+                </div>
+                <ul className={s.list}>
+                    { articlesList.map(article => {
+                        return(<BlogCard key={article._id} title={article.title} author={article.author} linkId={article._id}/>)
+                    })
+                    }
+                </ul>
+            </div>
+            
             <ButtonAddToBookmarks articleId={id} onClick={handleToggle}/>
         </div>
     )

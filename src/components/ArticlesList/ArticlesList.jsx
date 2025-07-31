@@ -40,7 +40,7 @@ const ArticlesList = ({ config, onTotalItemsChange, hideFourthOnDesktop }) => {
 
   return (
     <>
-        <ul className={`${css.list} ${hideFourthOnDesktop ? css.hideFourth : ''} }`}>
+        <ul className={`${css.list} ${hideFourthOnDesktop ? css.hideFourth : ''}`}>
           {!articlesArr && <p>wait....</p>}
           {articlesArr && 
             articlesArr.map(article => {
@@ -48,8 +48,8 @@ const ArticlesList = ({ config, onTotalItemsChange, hideFourthOnDesktop }) => {
               const isSaved = isAuthor && user.savedArticles?.includes(article.id);
                 return (
                 <ArticlesItem
-                  key={article.id}
-                  id={article.id}
+                  key={article._id}
+                  id={article._id}
                   title={article.title}
                   author={article.author}
                   description={article.title}
