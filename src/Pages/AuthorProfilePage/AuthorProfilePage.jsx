@@ -38,20 +38,34 @@ const AuthorProfilePage = () => {
   return (
     <div>
       <Container>
-        {isMyPage ? <SectionTitle title={title} /> : null}
-        {authorData && (
-          <div className={s.aboutAuthor}>
-            <img
-              className={s.authorAvatar}
-              src={authorData.avatarUrl}
-              alr={`Фото автора ${authorData.name}`}
-            />
-            <div className={s.authorInfo}>
-              <h2 className={s.authorName}>{authorData.name}</h2>
-              <p className={s.articlesAmount}>{articlesAmount} articles</p>
+        <div className={s.box}>
+          {isMyPage 
+          ? <SectionTitle title={title} /> 
+          : null}
+          {authorData && (
+            <div
+              className={`${s.aboutAuthor} ${
+                !isMyPage ? s.aboutAuthorShifted : ""
+              }`}
+            >
+              <img
+                className={s.authorAvatar}
+                src={authorData.avatarUrl}
+                alr={`Фото автора ${authorData.name}`}
+              />
+              <div className={s.authorInfo}>
+                <h2 className={s.authorName}>{authorData.name}</h2>
+                <p className={s.articlesAmount}>{articlesAmount} articles</p>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+          {isMyPage 
+          ? <div>
+            <p>My Articles</p>
+            <p>Saved Articles</p>
+          </div> 
+          : null}
+        </div>
         <ArticlesList />
         <LoadMore />
       </Container>
