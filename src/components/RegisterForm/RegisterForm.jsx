@@ -1,8 +1,9 @@
 import { Form, Formik, Field, ErrorMessage } from "formik";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import * as Yup from "yup";
-import React, { useState } from "react";
-// import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../redux/slice";
 // import { registerUser } from "../../redux/operations";
 import css from "./RegisterForm.module.css";
 // import { toast } from "react-toastify";
@@ -11,14 +12,40 @@ import hidePwd from "../../assets/icons/crossed-eye.svg";
 import showPwd from "../../assets/icons/eye.svg";
 
 const RegisterForm = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const initialValues = {
+  const location = useLocation();
+  const [initialFormValues, setInitialFormValues] = useState({
     name: "",
     email: "",
     password: "",
     repeatPwd: "",
-  };
+  });
+  const [preservedPhoto, setPreservedPhoto] = useState(null);
+
+  // Clear any existing errors when component mounts
+  useEffect(() => {
+    dispatch(authActions.clearError());
+  }, [dispatch]);
+
+  // Prefill form if redirected from UploadForm with error
+  useEffect(() => {
+    if (location.state?.formData) {
+      setInitialFormValues({
+        name: location.state.formData.name || "",
+        email: location.state.formData.email || "",
+        password: location.state.formData.password || "",
+        repeatPwd: location.state.formData.repeatPwd || "",
+      });
+      // Preserve the photo if it was uploaded
+      if (location.state.image && location.state.file) {
+        setPreservedPhoto({
+          image: location.state.image,
+          file: location.state.file
+        });
+      }
+    }
+  }, [location.state]);
 
   const RegisterSchema = Yup.object({
     name: Yup.string()
@@ -39,7 +66,7 @@ const RegisterForm = () => {
   });
 
   const handleSubmit = async (values) => {
-    navigate("/photo", { state: { formData: values } });
+    navigate("/photo", { state: { formData: values, preservedPhoto } });
   };
 
   //////// for testing purposes, registration is realised on upload form. uncomment for testing
@@ -78,9 +105,10 @@ const RegisterForm = () => {
       </p>
 
       <Formik
-        initialValues={initialValues}
+        initialValues={initialFormValues}
         validationSchema={RegisterSchema}
         onSubmit={handleSubmit}
+        enableReinitialize={true}
       >
         {({ isSubmitting, isValid }) => (
           <Form className={css.formContainer}>
@@ -93,9 +121,8 @@ const RegisterForm = () => {
                   {...field}
                   type="text"
                   placeholder="Max"
-                  className={`${css.field} ${
-                    meta.touched && meta.error ? css["is-invalid"] : ""
-                  }`}
+                  className={`${css.field} ${meta.touched && meta.error ? css["is-invalid"] : ""
+                    }`}
                 />
               )}
             </Field>
@@ -111,9 +138,8 @@ const RegisterForm = () => {
                   {...field}
                   type="email"
                   placeholder="email@gmail.com"
-                  className={`${css.field} ${
-                    meta.touched && meta.error ? css["is-invalid"] : ""
-                  }`}
+                  className={`${css.field} ${meta.touched && meta.error ? css["is-invalid"] : ""
+                    }`}
                 />
               )}
             </Field>
@@ -131,9 +157,8 @@ const RegisterForm = () => {
                     type={showPassword ? "text" : "password"}
                     id="password"
                     placeholder="*********"
-                    className={`${css.field} ${
-                      meta.touched && meta.error ? css["is-invalid"] : ""
-                    }`}
+                    className={`${css.field} ${meta.touched && meta.error ? css["is-invalid"] : ""
+                      }`}
                   />
                   <span className={css.iconWrap}>
                     <img
@@ -163,9 +188,8 @@ const RegisterForm = () => {
                     type={showRepeat ? "text" : "password"}
                     id="repeatPwd"
                     placeholder="*********"
-                    className={`${css.field} ${
-                      meta.touched && meta.error ? css["is-invalid"] : ""
-                    }`}
+                    className={`${css.field} ${meta.touched && meta.error ? css["is-invalid"] : ""
+                      }`}
                   />
                   <span className={css.iconWrap}>
                     <img
@@ -191,9 +215,8 @@ const RegisterForm = () => {
             )}
 
             <button
-              className={`${css.btn} ${
-                !isValid || isSubmitting ? css.disabledBtn : ""
-              }`}
+              className={`${css.btn} ${!isValid || isSubmitting ? css.disabledBtn : ""
+                }`}
               disabled={!isValid || isSubmitting}
               type="submit"
             >
