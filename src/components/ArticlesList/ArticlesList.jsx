@@ -9,7 +9,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 //уточнити, помилка через імпорт селектора редакс
 
-const ArticlesList = ({ config, onTotalItemsChange }) => {
+const ArticlesList = ({ config, onTotalItemsChange, hideFourthOnDesktop }) => {
   const [articleList, setArticleList] = useState ([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState (false)
@@ -40,8 +40,8 @@ const ArticlesList = ({ config, onTotalItemsChange }) => {
 
   return (
     <>
-        <ul className={`${css.list} }`}>
-          {!articleList && <p>wait....</p>}
+        <ul className={`${css.list} ${hideFourthOnDesktop ? css.hideFourth : ''} }`}>
+          {!articlesArr && <p>wait....</p>}
           {articlesArr && 
             articlesArr.map(article => {
               const isAuthor = article.author === user?.user?.id;

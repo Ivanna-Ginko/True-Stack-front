@@ -8,7 +8,7 @@ export const setAuthorizationHeader = token =>
 export const deleteAuthorizationHeader = () =>
   delete axios.defaults.headers.common.Authorization;
 
-export const fetchArticles = async ({ config }) => {
+export const fetchArticles = async (config = {}) => {
   const response = await axios.get('/articles', config);
   return response
 }
