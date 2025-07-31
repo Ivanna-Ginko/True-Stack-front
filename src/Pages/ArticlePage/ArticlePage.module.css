@@ -1,0 +1,28 @@
+.title{
+    padding-top: 48px;
+    padding-bottom: 16px;
+    font-weight: bold;
+    font-size: 40px;
+}
+
+.image{
+    border-radius: 50px;
+    width: 1226px;
+    height: 624px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    object-fit: cover;
+}
+
+.articleText{
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 155%;
+}
+
+.flexContainer{
+    display: flex;
+    padding-top: 16px;
+    column-gap: 24px;
+    padding-bottom: 48px;
+}
