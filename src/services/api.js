@@ -53,6 +53,14 @@ export const logoutUser = async() => {
 export const fetchUserData = async () => {
   axios.get('/user/')
 }
+export const fetchAuthorById = async (userId) => {
+  const response = await axios.get(`/user/${userId}`);
+  return response.data;
+};
+// export const fetchAuthorCreatedArticles = async () => {
+//   const response = await axios.get(`/user/created-articles}`);
+//   return response.data;
+// };
 
 export const addArticleToBookmarks = async articleId => {
   const response = await axios.post('/saved-articles/add-article', { articleId })
