@@ -36,7 +36,7 @@ if (!dateStr || typeof dateStr !== 'string') return '';
 const [year, month, day] = dateStr.split('-');
 return `${day}.${month}.${year}`;
 };
-
+//add btn change
 return (
 <div>
     {isError && <p className={s.error}>Something went wrong. Please try again later.</p>}
