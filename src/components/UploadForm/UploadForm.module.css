@@ -1,0 +1,53 @@
+.up_container {
+    width: 360px;
+    height: 322px;
+    background-color: #d1e0d8;
+    padding: 32px;
+    margin-top: 128px;
+    margin-bottom: 128px;
+    border-radius: 32px;
+    position: relative;
+}
+
+.up_header {
+    font-weight: 700;
+    font-size: 32px;
+    text-align: center;
+    margin: 0;
+}
+
+.up_inner_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.up_submit_btn {
+    border-radius: 64px;
+    padding: 8px;
+    width: 296px;
+    height: 38px;
+    color: #f7fffb;
+    font-weight: 700;
+    font-size: 16px;
+    /* box-shadow: 0 0 0 6px rgba(78, 70, 180, 0.12), 0 0 0 2px #fff; */
+    background-color: #649179;
+}
+
+.up_image_upload {
+    border-radius: 128px;
+    width: 136px;
+    height: 136px;
+}
+
+.up_image_upload:hover {
+    cursor: pointer;
+}
+
+.up_close_button {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+}
