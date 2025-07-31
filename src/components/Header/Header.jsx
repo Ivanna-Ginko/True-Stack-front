@@ -10,7 +10,8 @@ import burgerIcon from '../../assets/icons/menu.svg';
 import AppLink from '../AppLink/AppLink';
 
 const Header = () => {
-  const isAuthenticated = useSelector(state => state.user?.isLoggedIn);
+  const user = useSelector(state => state.user.user);
+  const isAuthenticated = Boolean(user?.name);
   // const isAuthenticated = true;
   // const userName = {
   //   name: 'TestUser',
