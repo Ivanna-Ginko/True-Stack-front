@@ -2,7 +2,7 @@
     border-radius: 32px;
     padding: 16px;
     width: 329px;
-
+    align-items: flex-start;
     background: white;
 }
 
@@ -14,9 +14,6 @@
 .flexContainer{
     display: flex;
     justify-content: space-between;
-    align-items: center;
-
-    
 }
 
 .linkContainer{
@@ -32,4 +29,16 @@
 
 .authorStyle{
     padding-top: 8px;
+}
+
+@media only screen and (min-width: 768px) {
+    .listStyle{
+        width: 640px;
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    .listStyle{
+        width: 329px;
+    }
 }

@@ -52,7 +52,11 @@ return (
         ))}
     </ul>
     </div>
-    <ButtonAddToBookmarks articleId={id} onClick={handleToggle} />
+    <ButtonAddToBookmarks 
+        articleId={id} 
+        onUpdate={handleToggle}
+        variant={saved ? "saved" : 'default'}
+    /> 
 </div>
 );
 };

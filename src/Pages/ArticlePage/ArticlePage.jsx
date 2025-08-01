@@ -49,7 +49,6 @@ const ArticlePage = () => {
             <p key={i}>{line.trim()}</p>
           ))}
         </div>
-  
         <YouCanAlsoInterested
           id={id}
           config={config}
