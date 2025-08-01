@@ -25,7 +25,7 @@ export const registerUser = async formData => {
 }
 
 export const fetchAuthors = async () => {
-  const response = await axios.get('/user');
+  const response = await axios.get('/users');
   return response.data;
 };
 
@@ -57,6 +57,19 @@ export const getUserData = async () => {
 
 export const logoutUser = async() => {
   await axios.post('/auth/logout');
+};
+
+export const fetchAuthorById = async (userId) => {
+  const response = await axios.get(`/users/${userId}`);
+  return response.data;
+};
+// export const fetchAuthorCreatedArticles = async () => {
+//   const response = await axios.get(`/user/created-articles}`);
+//   return response.data;
+// };
+export const getSavedArticles = async () => {
+  const response = await axios.get('/user/saved-articles');
+  return response.data.data;
 };
 
 export const addArticleToBookmarks = async articleId => {
