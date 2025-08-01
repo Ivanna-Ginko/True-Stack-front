@@ -17,7 +17,7 @@ const GuestNav = () => {
             >
                 Articles
             </NavLink>
-            <NavLink to="/creators"
+            <NavLink to="/authors"
                 className={navLink}
             >
                 Creators
