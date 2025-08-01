@@ -64,7 +64,7 @@ const ModalNotification = ({
                 onClose();
               }}
             >
-              Cansel
+              Cancel
             </button>
           </div>
         )}
