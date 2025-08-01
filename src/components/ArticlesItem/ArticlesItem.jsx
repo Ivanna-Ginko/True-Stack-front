@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import ButtonAddToBookmarks from '../ButtonAddToBookmarks/ButtonAddToBookmarks'
-import EditArticleButton from '../EditArticleButton/EditArticleButton'
 import AppLink from '../AppLink/AppLink'
 import s from '../ArticlesItem/ArticlesItem.module.css'
 
@@ -31,12 +30,13 @@ const ArticlesItem = ({id, image, author, title, description, isSaved=false, isA
       </AppLink>
       { isAuthor ? (
         <EditArticleButton articleId={id}/>
-      ) : <ButtonAddToBookmarks
-            articleId={id}
-            onUpdate={handleToggle}
-            variant={saved ? "saved" : undefined}
-          />
-      }
+      ) : (
+      <ButtonAddToBookmarks 
+        articleId={id} 
+        onUpdate={handleToggle}
+        variant={saved ? "saved" : 'default'}
+      /> 
+      )}
       </div>
     </li>
   )
