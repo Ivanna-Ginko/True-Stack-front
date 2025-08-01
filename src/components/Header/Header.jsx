@@ -10,13 +10,11 @@ import burgerIcon from '../../assets/icons/menu.svg';
 import AppLink from '../AppLink/AppLink';
 
 const Header = () => {
-  const isAuthenticated = useSelector(state => state.user?.isLoggedIn);
-  // const isAuthenticated = true;
-  // const userName = {
-  //   name: 'TestUser',
-  //   avatarUrl: 'https://i.pravatar.cc/40',
-  // };
+  const user = useSelector(state => state.user.user);
+  const isAuthenticated = Boolean(user?.name);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const toggleMenu = () => {
     setIsMenuOpen(prev => !prev);
   };
@@ -33,7 +31,7 @@ const Header = () => {
             </nav>
             {isAuthenticated && (
               <div className={`${s.createBtn} ${s.tabletOnly}`}>
-                <AppLink variant="fill" size="lg" to="/create-article" >
+                <AppLink variant="fill" size="lg" to={'/create'} >
                   Create an article
                 </AppLink>
               </div>

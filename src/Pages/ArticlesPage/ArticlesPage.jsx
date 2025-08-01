@@ -32,7 +32,7 @@ const handleTotalItemsChange = (count) => {
   setTotalItems(count);
 };
 
-
+//рендеримо список
   return (
     <>
       <Container>

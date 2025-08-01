@@ -21,6 +21,9 @@
     background: transparent;
     margin-top: 24px;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .hero_reg_btn:hover {
@@ -49,11 +52,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 200ms ease-in-out;
+}
+
+.hero_reg_btn_none {
+    visibility: hidden;
 }
 
 .hero_articles_btn:hover {
     background-color: #374f42;
-    transition: all 200ms ease-in-out;
 }
 
 .hero_articles_btn:focus {

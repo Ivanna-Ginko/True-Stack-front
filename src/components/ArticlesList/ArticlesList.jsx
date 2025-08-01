@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import ArticlesItem from '../ArticlesItem/ArticlesItem'
-import LoadMore from '../LoadMore/LoadMore'
 import css from './ArticlesList.module.css'
 import { useSelector } from 'react-redux'
 import { selectUser } from '../../redux/selectors'
 import { fetchArticles } from '../../services/api.js'
-import toast, { Toaster } from 'react-hot-toast';
+import { Loader } from '../Loader/Loader'
+import { toast } from 'react-toastify';
 
-//уточнити, помилка через імпорт селектора редакс
 
-const ArticlesList = ({ config, onTotalItemsChange }) => {
+
+const ArticlesList = ({ config, onTotalItemsChange, hideFourthOnDesktop }) => {
   const [articleList, setArticleList] = useState ([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState (false)
 
   const user = useSelector(selectUser)
-  
+
   useEffect(() => {
   const getArticles = async () => {
     try {
@@ -25,9 +25,14 @@ const ArticlesList = ({ config, onTotalItemsChange }) => {
       console.log(articles.data.data)
       if (onTotalItemsChange) {
         onTotalItemsChange(articles.data.data.totalItems);}
-    } catch (error) {
+    } catch {
       setIsError(true);
-      toast.error('Please, try again')
+      toast.warning('No articles found', {
+  style: {
+    backgroundColor: 'rgba(209, 224, 216, 1)',
+    color: '#333',
+  },
+});
     } finally {
       setIsLoading(false);
       }
@@ -36,20 +41,19 @@ const ArticlesList = ({ config, onTotalItemsChange }) => {
 }, [config]);
 
   const articlesArr = articleList.data
-  
-
+ 
   return (
     <>
-        <ul className={`${css.list} }`}>
-          {!articlesArr && <p>wait....</p>}
+        <ul className={`${css.list} ${hideFourthOnDesktop ? css.hideFourth : ''} }`}>
+          {isLoading && <Loader/>}
           {articlesArr && 
             articlesArr.map(article => {
               const isAuthor = article.author === user?.user?.id;
               const isSaved = isAuthor && user.savedArticles?.includes(article.id);
                 return (
                 <ArticlesItem
-                  key={article.id}
-                  id={article.id}
+                  key={article._id}
+                  id={article._id}
                   title={article.title}
                   author={article.author}
                   description={article.title}
