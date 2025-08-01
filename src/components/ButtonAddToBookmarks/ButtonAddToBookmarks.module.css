@@ -28,7 +28,7 @@
   stroke: #ffffff;
 }
 
-.buttonisWideцепропс {
+.buttonWideStyle {
   width: 393px;
   height: 57px;
   gap: 16px;
@@ -46,12 +46,12 @@
   cursor: pointer;
 }
 
-.buttonisWideцепропс:hover,
-.buttonisWideцепропс:active {
+.buttonWideStyle:hover,
+.buttonWideStyle:active {
   background: #374f42;
 }
 
-.buttonisWideцепропс:hover svg path,
-.buttonisWideцепропс:active svg path {
+.buttonWideStyle:hover svg path,
+.buttonWideStyle:active svg path {
   stroke: #ffffff;
 }
