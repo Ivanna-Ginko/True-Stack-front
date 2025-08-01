@@ -25,7 +25,7 @@ export const registerUser = async formData => {
 }
 
 export const fetchAuthors = async () => {
-  const response = await axios.get('/user');
+  const response = await axios.get('/users');
   return response.data;
 };
 
