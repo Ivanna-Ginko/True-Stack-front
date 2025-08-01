@@ -3,7 +3,7 @@ import axios from 'axios';
 axios.defaults.baseURL = 'https://truestack.onrender.com';
 
 export const setAuthorizationHeader = token =>
-  (axios.defaults.headers.common.Authorization = token);
+  (axios.defaults.headers.common.Authorization = 'Bearer ' + token);
 
 export const deleteAuthorizationHeader = () =>
   delete axios.defaults.headers.common.Authorization;
@@ -49,13 +49,16 @@ export const refreshUser = async () => {
   return response.data.data;
 };
 
+export const getUserData = async () => {
+  const response = await axios.get('/users/me');
+
+  return response.data.data;
+};
+
 export const logoutUser = async() => {
   await axios.post('/auth/logout');
 };
 
-export const fetchUserData = async () => {
-  axios.get('/user/')
-}
 export const fetchAuthorById = async (userId) => {
   const response = await axios.get(`/user/${userId}`);
   return response.data;
