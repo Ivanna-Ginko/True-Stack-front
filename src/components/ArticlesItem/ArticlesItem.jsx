@@ -30,18 +30,12 @@ const ArticlesItem = ({id, image, author, title, description, isSaved=false, isA
       </AppLink>
       { isAuthor ? (
         <EditArticleButton articleId={id}/>
-      ) : saved ? (
-      <ButtonAddToBookmarks 
-        articleId={id} 
-        onClick={handleToggle}
-        variant="saved"
-      /> 
-      ) : (
-      <ButtonAddToBookmarks 
-        articleId={id} 
-        onClick={handleToggle}
-      />
-      )}
+      ) : <ButtonAddToBookmarks
+            articleId={id}
+            onUpdate={handleToggle}
+            variant={saved ? "saved" : undefined}
+          />
+      }
       </div>
     </li>
   )
