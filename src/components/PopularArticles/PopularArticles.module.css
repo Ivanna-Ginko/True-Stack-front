@@ -1,6 +1,8 @@
 .innerContainer{
     padding-top: 36px;
     padding-bottom: 36px;
+
+    scroll-margin-top: 74px;
 }
 
 .titleContainer{

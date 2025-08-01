@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { registerUser } from '../../redux/operations'
-import { selectUser, selectIsLoading } from '../../redux/selectors'
+import { selectUser } from '../../redux/selectors'
 import Container from '../container/Container'
 import s from './UploadForm.module.css'
 import placeholderImg from '../../assets/images/normal/UploadPhoto/up-camera-test.png'
@@ -15,15 +15,33 @@ const UploadForm = ({ formData }) => {
   const inputRef = useRef(null)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const location = useLocation()
   const user = useSelector(selectUser)
-  const isLoading = useSelector(selectIsLoading)
+  const isLoading = useSelector(state => state.user.isLoading)
+  const error = useSelector(state => state.user.error)
 
-  // Redirect to home page after successful registration (when not loading state changes and user has an id)
+  // Restore preserved photo if available
+  useEffect(() => {
+    if (location.state?.preservedPhoto) {
+      setImage(location.state.preservedPhoto.image)
+      setFile(location.state.preservedPhoto.file)
+    }
+  }, [location.state])
+
+  // Redirect to home on success
   useEffect(() => {
     if (!isLoading && user.id) {
       navigate('/')
     }
   }, [isLoading, user.id, navigate])
+
+  // Show toast and redirect to /register on backend error
+  useEffect(() => {
+    if (error) {
+      toast.error(error.message);
+      navigate('/register', { state: { formData, image, file } })
+    }
+  }, [error, navigate, formData, image, file])
 
   const handleImageClick = () => {
     inputRef.current.click()
@@ -45,8 +63,7 @@ const UploadForm = ({ formData }) => {
     }
   }
 
-
-  const addAvatar = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     if (!file) {
       toast.error('No file selected!')
@@ -58,6 +75,7 @@ const UploadForm = ({ formData }) => {
     Object.entries(formData).forEach(([key, value]) => {
       formDataInstance.append(key, value)
     })
+    // Append avatar file
     formDataInstance.append('avatar', file)
     dispatch(registerUser(formDataInstance))
   }
@@ -76,7 +94,7 @@ const UploadForm = ({ formData }) => {
 
   return (
     <Container>
-      <form onSubmit={addAvatar} className={s.up_form}>
+      <form onSubmit={handleSubmit} className={s.up_form}>
         <div className={s.up_container}>
           <h1 className={s.up_header}>Upload your photo</h1>
           <div className={s.up_inner_container}>

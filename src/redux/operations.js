@@ -25,9 +25,9 @@ export const registerUser = createAsyncThunk(
     } catch (axiosError) {
       const errStatus = axiosError.response?.status;
       const apiError = axiosError.response?.data;
-
       if (errStatus === 409) {
-        return rejectWithValue({ message: apiError.message });
+        const errorMessage = apiError?.data?.message;
+        return rejectWithValue({ message: errorMessage });
       }
 
       const errors = apiError.data;
@@ -97,7 +97,7 @@ export const loginUser = createAsyncThunk(
 
 export const logoutUser = createAsyncThunk(
   'user/logout',
-  async (_, {rejectWithValue}) => {
+  async (_, { rejectWithValue }) => {
     try {
       await api.logoutUser()
     } catch {

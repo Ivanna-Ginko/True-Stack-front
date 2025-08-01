@@ -18,6 +18,7 @@ const initialState = {
   accessToken: '',
   isLoading: false,
   isFetchingUser: true,
+  error: null,
 };
 
 const slice = createSlice({
@@ -25,42 +26,61 @@ const slice = createSlice({
   initialState,
   reducers: {
     logoutUser: () => ({ ...initialState, isFetchingUser: false }),
+    clearError: (state) => ({
+      ...state,
+      error: null,
+    }),
   },
   extraReducers: builder => {
     builder
       .addCase(registerUser.fulfilled, (state, action) => ({
         ...state,
         ...action.payload,
+        error: null,
+      }))
+      .addCase(registerUser.rejected, (state, action) => ({
+        ...state,
+        error: action.payload || action.error,
       }))
 
       .addCase(loginUser.fulfilled, (state, action) => ({
         ...state,
         ...action.payload,
+        error: null,
+      }))
+      .addCase(loginUser.rejected, (state, action) => ({
+        ...state,
+        error: action.payload || action.error,
       }))
 
       .addCase(logoutUser.fulfilled, () => ({
         ...initialState,
         isFetchingUser: false,
+        error: null,
       }))
       .addCase(logoutUser.rejected, () => ({
         ...initialState,
         isFetchingUser: false,
+        error: null,
       }))
 
       .addCase(refreshUser.fulfilled, (state, action) => ({
         ...state,
         ...action.payload,
         isFetchingUser: false,
+        error: null,
       }))
 
       .addCase(addArticleToBookmarks.fulfilled, (state, action) => ({
         ...state,
         savedArticles: action.payload,
+        error: null,
       }))
 
       .addCase(removeArticleFromBookmarks.fulfilled, (state, action) => ({
         ...state,
         savedArticles: action.payload,
+        error: null,
       }))
 
       .addMatcher(
@@ -68,6 +88,7 @@ const slice = createSlice({
         state => ({
           ...state,
           isLoading: true,
+          error: null,
         })
       )
       .addMatcher(
