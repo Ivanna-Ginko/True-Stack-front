@@ -8,6 +8,8 @@ import SectionTitle from "../../components/SectionTitle/SectionTitle";
 import { useParams } from "react-router-dom";
 import { fetchAuthorById } from "../../services/api";
 import { selectIsLoggedIn, selectUser } from "../../redux/selectors";
+import { ProfileTabs } from "../../components/ProfileTabs/ProfileTabs";
+import SavedArticlesList from "../../components/SavedArticlesList/SavedArticlesList";
 
 const AuthorProfilePage = () => {
   const title = "My Profile";
@@ -21,6 +23,9 @@ const AuthorProfilePage = () => {
 
   const [authorData, setAuthorData] = useState(null);
   const [articlesAmount, setArticlesAmount] = useState(0);
+  const [selectedTab, setSelectedTab] = useState("My Articles");
+  // const [savedArticles, setSavedArticles] = useState([]);
+  const [totalItems, setTotalItems] = useState(0);
 
   useEffect(() => {
     const getAuthorData = async () => {
@@ -35,13 +40,16 @@ const AuthorProfilePage = () => {
     getAuthorData();
   }, [userId]);
 
+  const handleTotalItemsChange = (count) => {
+    setTotalItems(count);
+    console.log(totalItems);
+  };
+
   return (
     <div>
       <Container>
         <div className={s.box}>
-          {isMyPage 
-          ? <SectionTitle title={title} /> 
-          : null}
+          {isMyPage ? <SectionTitle title={title} /> : null}
           {authorData && (
             <div
               className={`${s.aboutAuthor} ${
@@ -59,14 +67,21 @@ const AuthorProfilePage = () => {
               </div>
             </div>
           )}
-          {isMyPage 
-          ? <div>
-            <p>My Articles</p>
-            <p>Saved Articles</p>
-          </div> 
-          : null}
+          {isMyPage ? (
+            <ProfileTabs
+              selectedTab={selectedTab}
+              onSelectTab={setSelectedTab}
+            />
+          ) : null}
         </div>
-        <ArticlesList />
+        {isMyPage ? (
+          <SavedArticlesList
+            selectedTab={selectedTab}
+            onTotalItemsChange={handleTotalItemsChange}
+          />
+        ) : (
+          <ArticlesList />
+        )}
         <LoadMore />
       </Container>
     </div>
