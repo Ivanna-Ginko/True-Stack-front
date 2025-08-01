@@ -60,7 +60,7 @@ export const logoutUser = async() => {
 };
 
 export const fetchAuthorById = async (userId) => {
-  const response = await axios.get(`/user/${userId}`);
+  const response = await axios.get(`/users/${userId}`);
   return response.data;
 };
 // export const fetchAuthorCreatedArticles = async () => {
