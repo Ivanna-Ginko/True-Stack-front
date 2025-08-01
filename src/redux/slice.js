@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   addArticleToBookmarks,
-  refreshUser,
   loginUser,
   registerUser,
   removeArticleFromBookmarks,
   logoutUser,
+  getUserData,
 } from './operations';
 
 const initialState = {
@@ -26,7 +26,7 @@ const slice = createSlice({
   initialState,
   reducers: {
     logoutUser: () => ({ ...initialState, isFetchingUser: false }),
-    clearError: (state) => ({
+    clearError: state => ({
       ...state,
       error: null,
     }),
@@ -53,6 +53,13 @@ const slice = createSlice({
         error: action.payload || action.error,
       }))
 
+      .addCase(getUserData.fulfilled, (state, action) => ({
+        ...state,
+        ...action.payload,
+        isFetchingUser: false,
+        error: null,
+      }))
+
       .addCase(logoutUser.fulfilled, () => ({
         ...initialState,
         isFetchingUser: false,
@@ -60,13 +67,6 @@ const slice = createSlice({
       }))
       .addCase(logoutUser.rejected, () => ({
         ...initialState,
-        isFetchingUser: false,
-        error: null,
-      }))
-
-      .addCase(refreshUser.fulfilled, (state, action) => ({
-        ...state,
-        ...action.payload,
         isFetchingUser: false,
         error: null,
       }))
