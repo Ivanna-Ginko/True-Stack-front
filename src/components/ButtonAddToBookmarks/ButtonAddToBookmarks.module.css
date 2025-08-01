@@ -27,3 +27,31 @@
 .button:active svg path {
   stroke: #ffffff;
 }
+
+.buttonisWideцепропс {
+  width: 393px;
+  height: 57px;
+  gap: 16px;
+  border-radius: 64px;
+  padding: 16px;
+  background: #649179;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  font-weight: 600;
+  font-size: 16px;
+  color: #ffffff;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.buttonisWideцепропс:hover,
+.buttonisWideцепропс:active {
+  background: #374f42;
+}
+
+.buttonisWideцепропс:hover svg path,
+.buttonisWideцепропс:active svg path {
+  stroke: #ffffff;
+}
