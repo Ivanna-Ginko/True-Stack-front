@@ -52,7 +52,7 @@ return (
         ))}
     </ul>
     </div>
-    <ButtonAddToBookmarks articleId={id} onClick={handleToggle} />
+    <ButtonAddToBookmarks articleId={id} onUpdate={handleToggle} />
 </div>
 );
 };
