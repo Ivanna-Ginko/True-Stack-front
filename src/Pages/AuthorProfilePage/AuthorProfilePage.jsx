@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import { fetchAuthorById } from "../../services/api";
 import { selectIsLoggedIn, selectUser } from "../../redux/selectors";
 import { ProfileTabs } from "../../components/ProfileTabs/ProfileTabs";
+import NothingFound from "../../components/NothingFound/NothingFound.jsx";
 
 const AuthorProfilePage = () => {
   const title = "My Profile";
@@ -31,7 +32,7 @@ const AuthorProfilePage = () => {
     console.log(totalItems);
   };
 
-    const config = {
+  const config = {
     params: {
       ownerId: userId,
     },
@@ -49,7 +50,6 @@ const AuthorProfilePage = () => {
     };
     getAuthorData();
   }, [userId]);
-
 
   return (
     <div>
@@ -83,7 +83,10 @@ const AuthorProfilePage = () => {
         {isMyPage ? (
           <div></div>
         ) : (
-          <ArticlesList config={config} onTotalItemsChange={handleTotalItemsChange} />
+          <ArticlesList
+            config={config}
+            onTotalItemsChange={handleTotalItemsChange}
+          />
         )}
         <LoadMore />
       </Container>
