@@ -1,0 +1,32 @@
+.div {
+  background-color: #d1e0d8;
+  padding: 12px;
+  border-radius: 32px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 83px;
+}
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.alert {
+  padding: 13px;
+  width: 64px;
+}
+.desc {
+  line-height: 155%;
+}
+
+@media screen and (min-width: 768px) {
+  .div {
+    width: 514px;
+  }
+}
+@media screen and (min-width: 1440px) {
+  .div {
+    width: 497px;
+  }
+}
