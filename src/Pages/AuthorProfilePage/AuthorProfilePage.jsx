@@ -24,6 +24,18 @@ const AuthorProfilePage = () => {
   const [articlesAmount, setArticlesAmount] = useState(0);
   const [selectedTab, setSelectedTab] = useState("My Articles");
   // const [savedArticles, setSavedArticles] = useState([]);
+  const [totalItems, setTotalItems] = useState(0);
+
+  const handleTotalItemsChange = (count) => {
+    setTotalItems(count);
+    console.log(totalItems);
+  };
+
+    const config = {
+    params: {
+      ownerId: userId,
+    },
+  };
 
   useEffect(() => {
     const getAuthorData = async () => {
@@ -71,7 +83,7 @@ const AuthorProfilePage = () => {
         {isMyPage ? (
           <div></div>
         ) : (
-          <ArticlesList />
+          <ArticlesList config={config} onTotalItemsChange={handleTotalItemsChange} />
         )}
         <LoadMore />
       </Container>
