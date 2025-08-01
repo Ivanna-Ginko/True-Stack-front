@@ -9,7 +9,6 @@ import { useParams } from "react-router-dom";
 import { fetchAuthorById } from "../../services/api";
 import { selectIsLoggedIn, selectUser } from "../../redux/selectors";
 import { ProfileTabs } from "../../components/ProfileTabs/ProfileTabs";
-import SavedArticlesList from "../../components/SavedArticlesList/SavedArticlesList";
 
 const AuthorProfilePage = () => {
   const title = "My Profile";
@@ -75,10 +74,7 @@ const AuthorProfilePage = () => {
           ) : null}
         </div>
         {isMyPage ? (
-          <SavedArticlesList
-            selectedTab={selectedTab}
-            onTotalItemsChange={handleTotalItemsChange}
-          />
+          <div></div>
         ) : (
           <ArticlesList />
         )}
