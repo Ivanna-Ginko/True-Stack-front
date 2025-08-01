@@ -10,19 +10,19 @@ export const deleteAuthorizationHeader = () =>
 
 export const fetchArticles = async (config = {}) => {
   const response = await axios.get('/articles', config);
-  return response
-}
+  return response;
+};
 
-export const fetchArticleById = async (id) =>{
+export const fetchArticleById = async id => {
   const response = await axios.get(`/articles/${id}`);
-  return response
-}
+  return response;
+};
 
 export const registerUser = async formData => {
   const response = await axios.post('/auth/register', formData);
 
-  return response.data.data
-}
+  return response.data.data;
+};
 
 export const fetchAuthors = async () => {
   const response = await axios.get('/users');
@@ -32,10 +32,10 @@ export const fetchAuthors = async () => {
 //Add function to get TopCreators - not sure
 export const fetchPopularAuthors = async () => {
   const response = await axios.get('/authors', {
-    params: { sortBy: 'articlesAmount' }
+    params: { sortBy: 'articlesAmount' },
   });
   return response.data;
-}
+};
 
 export const loginUser = async formData => {
   const response = await axios.post('/auth/login', formData);
@@ -55,11 +55,11 @@ export const getUserData = async () => {
   return response.data.data;
 };
 
-export const logoutUser = async() => {
+export const logoutUser = async () => {
   await axios.post('/auth/logout');
 };
 
-export const fetchAuthorById = async (userId) => {
+export const fetchAuthorById = async userId => {
   const response = await axios.get(`/users/${userId}`);
   return response.data;
 };
@@ -73,14 +73,15 @@ export const getSavedArticles = async () => {
 };
 
 export const addArticleToBookmarks = async articleId => {
-  const response = await axios.post('/saved-articles/add-article', { articleId })
+  const response = await axios.post('/saved-articles', { articleId });
 
-  return response.data.data
-}
+  return response.data.data;
+};
 
 export const deleteArticleFromBookmarks = async articleId => {
-  const response = await axios.delete(`/saved-articles/${articleId}`)
+  const response = await axios.delete(`/saved-articles/${articleId}`, {
+    articleId,
+  });
 
-  return response.data.data
-}
-
+  return response.data.data;
+};
