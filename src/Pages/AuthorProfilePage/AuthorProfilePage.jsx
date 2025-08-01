@@ -26,10 +26,11 @@ const AuthorProfilePage = () => {
   const [selectedTab, setSelectedTab] = useState("My Articles");
   // const [savedArticles, setSavedArticles] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
+  const [totalItemsSaved, setTotalItemsSaved] = useState(0);
 
   const handleTotalItemsChange = (count) => {
     setTotalItems(count);
-    console.log(totalItems);
+    // console.log(totalItems);
   };
 
   const config = {
@@ -43,13 +44,13 @@ const AuthorProfilePage = () => {
       try {
         const res = await fetchAuthorById(userId);
         setAuthorData(res.data);
-        setArticlesAmount(0);
+        setArticlesAmount(totalItems);
       } catch (error) {
         console.error("Помилка при отриманні автора", error);
       }
     };
     getAuthorData();
-  }, [userId]);
+  }, [userId, totalItems]);
 
   return (
     <div>
@@ -81,7 +82,40 @@ const AuthorProfilePage = () => {
           ) : null}
         </div>
         {isMyPage ? (
-          <div></div>
+          <>
+            {selectedTab === "My Articles" && (
+              <>
+                <ArticlesList
+                  config={config}
+                  onTotalItemsChange={handleTotalItemsChange}
+                />
+                {totalItems === 0 && (
+                  <div className={s.nothing}>
+                    <NothingFound
+                    description="Write your first article"
+                    buttonText="Create an article"
+                    buttonLink="/create"
+                  />
+                  </div>
+                )}
+              </>
+            )}
+
+            {selectedTab === "Saved Articles" && (
+              <>
+                <div></div>
+                {totalItemsSaved === 0 && (
+                  <div className={s.nothing}>
+                    <NothingFound
+                    description="Save your first article"
+                    buttonText="Go to articles"
+                    buttonLink="/articles"
+                  />
+                  </div>
+                )}
+              </>
+            )}
+          </>
         ) : (
           <ArticlesList
             config={config}
