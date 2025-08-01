@@ -24,6 +24,10 @@ export const store = configureStore({
   reducer: {
     user: persistedUserReducer,
   },
+  devTools: {
+    trace: true,
+    traceLimit: 20, // how deep the stack trace goes
+  },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
