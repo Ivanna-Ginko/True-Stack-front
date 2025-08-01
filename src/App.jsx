@@ -7,7 +7,7 @@ import ArticlesPage from './Pages/ArticlesPage/ArticlesPage.jsx';
 import ArticlePage from './Pages/ArticlePage/ArticlePage.jsx';
 import AuthorsPage from './Pages/AuthorsPage/AuthorsPage.jsx';
 import AuthorProfilePage from './Pages/AuthorProfilePage/AuthorProfilePage.jsx';
-import CreateArticlePage from './Pages/AuthorProfilePage/AuthorProfilePage.jsx';
+import CreateArticlePage from './Pages/CreateArticlePage/CreateArticlePage.jsx';
 import UploadPhoto from './Pages/UploadPhoto/UploadPhoto.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -29,6 +29,7 @@ function App() {
 
   return (
     <>
+      <ToastContainer position="top-right" autoClose={3000} />
       <Header />
       <Routes>
         <Route

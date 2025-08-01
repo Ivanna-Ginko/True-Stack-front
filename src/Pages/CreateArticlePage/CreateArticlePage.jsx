@@ -1,14 +1,13 @@
 import React from 'react'
-import AddArticleForm from '../../components/AddArticleForm/AddArticleForm'
+import Container from '../../components/container/Container';
+import AddArticleForm from '../../components/AddArticleForm/AddArticleForm';
 
 const CreateArticlePage = () => {
   return (
-    <>
-    <div>CreateArticleForm</div>
-
-    <AddArticleForm />
-    </>
-  )
+    <Container>
+      <AddArticleForm />
+    </Container>
+  );
 }
 
-export default CreateArticlePage
+export default CreateArticlePage;

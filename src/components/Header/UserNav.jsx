@@ -1,48 +1,79 @@
-import React from "react";
+import React, { useState } from "react";
 import s from './Header.module.css';
-import { useSelector } from "react-redux";
-import { Link, NavLink } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import divider from '../../assets/icons/divider.svg';
 import logoutIcon from '../../assets/icons/exit.svg';
 import AppLink from '../AppLink/AppLink';
+import { logoutUser } from '../../redux/operations';
+import { toast } from "react-toastify";
+import ModalNotification from "../ModalErrorSave/ModalErrorSave";
 
 const UserNav = () => {
-    const user = useSelector(state => state.auth.user);
-    const handleLogout = () => {
-        console.log('Logout clicked');
-    }
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const user = useSelector(state => state.user?.user);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+
+    const handleLogout = async () => {
+        try {
+            await dispatch(logoutUser()).unwrap();
+        } catch (error) {
+            toast.error(`Logout failed. ${error.message}`);
+        } finally {
+            localStorage.clear();
+            closeModal();
+            navigate("/login");
+        }
+    };
+
     const navLink = ({ isActive }) =>
         isActive ? s.activeLink : s.navLink;
     return (
-        <nav className={s.nav}>
-            <NavLink to="/" className={navLink}>Home</NavLink>
-            <NavLink to="/articles" className={navLink}>Articles</NavLink>
-            <NavLink to="/creators" className={navLink}>Creators</NavLink>
-            <NavLink to="/profile" className={navLink}>My Profile</NavLink>
-            <div  className={`${s.createBtn} ${s.desktopOnly}`}>
-                <AppLink variant="fill" size="lg" to="/create-article" > 
-                    Create an article
-                </AppLink>
-            </div>
-            {user && (
-                <div className={s.userBlock}>
-                    <AppLink variant='link' to={`/authors/${user.id}`}>
-                        {user.avatarUrl && (
-                            <img
-                                src={user.avatarUrl}
-                                alt={user.name}
-                                className={s.avatar}
-                            />
-                        )}
-                        <span className={s.userName}>{user?.name}</span>
+       <>
+            <nav className={s.nav}>
+                <NavLink to="/" className={navLink}>Home</NavLink>
+                <NavLink to="/articles" className={navLink}>Articles</NavLink>
+                <NavLink to="/creators" className={navLink}>Creators</NavLink>
+                <NavLink to="/profile" className={navLink}>My Profile</NavLink>
+                <div  className={`${s.createBtn} ${s.desktopOnly}`}>
+                    <AppLink variant="fill" size="lg"  to={'/create'} > 
+                        Create an article
                     </AppLink>
-                    <img src={divider} alt="divider" className={s.divider} />
-                    <button className={s.logoBtn} onClick={handleLogout}>
-                        <img src={logoutIcon} alt="Logout" className={s.logoutImg} />
-                    </button>
                 </div>
+                {user && (
+                    <div className={s.userBlock}>
+                        <AppLink variant='link' to={`/authors/${user.id}`}>
+                            {user.avatarUrl && (
+                                <img
+                                    src={user.avatarUrl}
+                                    alt={user.name}
+                                    className={s.avatar}
+                                />
+                            )}
+                            <span className={s.userName}>{user?.name}</span>
+                        </AppLink>
+                        <img src={divider} alt="divider" className={s.divider} />
+                        <button className={s.logoBtn} onClick={openModal}>
+                            <img src={logoutIcon} alt="Logout" className={s.logoutImg} />
+                        </button>
+                    </div>
+                )}
+            </nav>
+            {isModalOpen && (
+                <ModalNotification
+                    isOpen={isModalOpen}
+                    onClose={closeModal}
+                    title='Are you sure?'
+                    text='We will miss you!'
+                    onConfirm={handleLogout}
+                    logOut={true}
+                />
             )}
-        </nav>
+       </>
     );
 };
 export default UserNav;
