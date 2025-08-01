@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import LoadMore from '../../components/LoadMore/LoadMore'
 import AuthorsList from '../../components/AuthorsList/AuthorsList'
 import { useNavigate } from 'react-router-dom';
 import { fetchAuthors } from '../../services/api';
+import Pagination from '../../components/Pagination/Pagination';
+import Container from '../../components/container/Container';
+import css from './AuthorsPage.module.css';
+
 
 
 const AuthorsPage = () => {
@@ -37,9 +40,13 @@ const AuthorsPage = () => {
 
   return (
     <>
-      <h1>Authors</h1>
-      <AuthorsList authors={authors} onAuthCardClick={handleAuthorClick} />
-      <LoadMore />
+      <Container>
+        <h1 className={css.title}>Authors</h1>
+
+        <AuthorsList authors={authors} onAuthCardClick={handleAuthorClick} />
+
+        <Pagination />
+      </Container>
     </>
   )
 }

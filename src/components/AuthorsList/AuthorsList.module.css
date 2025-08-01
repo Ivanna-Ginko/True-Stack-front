@@ -1,0 +1,22 @@
+.list {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 361px;
+}
+
+@media (min-width: 768px) and (max-width: 1439px) {
+    .list {
+        padding-left: 54px;
+        padding-right: 54px;
+        gap: 24px;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (min-width: 1440px) {
+    .list {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
