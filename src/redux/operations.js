@@ -25,7 +25,7 @@ export const registerUser = createAsyncThunk(
     } catch (axiosError) {
       const errStatus = axiosError.response?.status;
       const apiError = axiosError.response?.data;
-      
+
       if (errStatus === 409) {
         const errorMessage = apiError?.data?.message;
         return rejectWithValue({ message: errorMessage });

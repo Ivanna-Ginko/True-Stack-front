@@ -56,7 +56,7 @@ const UploadForm = ({ formData }) => {
     });
     
     // Append avatar file
-    formDataInstance.append('avatar', file || '');
+    formDataInstance.append('avatarUrl', file || '');
     
     try {
       await dispatch(registerUser(formDataInstance)).unwrap();
