@@ -3,6 +3,8 @@ import LoadMore from '../../components/LoadMore/LoadMore'
 import AuthorsList from '../../components/AuthorsList/AuthorsList'
 import { useNavigate } from 'react-router-dom';
 import { fetchAuthors } from '../../services/api';
+import Container from '../../components/container/Container';
+import SectionTitle from '../../components/SectionTitle/SectionTitle';
 
 
 const AuthorsPage = () => {
@@ -37,9 +39,11 @@ const AuthorsPage = () => {
 
   return (
     <>
-      <h1>Authors</h1>
+    <Container>
+      <SectionTitle  title = {'Authors'}/>
       <AuthorsList authors={authors} onAuthCardClick={handleAuthorClick} />
       <LoadMore />
+      </Container>
     </>
   )
 }
