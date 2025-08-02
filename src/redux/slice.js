@@ -35,18 +35,10 @@ const slice = createSlice({
         ...state,
         ...action.payload,
       }))
-      .addCase(registerUser.rejected, (state, action) => ({
-        ...state,
-        error: action.payload || action.error,
-      }))
 
       .addCase(loginUser.fulfilled, (state, action) => ({
         ...state,
         ...action.payload,
-      }))
-      .addCase(loginUser.rejected, (state, action) => ({
-        ...state,
-        error: action.payload || action.error,
       }))
 
       .addCase(getUserData.fulfilled, (state, action) => ({

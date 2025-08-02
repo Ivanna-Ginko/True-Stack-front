@@ -66,7 +66,7 @@ export const getSavedArticles = async () => {
 };
 
 export const addArticleToBookmarks = async articleId => {
-  const response = await axios.post('/saved-articles', {
+  const response = await axios.post('/users/saved-articles', {
     articleId,
   });
 
@@ -74,7 +74,7 @@ export const addArticleToBookmarks = async articleId => {
 };
 
 export const deleteArticleFromBookmarks = async articleId => {
-  const response = await axios.delete(`/saved-articles/${articleId}`, {
+  const response = await axios.delete(`/users/saved-articles/${articleId}`, {
     articleId,
   });
 

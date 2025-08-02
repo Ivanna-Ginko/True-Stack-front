@@ -78,16 +78,16 @@ export const loginUser = createAsyncThunk(
         return rejectWithValue({ message: apiError.message });
       }
 
-      const errors = apiError.data;
+      // const errors = apiError.data;
 
-      if (errStatus === 400 && Array.isArray(errors)) {
-        const fieldErrorObjects = errors.map(err => ({
-          message: err.message,
-          field: err.path[0],
-        }));
+      // if (errStatus === 400 && Array.isArray(errors)) {
+      //   const fieldErrorObjects = errors.map(err => ({
+      //     message: err.message,
+      //     field: err.path[0],
+      //   }));
 
-        return rejectWithValue([fieldErrorObjects]);
-      }
+      //   return rejectWithValue([fieldErrorObjects]);
+      // }
 
       return rejectWithValue({
         message: 'Something went wrong. Try again later.',
