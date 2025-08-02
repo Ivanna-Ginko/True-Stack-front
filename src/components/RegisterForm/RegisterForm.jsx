@@ -23,10 +23,10 @@ const RegisterForm = () => {
   });
   const [preservedPhoto, setPreservedPhoto] = useState(null);
 
-  // Clear any existing errors when component mounts
-  useEffect(() => {
-    dispatch(authActions.clearError());
-  }, [dispatch]);
+  // // Clear any existing errors when component mounts
+  // useEffect(() => {
+  //   dispatch(authActions.clearError());
+  // }, [dispatch]);
 
   // Prefill form if redirected from UploadForm with error
   useEffect(() => {
