@@ -35,6 +35,9 @@
   font-weight: 700;
   font-size: 18px;
 }
+.nothing {
+  margin-top: 42px;
+}
 
 @media screen and (min-width: 768px) {
   .authorAvatar {
@@ -45,6 +48,12 @@
     font-weight: 700;
     font-size: 18px;
   }
+  .nothing {
+    margin-top: 32px;
+  }
 }
 @media screen and (min-width: 1440px) {
+	.nothing {
+    margin-top: 8px;
+  }
 }
