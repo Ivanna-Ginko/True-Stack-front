@@ -65,8 +65,8 @@ export const fetchAuthorById = async userId => {
 //   return response.data;
 // };
 export const getSavedArticles = async () => {
-  const response = await axios.get('/user/saved-articles');
-  return response.data.data;
+  const response = await axios.get("/users/saved-articles");
+  return response.data;
 };
 
 export const addArticleToBookmarks = async articleId => {
