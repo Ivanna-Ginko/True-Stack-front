@@ -1,56 +1,83 @@
-import React, { useState, useEffect } from 'react'
-import ArticlesList from '../../components/ArticlesList/ArticlesList'
-import SectionTitle from '../../components/SectionTitle/SectionTitle'
-import css from './ArticlesPage.module.css'
-import ArticleListSelect from '../../components/ArticleListSelect/ArticleListSelect'
-import Container from '../../components/container/Container'
-import LoadMore from '../../components/LoadMore/LoadMore'
-
+import React, { useState, useEffect } from 'react';
+import ArticlesList from '../../components/ArticlesList/ArticlesList';
+import SectionTitle from '../../components/SectionTitle/SectionTitle';
+import css from './ArticlesPage.module.css';
+import ArticleListSelect from '../../components/ArticleListSelect/ArticleListSelect';
+import Container from '../../components/container/Container';
+import LoadMore from '../../components/LoadMore/LoadMore';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../redux/selectors';
+import { fetchArticles } from '../../services/api.js';
+import { toast } from 'react-toastify';
+import { Loader } from '../../components/Loader/Loader'; // ✅ не забудь импорт
+import NothingFound from '../../components/NothingFound/NothingFound.jsx'
 
 const ArticlesPage = () => {
   const title = 'Articles';
-  const [selectedFilter, setSelectedFilter] = useState('Popular'); 
-  const [config, setConfig] = useState({});
-  console.log(selectedFilter)
-  const [totalItems, setTotalItems] = useState(0);
+  const [selectedFilter, setSelectedFilter] = useState('Popular');
+  const [articleList, setArticleList] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const handleSelectChange = (value) => {
-  setSelectedFilter(value);
-};
+    setSelectedFilter(value);
+  };
+
+  const user = useSelector(selectUser);
 
   useEffect(() => {
-  if (selectedFilter === 'Popular') {
-    setConfig({
-      params: { sortBy: 'rate' },
-    });
-  } else {
-    setConfig({});
-  }
-}, [selectedFilter]);
+    const getArticles = async () => {
+      try {
+        setIsLoading(true);
+        setIsError(false);
+        const config = selectedFilter === 'Popular'
+          ? { params: { sortBy: 'rate' } }
+          : {};
+        const response = await fetchArticles(config);
+        setArticleList(response.data.data);
+        
+      } catch (error) {
+        setIsError(true);
+        toast.warning('No articles found', {
+          style: {
+            backgroundColor: 'rgba(209, 224, 216, 1)',
+            color: '#333',
+          },
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-const handleTotalItemsChange = (count) => {
-  setTotalItems(count);
+    getArticles();
+  }, [selectedFilter]);
+
+  const articlesArr = articleList?.data || [];
+  const totalItems = articleList?.totalItems || 0;
+
+  return (
+    <Container>
+      <SectionTitle title={title} />
+      <div className={css.box}>
+        <p className={css.quantity}>{totalItems} articles</p>
+        <div style={{ width: '169px' }}>
+          <ArticleListSelect onChange={handleSelectChange} />
+        </div>
+      </div>
+
+      {isLoading && <Loader />}
+      {!isLoading && articlesArr.length > 0 && (
+        <>
+          <ArticlesList articles={articlesArr} user={user} />
+          <LoadMore />
+        </>
+      )}
+
+      {!isLoading && !articlesArr.length && !isError && (
+        <NothingFound/>
+      )}
+    </Container>
+  );
 };
 
-//рендеримо список
-  return (
-    <>
-      <Container>
-        <SectionTitle title={title}/>
-        <div className={css.box}>
-          <p className={css.quantity}>{totalItems} articles</p>
-          <div style={{ width: '169px' }}>
-            <ArticleListSelect onChange={handleSelectChange}/>
-          </div>
-        </div>
-        <ArticlesList config={config} onTotalItemsChange={handleTotalItemsChange}/>
-        <LoadMore />
-      </Container>
-    </>
-  )
-}
-
-
-
-
-export default ArticlesPage
+export default ArticlesPage;

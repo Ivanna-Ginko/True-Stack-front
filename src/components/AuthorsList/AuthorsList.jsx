@@ -1,6 +1,9 @@
-import React from 'react';
-import AuthorsItem from '../AuthorsItem/AuthorsItem';
-import css from './AuthorsList.module.css';
+
+import React from 'react'
+import AuthorsItem from '../AuthorsItem/AuthorsItem'
+import css from './AuthorsList.module.css'
+import { Loader } from '../Loader/Loader'
+
 
 const AuthorsList = ({ authors, onAuthCardClick, imgSize }) => {
 
@@ -10,8 +13,9 @@ const AuthorsList = ({ authors, onAuthCardClick, imgSize }) => {
 
   return (
     <>
+
       <ul className={css.list}>
-        {authors.map((item) => (
+    {authors && authors.map((item) => (
           <li key={item._id}>
             <div>
               <AuthorsItem
