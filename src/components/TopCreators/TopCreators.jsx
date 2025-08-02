@@ -14,18 +14,13 @@ const TopCreators = () => {
       try {
         // const response = await fetchPopularAuthors();        
         const response = await fetchAuthors();                
-        setTopCreators(response.data?.slice(0, 6) || []);        
-        //console.log('Response = ', response);
-        //console.log('topCreators =', topCreators);
+        setTopCreators(response.data?.slice(0, 6) || []);                
       } catch (err) {
         console.log('Error loading TopCreators', err.message);
       }
     };
     getTopCreators();
   }, []);
-  useEffect(() => {
-    console.log('topCreators =', topCreators);
-  }, [topCreators]);
   
   return (
     <>

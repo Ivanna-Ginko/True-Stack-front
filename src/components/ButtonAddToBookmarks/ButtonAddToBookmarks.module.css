@@ -13,7 +13,7 @@
   transition: all 0.3s ease;
 }
 
-.buttonSaved {
+.button.saved {
   background-color: #649179;
   border: none;
 }

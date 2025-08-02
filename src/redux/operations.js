@@ -25,9 +25,9 @@ export const registerUser = createAsyncThunk(
     } catch (axiosError) {
       const errStatus = axiosError.response?.status;
       const apiError = axiosError.response?.data;
-
       if (errStatus === 409) {
-        return rejectWithValue({ message: apiError.message });
+        const errorMessage = apiError?.data?.message;
+        return rejectWithValue({ message: errorMessage });
       }
 
       const errors = apiError.data;
@@ -97,30 +97,29 @@ export const loginUser = createAsyncThunk(
 
 export const logoutUser = createAsyncThunk(
   'user/logout',
-  async (_, {rejectWithValue}) => {
+  async (_, { rejectWithValue }) => {
     try {
-      await api.logoutUser()
+      await api.logoutUser();
     } catch {
-      return rejectWithValue('')
+      return rejectWithValue('');
     }
   }
-)
+);
 
-export const refreshUser = createAsyncThunk(
-  'user/refreshUser',
+export const getUserData = createAsyncThunk(
+  'user/getUserData',
   async (_, thunkAPI) => {
-    try {
-      const data = await api.refreshUser();
-      const {
-        user: { _id: id, name, avatar },
-        accessToken,
-      } = data;
+    const state = thunkAPI.getState();
+    const { accessToken } = state.user;
 
-      api.setAuthorizationHeader(accessToken);
+    api.setAuthorizationHeader(accessToken);
+
+    try {
+      const data = await api.getUserData();
+      const { _id: id, name, avatar } = data;
 
       return {
         user: { id, name, avatar },
-        accessToken,
       };
     } catch {
       await thunkAPI.dispatch(logoutUser());
