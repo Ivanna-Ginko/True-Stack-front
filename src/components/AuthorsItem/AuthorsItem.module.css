@@ -1,6 +1,11 @@
 .img {
-width: 148px;
+
 border-radius: 50%;
+}
+
+.img_default,
+.img_tc {
+    width: 148px;
 }
 
 .text {
@@ -12,8 +17,12 @@ padding-top: 16px;
 }
 
 @media only screen and (min-width: 768px) {
-    .img { 
+.img_default { 
     width: 262px;
-    }
+}
+
+.img_tc {
+    width: 160px;
+}
 }
 
