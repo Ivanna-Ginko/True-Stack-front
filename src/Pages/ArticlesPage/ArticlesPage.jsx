@@ -15,7 +15,7 @@ import NothingFound from '../../components/NothingFound/NothingFound.jsx'
 const ArticlesPage = () => {
   const title = 'Articles';
   const [selectedFilter, setSelectedFilter] = useState('Popular');
-  const [articleList, setArticleList] = useState(null);
+  const [articleList, setArticleList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -64,7 +64,6 @@ const ArticlesPage = () => {
           <ArticleListSelect onChange={handleSelectChange} />
         </div>
       </div>
-
       {isLoading && <Loader />}
       {!isLoading && articlesArr.length > 0 && (
         <>
