@@ -1,6 +1,7 @@
 import React from 'react'
 import AuthorsItem from '../AuthorsItem/AuthorsItem'
 import css from './AuthorsList.module.css'
+import { Loader } from '../Loader/Loader'
 
 const AuthorsList = ({ authors, onAuthCardClick }) => {
 
@@ -10,8 +11,9 @@ const AuthorsList = ({ authors, onAuthCardClick }) => {
 
   return (
     <>
+
       <ul className={css.list}>
-        {authors.map((item) => (
+    {authors && authors.map((item) => (
           <li key={item._id}>
             <div>
               <AuthorsItem item={item} onAuthCardClick={onAuthCardClick} />
