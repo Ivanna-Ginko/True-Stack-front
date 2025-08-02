@@ -1,0 +1,32 @@
+.loadmore {
+    margin-top: 24px;
+    margin-bottom: 46px;
+    display: flex;    
+    justify-content: center;
+}
+
+.loadmore button {
+    width: 100%;
+    max-width: 361px;
+} 
+
+@media only screen and (min-width: 768px) {
+
+.loadmore button {    
+    max-width: 289px;
+}     
+}
+
+@media only screen and (min-width: 1440px) {
+
+.loadmore {
+    margin-top: 24px;
+    margin-bottom: 48px;
+    display: flex;    
+    justify-content: center;
+}
+
+.loadmore button {
+    max-width: 390px;
+}
+}
