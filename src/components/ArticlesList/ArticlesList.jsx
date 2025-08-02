@@ -11,7 +11,7 @@ const ArticlesList = ({ articles, user }) => {
  //${hideFourthOnDesktop ? css.hideFourth : ''}
     return(
       <ul className={`${css.list} `}>
-      {articles.map(article => { 
+      {Array.isArray(articles) && articles.map(article => { 
         const isAuthor = article.author === user?.user?.id;
         const isSaved = isAuthor && user.savedArticles?.includes(article.id);        
         return(
