@@ -4,15 +4,15 @@ import AppLink from '../AppLink/AppLink';
 import Container from '../container/Container';
 import AuthorsList from '../AuthorsList/AuthorsList';
 import svg from '../../assets/icons/arrow.svg';
-import { fetchPopularAuthors } from '../../services/api';
+import { fetchAuthors } from '../../services/api';
 
 const TopCreators = () => {
   const [topCreators, setTopCreators] = useState([]);
   useEffect(()=>{
     const getTopCreators = async () =>{
       try {
-        const response = await fetchPopularAuthors();
-        setTopCreators(response.data);
+        const response = await fetchAuthors();        
+        setTopCreators(response.data.slice(0, 6));        
       } catch (err) {
         console.log('Error loading TopCreators', err.message);
       }
