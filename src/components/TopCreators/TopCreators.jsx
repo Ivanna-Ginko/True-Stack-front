@@ -32,8 +32,8 @@ const TopCreators = () => {
                 <img src={svg} alt="arrow icon" />
               </AppLink>
             </div>
-          </div>
-          <AuthorsList authors={topCreators} />
+          </div>          
+            <AuthorsList authors={topCreators} imgSize="tc" />          
         </div>
       </Container>
     </>    
