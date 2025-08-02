@@ -1,18 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   addArticleToBookmarks,
-  refreshUser,
   loginUser,
   registerUser,
   removeArticleFromBookmarks,
   logoutUser,
+  getUserData,
 } from './operations';
 
 const initialState = {
   user: {
     id: '',
     name: '',
-    avatar: '',
+    avatarUrl: '',
   },
   savedArticles: [],
   accessToken: '',
@@ -25,6 +25,9 @@ const slice = createSlice({
   initialState,
   reducers: {
     logoutUser: () => ({ ...initialState, isFetchingUser: false }),
+    clearError: state => ({
+      ...state,
+    }),
   },
   extraReducers: builder => {
     builder
@@ -32,10 +35,24 @@ const slice = createSlice({
         ...state,
         ...action.payload,
       }))
+      .addCase(registerUser.rejected, (state, action) => ({
+        ...state,
+        error: action.payload || action.error,
+      }))
 
       .addCase(loginUser.fulfilled, (state, action) => ({
         ...state,
         ...action.payload,
+      }))
+      .addCase(loginUser.rejected, (state, action) => ({
+        ...state,
+        error: action.payload || action.error,
+      }))
+
+      .addCase(getUserData.fulfilled, (state, action) => ({
+        ...state,
+        ...action.payload,
+        isFetchingUser: false,
       }))
 
       .addCase(logoutUser.fulfilled, () => ({
@@ -44,12 +61,6 @@ const slice = createSlice({
       }))
       .addCase(logoutUser.rejected, () => ({
         ...initialState,
-        isFetchingUser: false,
-      }))
-
-      .addCase(refreshUser.fulfilled, (state, action) => ({
-        ...state,
-        ...action.payload,
         isFetchingUser: false,
       }))
 

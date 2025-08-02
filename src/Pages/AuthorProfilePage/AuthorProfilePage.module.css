@@ -1,0 +1,59 @@
+.box {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-bottom: 8px;
+}
+.aboutAuthorShifted {
+  padding-top: 46px;
+}
+.aboutAuthor {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.authorAvatar {
+  width: 124px;
+  height: 124px;
+  border-radius: 50%;
+}
+.authorInfo {
+  max-width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.authorName {
+  font-size: 32px;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.articlesAmount {
+  font-weight: 700;
+  font-size: 18px;
+}
+.nothing {
+  margin-top: 42px;
+}
+
+@media screen and (min-width: 768px) {
+  .authorAvatar {
+    width: 137px;
+    height: 137px;
+  }
+  .articlesAmount {
+    font-weight: 700;
+    font-size: 18px;
+  }
+  .nothing {
+    margin-top: 32px;
+  }
+}
+@media screen and (min-width: 1440px) {
+	.nothing {
+    margin-top: 8px;
+  }
+}

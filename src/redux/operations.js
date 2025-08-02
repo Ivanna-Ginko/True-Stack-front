@@ -3,7 +3,7 @@ import * as api from '../services/api';
 
 /**
  * @param {formData}
- * @returns {Promise<{user: {id: string, name: string, avatar: string}, accessToken: string}>}
+ * @returns {Promise<{user: {id: string, name: string, avatarUrl: string}, accessToken: string}>}
  * @throws {{message: string} | Array<{message: string, field: string}>}
  */
 export const registerUser = createAsyncThunk(
@@ -12,14 +12,14 @@ export const registerUser = createAsyncThunk(
     try {
       const data = await api.registerUser(formData);
       const {
-        user: { _id: id, name, avatar },
+        user: { _id: id, name, avatarUrl },
         accessToken,
       } = data;
 
       api.setAuthorizationHeader(accessToken);
 
       return {
-        user: { id, name, avatar },
+        user: { id, name, avatarUrl },
         accessToken,
       };
     } catch (axiosError) {
@@ -27,19 +27,20 @@ export const registerUser = createAsyncThunk(
       const apiError = axiosError.response?.data;
 
       if (errStatus === 409) {
-        return rejectWithValue({ message: apiError.message });
+        const errorMessage = apiError?.data?.message;
+        return rejectWithValue({ message: errorMessage });
       }
 
-      const errors = apiError.data;
+      // const errors = apiError.data;
 
-      if (errStatus === 400 && Array.isArray(errors)) {
-        const fieldErrorObjects = errors.map(err => ({
-          message: err.message,
-          field: err.path[0],
-        }));
+      // if (errStatus === 400 && Array.isArray(errors)) {
+      //   const fieldErrorObjects = errors.map(err => ({
+      //     message: err.message,
+      //     field: err.path[0],
+      //   }));
 
-        return rejectWithValue([fieldErrorObjects]);
-      }
+      //   return rejectWithValue([fieldErrorObjects]);
+      // }
 
       return rejectWithValue({
         message: 'Something went wrong. Try again later.',
@@ -50,7 +51,7 @@ export const registerUser = createAsyncThunk(
 
 /**
  * @param {formData}
- * @returns {Promise<{user: {id: string, name: string, avatar: string}, accessToken: string}>}
+ * @returns {Promise<{user: {id: string, name: string, avatarUrl: string}, accessToken: string}>}
  * @throws {{message: string} | Array<{message: string, field: string}>}
  */
 export const loginUser = createAsyncThunk(
@@ -59,14 +60,14 @@ export const loginUser = createAsyncThunk(
     try {
       const data = await api.loginUser(formData);
       const {
-        user: { _id: id, name, avatar },
+        user: { _id: id, name, avatarUrl },
         accessToken,
       } = data;
 
       api.setAuthorizationHeader(accessToken);
 
       return {
-        user: { id, name, avatar },
+        user: { id, name, avatarUrl },
         accessToken,
       };
     } catch (axiosError) {
@@ -97,30 +98,29 @@ export const loginUser = createAsyncThunk(
 
 export const logoutUser = createAsyncThunk(
   'user/logout',
-  async (_, {rejectWithValue}) => {
+  async (_, { rejectWithValue }) => {
     try {
-      await api.logoutUser()
+      await api.logoutUser();
     } catch {
-      return rejectWithValue('')
+      return rejectWithValue('');
     }
   }
-)
+);
 
-export const refreshUser = createAsyncThunk(
-  'user/refreshUser',
+export const getUserData = createAsyncThunk(
+  'user/getUserData',
   async (_, thunkAPI) => {
-    try {
-      const data = await api.refreshUser();
-      const {
-        user: { _id: id, name, avatar },
-        accessToken,
-      } = data;
+    const state = thunkAPI.getState();
+    const { accessToken } = state.user;
 
-      api.setAuthorizationHeader(accessToken);
+    api.setAuthorizationHeader(accessToken);
+
+    try {
+      const data = await api.getUserData();
+      const { _id: id, name, avatarUrl } = data;
 
       return {
-        user: { id, name, avatar },
-        accessToken,
+        user: { id, name, avatarUrl },
       };
     } catch {
       await thunkAPI.dispatch(logoutUser());

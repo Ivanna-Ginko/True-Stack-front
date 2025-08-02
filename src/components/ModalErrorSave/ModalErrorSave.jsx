@@ -36,8 +36,8 @@ const ModalNotification = ({
             <path
               d="M5.25 5.25L12 12M12 12L5.25 18.75M12 12L18.75 18.75M12 12L18.75 5.25"
               stroke="#070721"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </button>
@@ -64,7 +64,7 @@ const ModalNotification = ({
                 onClose();
               }}
             >
-              Cansel
+              Cancel
             </button>
           </div>
         )}
