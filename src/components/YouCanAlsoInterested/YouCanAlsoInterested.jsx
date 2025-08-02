@@ -55,13 +55,14 @@ return (
                 </div>
             )}
         </p>
+        <p><span className={s.span}>Publication date:</span> {isLoading ? (<Loader variant="skeleton" small inline/>) : formatDate(publishDate)}</p> 
         <h3>You may also be interested</h3>
     </div>
     <ul className={s.list}>
         {isLoading
             ? [1, 2, 3].map(i => (
                 <li key={i} className={s.listStyle}>
-                <Loader variant="skeleton" small className={s.inline} />
+                <Loader variant="skeleton" small inline />
                 </li>
         ))
             : articlesList.map(article => (
