@@ -29,11 +29,6 @@ export const fetchAuthors = async () => {
   return response.data;
 };
 
-export const fetchPopularAuthors = async () => {
-  const response = await axios.get('/users/top-by-articles-rating');
-  return response.data;
-}
-
 export const loginUser = async formData => {
   const response = await axios.post('/auth/login', formData);
 
