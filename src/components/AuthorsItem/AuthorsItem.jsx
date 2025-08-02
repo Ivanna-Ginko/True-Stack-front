@@ -11,7 +11,7 @@ const firstName = fullName.split(' ')[0]
 console.log(firstName)
 
   return (
-    <div onClick={handleClick}>
+    <div onClick={handleClick} className={css.itemwrapper}>
       <img
         src={item.avatarUrl}
         className={clsx(css.img, css[`img_${imgSize}`])}

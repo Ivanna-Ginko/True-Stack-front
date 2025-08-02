@@ -1,6 +1,9 @@
-.img {
+.itemwrapper {
+    padding: 12px;
+}
 
-border-radius: 50%;
+.img {
+    border-radius: 50%;
 }
 
 .img_default,
