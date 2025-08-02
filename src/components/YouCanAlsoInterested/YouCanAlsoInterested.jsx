@@ -7,7 +7,7 @@ import s from './YouCanAlsoInterested.module.css'
 import { Loader } from '../Loader/Loader';
 import AppLink from '../AppLink/AppLink';
 
-const YouCanAlsoInterested = ({ id, isSaved = false, config, author, publishDate }) => {
+const YouCanAlsoInterested = ({ id, isSaved = false, config, author, publishDate, }) => {
 const [articlesList, setArticlesList] = useState([]);
 const [saved, setSaved] = useState(isSaved);
 const [isLoading, setIsLoading] = useState(false);
@@ -55,13 +55,14 @@ return (
                 </div>
             )}
         </p>
+        <p><span className={s.span}>Publication date:</span> {isLoading ? (<Loader variant="skeleton" small inline/>) : formatDate(publishDate)}</p> 
         <h3>You may also be interested</h3>
     </div>
     <ul className={s.list}>
         {isLoading
             ? [1, 2, 3].map(i => (
                 <li key={i} className={s.listStyle}>
-                <Loader variant="skeleton" small className={s.inline} />
+                <Loader variant="skeleton" small inline />
                 </li>
         ))
             : articlesList.map(article => (
@@ -78,7 +79,8 @@ return (
     <ButtonAddToBookmarks 
         articleId={id} 
         onUpdate={handleToggle}
-        variant={saved ? "saved" : 'default'}
+            variant={saved ? "saved" : 'default'}
+            isWideStyle={true}
     /> 
 </div>
 );
