@@ -10,6 +10,7 @@ import { fetchAuthorById } from "../../services/api";
 import { selectIsLoggedIn, selectUser } from "../../redux/selectors";
 import { ProfileTabs } from "../../components/ProfileTabs/ProfileTabs";
 import NothingFound from "../../components/NothingFound/NothingFound.jsx";
+import { Loader } from "../../components/Loader/Loader.jsx";
 
 const AuthorProfilePage = () => {
   const title = "My Profile";
@@ -21,6 +22,7 @@ const AuthorProfilePage = () => {
 
   const isMyPage = isAuthenticated && loggedInUserId === userId;
 
+  const [isLoading, setIsLoading] = useState(false);
   const [authorData, setAuthorData] = useState(null);
   const [articlesAmount, setArticlesAmount] = useState(0);
   const [selectedTab, setSelectedTab] = useState("My Articles");
@@ -42,11 +44,14 @@ const AuthorProfilePage = () => {
   useEffect(() => {
     const getAuthorData = async () => {
       try {
+        setIsLoading(true);
         const res = await fetchAuthorById(userId);
         setAuthorData(res.data);
         setArticlesAmount(totalItems);
       } catch (error) {
         console.error("Помилка при отриманні автора", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     getAuthorData();
@@ -55,6 +60,7 @@ const AuthorProfilePage = () => {
   return (
     <div>
       <Container>
+        {isLoading && <Loader />}
         <div className={s.box}>
           {isMyPage ? <SectionTitle title={title} /> : null}
           {authorData && (
@@ -92,10 +98,10 @@ const AuthorProfilePage = () => {
                 {totalItems === 0 && (
                   <div className={s.nothing}>
                     <NothingFound
-                    description="Write your first article"
-                    buttonText="Create an article"
-                    buttonLink="/create"
-                  />
+                      description="Write your first article"
+                      buttonText="Create an article"
+                      buttonLink="/create"
+                    />
                   </div>
                 )}
               </>
@@ -107,10 +113,10 @@ const AuthorProfilePage = () => {
                 {totalItemsSaved === 0 && (
                   <div className={s.nothing}>
                     <NothingFound
-                    description="Save your first article"
-                    buttonText="Go to articles"
-                    buttonLink="/articles"
-                  />
+                      description="Save your first article"
+                      buttonText="Go to articles"
+                      buttonLink="/articles"
+                    />
                   </div>
                 )}
               </>
