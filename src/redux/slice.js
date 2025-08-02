@@ -12,7 +12,7 @@ const initialState = {
   user: {
     id: '',
     name: '',
-    avatar: '',
+    avatarUrl: '',
   },
   savedArticles: [],
   accessToken: '',

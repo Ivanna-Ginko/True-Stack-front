@@ -1,37 +1,89 @@
-// import React, { useState } from 'react';
+// import React, { useState, useEffect } from 'react';
+// import { useSelector } from 'react-redux';
 // import clsx from 'clsx';
 // import { toast } from 'react-toastify';
 // import ModalNotification from '../ModalErrorSave/ModalErrorSave';
 // import { addArticleToBookmarks, deleteArticleFromBookmarks } from '../../services/api';
+// import { selectIsLoggedIn } from '../../redux/selectors';
 // import s from './ButtonAddToBookmarks.module.css';
 
-
-// const ButtonAddToBookmarks = ({ isAuthenticated, articleId, variant = 'default', styleVariant = 'primary', isWideStyle = false, }) => {
+// const ButtonAddToBookmarks = ({
+//   articleId,
+//   savedArticles = [],
+//   variant = 'default',
+//   styleVariant = 'primary',
+//   isWideStyle = false,
+// }) => {
+//   const isLoggedIn = useSelector(selectIsLoggedIn);
 //   const [isModalOpen, setIsModalOpen] = useState(false);
 //   const [loading, setLoading] = useState(false);
 //   const [bookmarkStatus, setBookmarkStatus] = useState(variant);
+//   const [localSavedArticles, setLocalSavedArticles] = useState([]);
+
+  
+//   useEffect(() => {
+//     console.log('useEffect: Checking savedArticles', JSON.stringify({ articleId, savedArticles }, null, 2));
+//     if (savedArticles.includes(articleId)) {
+//       setBookmarkStatus('saved');
+//       if (!localSavedArticles.some(item => item.id === articleId)) {
+//         setLocalSavedArticles(prev => {
+//           if (prev.some(item => item.id === articleId)) return prev;
+//           return [...prev, { id: articleId }];
+//         });
+//       }
+//     } else {
+//       setBookmarkStatus('default');
+//       if (localSavedArticles.some(item => item.id === articleId)) {
+//         setLocalSavedArticles(prev => prev.filter(item => item.id !== articleId));
+//       }
+//     }
+//   }, [articleId, savedArticles, localSavedArticles]);
 
 //   const toggleBookmark = async () => {
 //     try {
 //       setLoading(true);
-//       await (bookmarkStatus === 'saved'
-//         ? deleteArticleFromBookmarks(articleId)
-//         : addArticleToBookmarks(articleId));
+//       let updatedLocalSavedArticles;
 
-//       setBookmarkStatus(bookmarkStatus === 'saved' ? 'default' : 'saved');
+//       if (bookmarkStatus === 'saved') {
+//         console.log('toggleBookmark: Removing article from bookmarks', { articleId });
+//         await deleteArticleFromBookmarks(articleId);
+//         setBookmarkStatus('default');
+//         updatedLocalSavedArticles = localSavedArticles.filter(item => item.id !== articleId);
+//         toast.success('Article removed from bookmarks');
+//       } else {
+//         console.log('toggleBookmark: Adding article to bookmarks', { articleId });
+//         await addArticleToBookmarks(articleId);
+//         setBookmarkStatus('saved');
+//         updatedLocalSavedArticles = [...localSavedArticles, { id: articleId }];
+//         toast.success('Article added to bookmarks');
+//       }
+
+//       setLocalSavedArticles(updatedLocalSavedArticles);
+//       console.log('Updated localSavedArticles:', JSON.stringify(updatedLocalSavedArticles, null, 2));
 //     } catch (error) {
+//       console.error('Bookmark API error:', {
+//         message: error.message,
+//         status: error.response?.status,
+//         data: error.response?.data,
+//       });
 //       toast.error(error.response?.data?.message || 'Failed to update bookmark');
+//       if (error.response?.status === 401) {
+//         console.log('toggleBookmark: 401 Unauthorized, opening modal');
+//         setIsModalOpen(true);
+//       }
 //     } finally {
 //       setLoading(false);
 //     }
 //   };
 
 //   const handleButtonClick = () => {
-//     if (!isAuthenticated) {
+//     console.log('handleButtonClick:', { isLoggedIn, articleId, localSavedArticles });
+//     if (!isLoggedIn) {
+//       console.log('handleButtonClick: User not logged in, opening modal');
 //       setIsModalOpen(true);
-//     } else {
-//       toggleBookmark();
+//       return;
 //     }
+//     toggleBookmark();
 //   };
 
 //   const closeModal = () => {
@@ -49,53 +101,35 @@
 //           bookmarkStatus === 'saved' && s[`${styleVariant}Saved`],
 //           isWideStyle && s.buttonWideStyle
 //         )}
-//         disabled={loading}
+//         disabled={loading || !isLoggedIn}
 //         style={{
-//           opacity: loading ? 0.6 : 1,
-//           cursor: loading ? 'not-allowed' : 'pointer',
+//           opacity: loading || !isLoggedIn ? 0.6 : 1,
+//           cursor: loading || !isLoggedIn ? 'not-allowed' : 'pointer',
 //         }}
+//         aria-label={bookmarkStatus === 'saved' ? 'Remove from bookmarks' : 'Add to bookmarks'}
 //       >
 //         {loading ? (
 //           <div className={s.loader}>Loading...</div>
 //         ) : (
-//             <>
-//     <svg
-//       width={styleVariant === 'secondary' ? '20' : '24'}
-//       height={styleVariant === 'secondary' ? '20' : '24'}
-//       viewBox="0 0 26 32"
-//     >
-//       <path
-//         strokeLinejoin="round"
-//         strokeLinecap="round"
-//         strokeMiterlimit="4"
-//         strokeWidth="1.8824"
-//         fill="none"
-//         stroke={bookmarkStatus === 'saved' ? '#000000' : '#649179'}
-//         d="M13.171 0.941c2.379 0 4.562 0.228 6.292 0.491 2.191 0.333 3.908 1.834 4.397 3.932 0.59 2.532 1.169 6.385 1.070 11.559-0.11 5.709-0.943 9.829-1.746 12.516-0.217 0.727-0.720 1.101-1.289 1.197-0.594 0.1-1.328-0.098-1.925-0.691-1.086-1.081-2.329-2.248-3.476-3.151-0.572-0.45-1.142-0.852-1.671-1.145-0.499-0.277-1.083-0.528-1.653-0.528-0.56 0-1.165 0.247-1.693 0.518-0.563 0.289-1.186 0.686-1.824 1.136-1.277 0.902-2.692 2.070-3.938 3.153-0.658 0.571-1.432 0.706-2.042 0.54-0.589-0.16-1.086-0.613-1.239-1.401-0.525-2.707-1.024-6.705-1.024-12.127 0-5.409 0.557-9.224 1.112-11.68 0.46-2.035 2.12-3.485 4.255-3.814 1.746-0.27 3.967-0.505 6.392-0.505z"
-//          />
-//     </svg>
-//               {isWideStyle && <span>{bookmarkStatus === 'saved' ? 'Saved' : 'Save'}</span>}
-
-//   </>
-//           // <svg
-//           //   width={styleVariant === 'secondary' ? '20' : '24'}
-//           //   height={styleVariant === 'secondary' ? '20' : '24'}
-//           //   viewBox="0 0 26 32"
-//           // >
-//           //   <path
-//           //     strokeLinejoin="round"
-//           //     strokeLinecap="round"
-//           //     strokeMiterlimit="4"
-//           //     strokeWidth="1.8824"
-//           //     fill="none"
-//           //     stroke={
-//           //       bookmarkStatus === 'saved'
-//           //         ? (styleVariant === 'secondary' ? '#FF0000' : '#FFFFFF')
-//           //         : (styleVariant === 'secondary' ? '#000000' : '#649179')
-//           //     }
-//           //     d="M13.171 0.941c2.379 0 4.562 0.228 6.292 0.491 2.191 0.333 3.908 1.834 4.397 3.932 0.59 2.532 1.169 6.385 1.070 11.559-0.11 5.709-0.943 9.829-1.746 12.516-0.217 0.727-0.720 1.101-1.289 1.197-0.594 0.1-1.328-0.098-1.925-0.691-1.086-1.081-2.329-2.248-3.476-3.151-0.572-0.45-1.142-0.852-1.671-1.145-0.499-0.277-1.083-0.528-1.653-0.528-0.56 0-1.165 0.247-1.693 0.518-0.563 0.289-1.186 0.686-1.824 1.136-1.277 0.902-2.692 2.070-3.938 3.153-0.658 0.571-1.432 0.706-2.042 0.54-0.589-0.16-1.086-0.613-1.239-1.401-0.525-2.707-1.024-6.705-1.024-12.127 0-5.409 0.557-9.224 1.112-11.68 0.46-2.035 2.12-3.485 4.255-3.814 1.746-0.27 3.967-0.505 6.392-0.505z"
-//           //   />
-//           // </svg>
+//           <>
+//             <svg
+//               width={styleVariant === 'secondary' ? '20' : '24'}
+//               height={styleVariant === 'secondary' ? '20' : '24'}
+//               viewBox="0 0 26 32"
+//               aria-hidden="true"
+//             >
+//               <path
+//                 strokeLinejoin="round"
+//                 strokeLinecap="round"
+//                 strokeMiterlimit="4"
+//                 strokeWidth="1.8824"
+//                 fill="none"
+//                 stroke={bookmarkStatus === 'saved' ? '#000000' : '#649179'}
+//                 d="M13.171 0.941c2.379 0 4.562 0.228 6.292 0.491 2.191 0.333 3.908 1.834 4.397 3.932 0.59 2.532 1.169 6.385 1.070 11.559-0.11 5.709-0.943 9.829-1.746 12.516-0.217 0.727-0.720 1.101-1.289 1.197-0.594 0.1-1.328-0.098-1.925-0.691-1.086-1.081-2.329-2.248-3.476-3.151-0.572-0.45-1.142-0.852-1.671-1.145-0.499-0.277-1.083-0.528-1.653-0.528-0.56 0-1.165 0.247-1.693 0.518-0.563 0.289-1.186 0.686-1.824 1.136-1.277 0.902-2.692 2.070-3.938 3.153-0.658 0.571-1.432 0.706-2.042 0.54-0.589-0.16-1.086-0.613-1.239-1.401-0.525-2.707-1.024-6.705-1.024-12.127 0-5.409 0.557-9.224 1.112-11.68 0.46-2.035 2.12-3.485 4.255-3.814 1.746-0.27 3.967-0.505 6.392-0.505z"
+//               />
+//             </svg>
+//             {isWideStyle && <span>{bookmarkStatus === 'saved' ? 'Saved' : 'Save'}</span>}
+//           </>
 //         )}
 //       </button>
 
@@ -111,69 +145,111 @@
 // };
 
 // export default ButtonAddToBookmarks;
-
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 import { toast } from 'react-toastify';
 import ModalNotification from '../ModalErrorSave/ModalErrorSave';
 import { addArticleToBookmarks, deleteArticleFromBookmarks } from '../../services/api';
+import { selectIsLoggedIn } from '../../redux/selectors';
 import s from './ButtonAddToBookmarks.module.css';
 
 const ButtonAddToBookmarks = ({
-  isAuthenticated,
   articleId,
-  savedArticles = [],       // Масив збережених статей користувача
-  // variant = 'default',
+  savedArticles = [],
+  variant = 'default',
   styleVariant = 'primary',
   isWideStyle = false,
 }) => {
+  const isLoggedIn = useSelector(selectIsLoggedIn);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [bookmarkStatus, setBookmarkStatus] = useState('default');
+  const [bookmarkStatus, setBookmarkStatus] = useState(variant);
+  const [, setLocalSavedArticles] = useState([]);
 
-  // При завантаженні компонента перевіряємо, чи стаття вже у закладках
+
   useEffect(() => {
-    if (savedArticles.includes(articleId)) {
-      setBookmarkStatus('saved');
-    } else {
-      setBookmarkStatus('default');
-    }
-  }, [articleId, savedArticles]);
+  if (!Array.isArray(savedArticles)) {
+    console.error('savedArticles is not an array:', savedArticles);
+    return;
+  }
 
-  // Функція для додавання / видалення статті із закладок
+  console.log('useEffect: Checking savedArticles', { articleId, savedArticles });
+
+  const isSaved = savedArticles.includes(articleId);
+  setBookmarkStatus(isSaved ? 'saved' : 'default');
+
+ 
+  setLocalSavedArticles(prev => {
+    const alreadySaved = prev.some(item => item.id === articleId);
+    if (isSaved && !alreadySaved) {
+      return [...prev, { id: articleId }];
+    }
+    if (!isSaved && alreadySaved) {
+      return prev.filter(item => item.id !== articleId);
+    }
+    return prev; 
+  });
+}, [articleId, savedArticles]);
+
   const toggleBookmark = async () => {
+    if (!articleId) {
+      console.error('articleId is undefined or null');
+      toast.error('Invalid article ID');
+      return;
+    }
     try {
       setLoading(true);
+      console.log('toggleBookmark: Sending request', {
+        articleId,
+        isLoggedIn,
+        endpoint: bookmarkStatus === 'saved' ? 'delete' : 'add',
+      });
 
       if (bookmarkStatus === 'saved') {
         await deleteArticleFromBookmarks(articleId);
         setBookmarkStatus('default');
+        setLocalSavedArticles(prev => prev.filter(item => item.id !== articleId));
         toast.success('Article removed from bookmarks');
       } else {
         await addArticleToBookmarks(articleId);
         setBookmarkStatus('saved');
+        setLocalSavedArticles(prev => [...prev, { id: articleId }]);
         toast.success('Article added to bookmarks');
       }
-
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Failed to update bookmark');
+      console.error('Bookmark API error:', {
+        message: error.message,
+        status: error.response?.status,
+        data: error.response?.data,
+        url: error.config?.url,
+      });
+      if (error.response?.status === 404) {
+        toast.error('Article not found or invalid endpoint');
+      } else if (error.response?.status === 401) {
+        console.log('401 Unauthorized, opening modal');
+        setIsModalOpen(true);
+      } else {
+        toast.error(error.response?.data?.message || 'Failed to update bookmark');
+      }
     } finally {
       setLoading(false);
     }
   };
 
-  // Обробка кліку по кнопці
   const handleButtonClick = () => {
-    if (!isAuthenticated) {
+    console.log('handleButtonClick:', { isLoggedIn, articleId, isModalOpen });
+    if (!isLoggedIn) {
+      console.log('User not logged in, opening modal');
       setIsModalOpen(true);
-    } else {
-      toggleBookmark();
+      return;
     }
+    toggleBookmark();
   };
 
   const closeModal = () => {
+    console.log('Closing modal');
     setIsModalOpen(false);
-    setLoading(false);
   };
 
   return (
@@ -186,10 +262,10 @@ const ButtonAddToBookmarks = ({
           bookmarkStatus === 'saved' && s[`${styleVariant}Saved`],
           isWideStyle && s.buttonWideStyle
         )}
-        disabled={loading}
+        disabled={loading || !articleId}
         style={{
-          opacity: loading ? 0.6 : 1,
-          cursor: loading ? 'not-allowed' : 'pointer',
+          opacity: loading || !articleId ? 0.6 : 1,
+          cursor: loading || !articleId ? 'not-allowed' : 'pointer',
         }}
         aria-label={bookmarkStatus === 'saved' ? 'Remove from bookmarks' : 'Add to bookmarks'}
       >

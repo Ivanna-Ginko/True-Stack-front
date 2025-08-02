@@ -29,11 +29,8 @@ export const fetchAuthors = async () => {
   return response.data;
 };
 
-//Add function to get TopCreators - not sure
 export const fetchPopularAuthors = async () => {
-  const response = await axios.get('/authors', {
-    params: { sortBy: 'articlesAmount' }
-  });
+  const response = await axios.get('/users/top-by-articles-rating');
   return response.data;
 }
 
@@ -83,4 +80,3 @@ export const deleteArticleFromBookmarks = async articleId => {
 
   return response.data.data
 }
-

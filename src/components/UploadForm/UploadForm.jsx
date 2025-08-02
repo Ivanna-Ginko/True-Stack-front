@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { registerUser } from '../../redux/operations'
 import { selectUser } from '../../redux/selectors'
 import Container from '../container/Container'
+import { Loader } from '../Loader/Loader'
 import s from './UploadForm.module.css'
 import placeholderImg from '../../assets/images/normal/UploadPhoto/up-camera-test.png'
 import closeIcon from '../../assets/icons/close.svg'
@@ -76,7 +77,7 @@ const UploadForm = ({ formData }) => {
       formDataInstance.append(key, value)
     })
     // Append avatar file
-    formDataInstance.append('avatar', file)
+    formDataInstance.append('avatarUrl', file)
     dispatch(registerUser(formDataInstance))
   }
 
@@ -87,7 +88,7 @@ const UploadForm = ({ formData }) => {
       formDataInstance.append(key, value)
     })
 
-    formDataInstance.append('avatar', '')
+    formDataInstance.append('avatarUrl', '')
 
     dispatch(registerUser(formDataInstance))
   }
@@ -113,12 +114,15 @@ const UploadForm = ({ formData }) => {
               onClick={handleImageClick}
             />
           </div>
-          <button disabled={!image} className={s.up_submit_btn} type='submit'>Save</button>
-          <button className={s.up_close_button} type="button" onClick={skipAvatar}>
+          <button disabled={!image || isLoading} className={s.up_submit_btn} type='submit'>
+            {isLoading ? 'Saving...' : 'Save'}
+          </button>
+          <button className={s.up_close_button} type="button" onClick={skipAvatar} disabled={isLoading}>
             <img src={closeIcon} alt="Close" width="24" height="24" />
           </button>
         </div>
       </form>
+      {isLoading && <Loader />}
     </Container>
   )
 }

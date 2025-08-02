@@ -3,7 +3,7 @@ import * as api from '../services/api';
 
 /**
  * @param {formData}
- * @returns {Promise<{user: {id: string, name: string, avatar: string}, accessToken: string}>}
+ * @returns {Promise<{user: {id: string, name: string, avatarUrl: string}, accessToken: string}>}
  * @throws {{message: string} | Array<{message: string, field: string}>}
  */
 export const registerUser = createAsyncThunk(
@@ -12,14 +12,14 @@ export const registerUser = createAsyncThunk(
     try {
       const data = await api.registerUser(formData);
       const {
-        user: { _id: id, name, avatar },
+        user: { _id: id, name, avatarUrl },
         accessToken,
       } = data;
 
       api.setAuthorizationHeader(accessToken);
 
       return {
-        user: { id, name, avatar },
+        user: { id, name, avatarUrl },
         accessToken,
       };
     } catch (axiosError) {
@@ -50,7 +50,7 @@ export const registerUser = createAsyncThunk(
 
 /**
  * @param {formData}
- * @returns {Promise<{user: {id: string, name: string, avatar: string}, accessToken: string}>}
+ * @returns {Promise<{user: {id: string, name: string, avatarUrl: string}, accessToken: string}>}
  * @throws {{message: string} | Array<{message: string, field: string}>}
  */
 export const loginUser = createAsyncThunk(
@@ -59,14 +59,14 @@ export const loginUser = createAsyncThunk(
     try {
       const data = await api.loginUser(formData);
       const {
-        user: { _id: id, name, avatar },
+        user: { _id: id, name, avatarUrl },
         accessToken,
       } = data;
 
       api.setAuthorizationHeader(accessToken);
 
       return {
-        user: { id, name, avatar },
+        user: { id, name, avatarUrl },
         accessToken,
       };
     } catch (axiosError) {
@@ -116,10 +116,10 @@ export const getUserData = createAsyncThunk(
 
     try {
       const data = await api.getUserData();
-      const { _id: id, name, avatar } = data;
+      const { _id: id, name, avatarUrl } = data;
 
       return {
-        user: { id, name, avatar },
+        user: { id, name, avatarUrl },
       };
     } catch {
       await thunkAPI.dispatch(logoutUser());
