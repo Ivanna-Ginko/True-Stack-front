@@ -1,0 +1,135 @@
+.menuBackdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0 0 0 0.3);
+    z-index: 999;
+    display: flex;
+    justify-content: flex-end;
+}
+.menu {
+    background-color: #D1E0D8;
+    width: 100%;
+    max-width: 393px;
+    height: auto;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+.topRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+}
+.logo {
+    width: 165px;
+    height: 46px;
+}
+.closeBtn {
+    font-size: 24px;
+    background: transparent;
+    border-radius: 6px;
+    padding: 0px 0px 5px 0px;
+    border: none;
+    cursor: pointer;
+    color: #070721;
+}
+.nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    margin-top: 24px;
+}
+.navLink {
+    font-size: 18px;
+    text-decoration: none;
+    color: #374F42;
+}
+.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+.mobileButtons {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.tabletButtons {
+    display: none;
+}
+.userActions {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 32px;
+}
+.userBlock {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+.userWrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.userInfo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.userName {
+    font-weight: 700;
+    font-size: 12px;
+    color: #374F42;
+}
+.logoutBtn {
+    all: unset;
+    padding: 0 0 4px 0;
+    border-radius: 8px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logoutIcon {
+    width: 24px;
+    height: 28px;
+    color: #374F42;
+}
+@media screen and (min-width: 768px) {
+    .menu {
+        max-width: 768px;
+        padding: 0 32px;
+    }
+    .mobileButtons {
+        display: none;
+    }
+    .menuActions {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+    .tabletButtons {
+        /* margin-top: auto; */
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+    }
+    .userActions {
+        flex-direction: column;
+    }
+}

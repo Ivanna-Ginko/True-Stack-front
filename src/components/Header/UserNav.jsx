@@ -3,7 +3,7 @@ import s from './Header.module.css';
 import { useSelector, useDispatch } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import divider from '../../assets/icons/divider.svg';
-import logoutIcon from '../../assets/icons/exit.svg';
+import LogoutIcon from '../../assets/icons/exit.svg?react';
 import AppLink from '../AppLink/AppLink';
 import { logoutUser } from '../../redux/operations';
 import { toast } from "react-toastify";
@@ -24,23 +24,21 @@ const UserNav = () => {
         } catch (error) {
             toast.error(`Logout failed. ${error.message}`);
         } finally {
-            localStorage.clear();
             closeModal();
             navigate("/login");
         }
     };
-
     const navLink = ({ isActive }) =>
-        isActive ? s.activeLink : s.navLink;
+        (isActive ? s.activeLink : s.navLink);
     return (
-       <>
+        <>
             <nav className={s.nav}>
                 <NavLink to="/" className={navLink}>Home</NavLink>
                 <NavLink to="/articles" className={navLink}>Articles</NavLink>
                 <NavLink to="/authors" className={navLink}>Creators</NavLink>
                 <NavLink to="/profile" className={navLink}>My Profile</NavLink>
-                <div  className={`${s.createBtn} ${s.desktopOnly}`}>
-                    <AppLink variant="fill" size="lg"  to={'/create'} > 
+                <div className={`${s.createBtn} ${s.desktopOnly}`}>
+                    <AppLink variant="fill" size="lg" to={'/create'} >
                         Create an article
                     </AppLink>
                 </div>
@@ -58,7 +56,7 @@ const UserNav = () => {
                         </AppLink>
                         <img src={divider} alt="divider" className={s.divider} />
                         <button className={s.logoBtn} onClick={openModal}>
-                            <img src={logoutIcon} alt="Logout" className={s.logoutImg} />
+                            <LogoutIcon className={s.logoutImg} width={24} height={28} />
                         </button>
                     </div>
                 )}
@@ -73,7 +71,7 @@ const UserNav = () => {
                     logOut={true}
                 />
             )}
-       </>
+        </>
     );
 };
 export default UserNav;
