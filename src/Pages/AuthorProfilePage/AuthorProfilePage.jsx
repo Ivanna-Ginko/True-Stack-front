@@ -11,6 +11,7 @@ import { selectIsLoggedIn, selectUser } from "../../redux/selectors";
 import { ProfileTabs } from "../../components/ProfileTabs/ProfileTabs";
 import NothingFound from "../../components/NothingFound/NothingFound.jsx";
 import { Loader } from "../../components/Loader/Loader.jsx";
+import ProfileArticlesList from "../../components/ProfileArticlesList/ProfileArticlesList.jsx";
 
 const AuthorProfilePage = () => {
   const title = "My Profile";
@@ -26,13 +27,14 @@ const AuthorProfilePage = () => {
   const [authorData, setAuthorData] = useState(null);
   const [articlesAmount, setArticlesAmount] = useState(0);
   const [selectedTab, setSelectedTab] = useState("My Articles");
-  // const [savedArticles, setSavedArticles] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
   const [totalItemsSaved, setTotalItemsSaved] = useState(0);
 
   const handleTotalItemsChange = (count) => {
     setTotalItems(count);
-    // console.log(totalItems);
+  };
+  const handleSavedTotalItemsChange = (count) => {
+    setTotalItemsSaved(count);
   };
 
   const config = {
@@ -109,7 +111,10 @@ const AuthorProfilePage = () => {
 
             {selectedTab === "Saved Articles" && (
               <>
-                <div></div>
+                <ProfileArticlesList
+                  selectedTab={selectedTab}
+                  onTotalItemsChange={handleSavedTotalItemsChange}
+                />
                 {totalItemsSaved === 0 && (
                   <div className={s.nothing}>
                     <NothingFound
