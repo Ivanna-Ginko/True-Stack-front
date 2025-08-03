@@ -8,14 +8,15 @@ import AppLink from "../AppLink/AppLink";
 import LogoutIcon from '../../assets/icons/exit.svg?react';
 import divider from '../../assets/icons/divider.svg';
 
-const MobileMenu = ({ closeMenu, isAuthenticated, openModal }) => {
+const MobileMenu = ({ closeMenu, isAuthenticated, openModal, isMenuOpen }) => {
     const user = useSelector(state => state.user.user);
     const handleLinkClick = () => closeMenu();
     const navLinkClass = ({ isActive }) =>
         (isActive ? `${s.navLink} ${s.active}` : s.navLink);
     return (
-        <div className={s.menuBackdrop}>
-            <div className={s.menu}>
+        <div className={`${s.menuBackdrop} ${isMenuOpen ? s.isMenuOpen : ''}`}>
+            <div
+                className={s.menu} onClick={e=>e.stopPropagation()}>
                 <div className={s.topRow}>
                     <img src={logo} alt='Harmoniq logo' className={s.logo} />
                     <div className={s.menuActions}>
@@ -47,7 +48,7 @@ const MobileMenu = ({ closeMenu, isAuthenticated, openModal }) => {
                     <NavLink to='/articles' className={navLinkClass} onClick={handleLinkClick}>
                         Articles
                     </NavLink>
-                    <NavLink to='/authors' className={navLinkClass} onClick={handleLinkClick}>
+                    <NavLink to='/authors' end className={navLinkClass} onClick={handleLinkClick}>
                         Creators
                     </NavLink>
                     {isAuthenticated ? (

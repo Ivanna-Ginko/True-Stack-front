@@ -22,6 +22,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+
   const toggleMenu = () => { setIsMenuOpen(prev => !prev); };
   const closeMenu = () => { setIsMenuOpen(false); };
   const openModal = () => setIsModalOpen(true);
@@ -74,6 +75,8 @@ const Header = () => {
           isAuthenticated={isAuthenticated}
           closeMenu={closeMenu}
           openModal={openModal}
+          isMenuOpen={isMenuOpen}
+          
         />
       )}
       {isModalOpen && (
