@@ -14,7 +14,7 @@ const UserNav = ({user,openModal}) => {
             <nav className={s.nav}>
                 <NavLink to="/" className={navLink}>Home</NavLink>
                 <NavLink to="/articles" className={navLink}>Articles</NavLink>
-                <NavLink to="/authors" className={navLink}>Creators</NavLink>
+                <NavLink to="/authors" end className={navLink}>Creators</NavLink>
                 <NavLink to={`/authors/${user.id}`} className={navLink}>My Profile</NavLink>
                 <div  className={`${s.createBtn} ${s.desktopOnly}`}>
                     <AppLink variant="fill" size="lg"  to={'/create'} > 
