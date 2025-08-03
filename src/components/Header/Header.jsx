@@ -6,8 +6,9 @@ import UserNav from './UserNav';
 import GuestNav from './GuestNav';
 import { useSelector } from 'react-redux';
 import Container from '../container/Container';
-import burgerIcon from '../../assets/icons/menu.svg';
+import BurgerIcon from '../../assets/icons/menu.svg?react';
 import AppLink from '../AppLink/AppLink';
+import MobileMenu from '../MobileMenu/MobileMenu';
 
 const Header = () => {
   const user = useSelector(state => state.user.user);
@@ -18,6 +19,10 @@ const Header = () => {
   const toggleMenu = () => {
     setIsMenuOpen(prev => !prev);
   };
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+  
   return (
     <header className={s.header}>
       <Container>
@@ -27,7 +32,7 @@ const Header = () => {
           </Link>
           <div className={s.rightSide}>
             <nav className={`${s.nav} ${isMenuOpen ? s.navOpen : ''}`}>
-              {isAuthenticated ? <UserNav /> : <GuestNav />}
+              {isAuthenticated ? <UserNav /> : <GuestNav/>}
             </nav>
             {isAuthenticated && (
               <div className={`${s.createBtn} ${s.tabletOnly}`}>
@@ -44,11 +49,17 @@ const Header = () => {
               </div>
             )}
             <button className={s.burgerBtn} onClick={toggleMenu}>
-              <img src={burgerIcon} alt="Menu" />
+              <BurgerIcon className={s.burgerIcon} width={32} height={32} />
             </button>
           </div>
         </div>
       </Container>
+      {isMenuOpen && (
+        <MobileMenu
+          isAuthenticated={isAuthenticated}
+          closeMenu={closeMenu}
+        />
+      )}
     </header>
   );
 };

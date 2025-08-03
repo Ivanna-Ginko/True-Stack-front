@@ -4,25 +4,48 @@ import { articleFormValidation } from './articleFormValidation';
 import ArticleTextArea from './ArticleTextArea';
 import styles from './AddArticleForm.module.css';
 import cameraIcon from '../../assets/icons/camera.svg';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+import { createArticle } from '../../services/api';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../redux/selectors';
+import { useNavigate } from 'react-router-dom';
 
 const initialValues = {
   title: '',
-  text: '',
-  image: null,
+  article: '',
+  img: null,
 };
 
 export default function ArticleForm() {
   const fileRef = useRef();
+  const author = useSelector(selectUser)
+  const navigate = useNavigate();
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      await new Promise((res) => setTimeout(res, 1000));
+      const formData = new FormData();
+      formData.append('title', values.title);
+      formData.append('article', values.article);
+      formData.append('img', values.img);
+      formData.append('author', author.name);
+      formData.append('date', new Date().toISOString().split('T')[0]); // Add date field
+      const response = await createArticle(formData);
+      console.log('Article creation response:', response);
+      console.log('Response.data:', response._id);
+      console.log('Response.data._id:', response._id);
       toast.success('Article successfully published!');
       resetForm();
-    } catch {
-      toast.error('Server error. Please try again.');
+      // Redirect to the created article
+      if (response._id) {
+        console.log('Navigating to article:', response._id);
+        navigate(`/articles/${response._id}`);
+      } else {
+        console.log('No article ID, navigating to articles list');
+        console.log('Response structure:', JSON.stringify(response, null, 2));
+        navigate('/articles'); // Fallback to articles list
+      }
+    } catch (error) {
+      console.log(error)
     } finally {
       setSubmitting(false);
     }
@@ -30,8 +53,6 @@ export default function ArticleForm() {
 
   return (
     <div className={styles.formWrapper}>
-      <ToastContainer />
-      <h1 className={styles.heading}>Create an article</h1>
       <Formik
         initialValues={initialValues}
         validationSchema={articleFormValidation}
@@ -55,7 +76,7 @@ export default function ArticleForm() {
 
               {/* Використання кастомного textarea */}
               <ArticleTextArea
-                name="text"
+                name="article"
                 placeholder="Enter a text"
               />
 
@@ -75,19 +96,19 @@ export default function ArticleForm() {
                 accept="image/*"
                 className={styles.imageInput}
                 onChange={e => {
-                  setFieldValue('image', e.target.files[0]);
+                  setFieldValue('img', e.target.files[0]);
                 }}
               />
-              {values.image ? (
+              {values.img ? (
                 <img
-                  src={URL.createObjectURL(values.image)}
+                  src={URL.createObjectURL(values.img)}
                   alt="Preview"
                   style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '16px' }}
                 />
               ) : (
                 <img src={cameraIcon} alt="camera icon" className={styles.cameraIcon} />
               )}
-              <ErrorMessage name="image" component="div" className={styles.errorImg} />
+              <ErrorMessage name="img" component="div" className={styles.errorImg} />
             </label>
           </Form>
         )}

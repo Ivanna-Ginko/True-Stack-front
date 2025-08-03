@@ -7,7 +7,7 @@ import s from './YouCanAlsoInterested.module.css'
 import { Loader } from '../Loader/Loader';
 import AppLink from '../AppLink/AppLink';
 
-const YouCanAlsoInterested = ({ id, isSaved = false, config, author, publishDate }) => {
+const YouCanAlsoInterested = ({ id, isSaved = false, config, author, publishDate, idAuthor}) => {
 const [articlesList, setArticlesList] = useState([]);
 const [saved, setSaved] = useState(isSaved);
 const [isLoading, setIsLoading] = useState(false);
@@ -49,7 +49,7 @@ return (
                 <Loader variant="skeleton" small inline />
             ) : (
                 <div className={s.containerLink}>
-                    <AppLink size='md' to={`/authors/${author}`} variant="link" className={s.linkOverride}>
+                    <AppLink size='md' to={`/authors/${idAuthor}`} variant="link" className={s.linkOverride}>
                         <span className={s.spanAuthor}>{author}</span>
                     </AppLink>
                 </div>
@@ -79,7 +79,8 @@ return (
     <ButtonAddToBookmarks 
         articleId={id} 
         onUpdate={handleToggle}
-        variant={saved ? "saved" : 'default'}
+            variant={saved ? "saved" : 'default'}
+            isWideStyle={true}
     /> 
 </div>
 );

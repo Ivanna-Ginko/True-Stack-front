@@ -50,20 +50,23 @@ const UploadForm = ({ formData }) => {
 
   const sendRegisterRequest = async () => {
     const formDataInstance = new FormData();
-    // Append registration fields
     Object.entries(formData).forEach(([key, value]) => {
       formDataInstance.append(key, value);
     });
-    
-    // Append avatar file
-    formDataInstance.append('avatarUrl', file || '');
-    
-    try {
-      await dispatch(registerUser(formDataInstance)).unwrap();
-    } catch (err) {
-      toast.error(err.message);
-      navigate('/register', { state: { formData, image, file } });
-    }
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const base64String = reader.result;
+      formDataInstance.append('avatarUrl', base64String);
+      formDataInstance.delete('repeatPwd');
+
+      try {
+        await dispatch(registerUser(formDataInstance)).unwrap();
+      } catch (err) {
+        toast.error(err.message);
+        navigate('/register', { state: { formData, image, file } });
+      }
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleSubmit = e => {
@@ -72,12 +75,33 @@ const UploadForm = ({ formData }) => {
       toast.error('No file selected!');
       return;
     }
-    
     sendRegisterRequest()
   };
 
-  const skipAvatar = () => {
-    sendRegisterRequest()
+  const skipAvatar = async () => {
+    // Send registration request without avatar
+    const formDataInstance = new FormData();
+
+    // Append registration fields
+    Object.entries(formData).forEach(([key, value]) => {
+      formDataInstance.append(key, value);
+    });
+
+    // Don't append avatarUrl - send empty or skip it
+    formDataInstance.delete('repeatPwd');
+
+    console.log('=== FormData Contents (skip avatar) ===');
+    for (let [key, value] of formDataInstance.entries()) {
+      console.log(`${key}:`, value);
+    }
+    console.log('=== End FormData Contents ===');
+
+    try {
+      await dispatch(registerUser(formDataInstance)).unwrap();
+    } catch (err) {
+      toast.error(err.message);
+      navigate('/register', { state: { formData, image, file } });
+    }
   };
 
   if (isLoggedIn) navigate('/');
