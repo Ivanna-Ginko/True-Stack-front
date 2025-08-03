@@ -11,21 +11,9 @@
     font-weight: 400;
     font-size: 16px;
     line-height: 155%;
-
     padding-bottom: 24px;
-
-    hyphens: auto;
-    overflow-wrap: break-word;
-    word-break: normal;
-    white-space: pre-wrap;
 }
 
-.articleText p{
-    hyphens: auto;
-    word-break: normal;
-    overflow-wrap: break-word;
-    white-space: pre-wrap;
-}
 
 .flexContainer{
     display: flex;

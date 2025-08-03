@@ -6,6 +6,7 @@ import { fetchArticleById } from '../../services/api';
 import { Loader } from '../../components/Loader/Loader';
 import s from './ArticlePage.module.css';
 import SectionTitle from '../../components/SectionTitle/SectionTitle';
+import { insertSoftHyphens } from '../../utils/hyphenator';
 
 const ArticlePage = () => {
   const { id } = useParams();
@@ -47,7 +48,7 @@ const ArticlePage = () => {
       <div className={s.flexContainer}>
         <div className={s.articleText} lang="uk">
           {article.article.replace(/\/n/g, '\n').split('\n').map((line, i) => (
-            <p key={i} > {line.trim()}</p>
+            <p key={i} > {insertSoftHyphens(line.trim())}</p>
           ))}
         </div>
         <YouCanAlsoInterested
