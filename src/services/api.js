@@ -29,7 +29,7 @@ export const fetchAuthors = async (page, perPage) => {
     params: {
       page:page,
       perPage:perPage,
-      sortBy: 'name'
+      //sortBy: 'name'
     },
   });
   
