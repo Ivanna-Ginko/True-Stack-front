@@ -1,12 +1,10 @@
-
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 import { toast } from 'react-toastify';
 import ModalNotification from '../ModalErrorSave/ModalErrorSave';
 import { addArticleToBookmarks, deleteArticleFromBookmarks } from '../../services/api';
 import { selectSavedArticles, selectIsLoggedIn } from '../../redux/selectors';
-import { addBookmark, removeBookmark } from '../../redux/bookmarksSlice';
 import s from './ButtonAddToBookmarks.module.css';
 
 const ButtonAddToBookmarks = ({
@@ -15,17 +13,16 @@ const ButtonAddToBookmarks = ({
   styleVariant = 'primary',
   isWideStyle = false,
 }) => {
-  const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const savedArticles = useSelector(selectSavedArticles);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [bookmarkStatus, setBookmarkStatus] = useState(variant);
 
-  
+  // Синхронізація bookmarkStatus із savedArticles
   useEffect(() => {
     if (!articleId) {
-      console.warn('ButtonAddToBookmarks - useEffect - Invalid articleId:', articleId);
+      console.warn('ButtonAddToBookmarks - useEffect - Invalid articleId:', articleId, 'type:', typeof articleId);
       setBookmarkStatus('default');
       return;
     }
@@ -57,26 +54,22 @@ const ButtonAddToBookmarks = ({
       setLoading(true);
       if (bookmarkStatus === 'saved') {
         await deleteArticleFromBookmarks(String(articleId));
-        dispatch(removeBookmark(String(articleId)));
         setBookmarkStatus('default');
         toast.success('Article removed from bookmarks');
       } else {
         await addArticleToBookmarks(String(articleId));
-        dispatch(addBookmark(String(articleId)));
         setBookmarkStatus('saved');
         toast.success('Article added to bookmarks');
       }
-      console.log('ButtonAddToBookmarks - toggleBookmark - After operation - savedArticles:', savedArticles, 'bookmarkStatus:', bookmarkStatus);
+      console.log('ButtonAddToBookmarks - toggleBookmark - After operation - articleId:', articleId, 'bookmarkStatus:', bookmarkStatus);
     } catch (error) {
       console.error('ButtonAddToBookmarks - toggleBookmark - Error:', error.response?.data || error.message);
       if (error.response?.status === 404) {
-        dispatch(removeBookmark(String(articleId)));
         setBookmarkStatus('default');
         toast.error('Article not found, removed from bookmarks');
       } else if (error.response?.status === 401) {
         setIsModalOpen(true);
       } else if (error.response?.status === 409 && bookmarkStatus !== 'saved') {
-        dispatch(addBookmark(String(articleId)));
         setBookmarkStatus('saved');
         toast.info('Article is already in bookmarks');
       } else {

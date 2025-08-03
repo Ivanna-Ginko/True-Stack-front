@@ -14,6 +14,7 @@ export const registerUser = createAsyncThunk(
       const {
         user: { _id: id, name, avatarUrl },
         accessToken,
+        savedArticles,
       } = data;
 
       api.setAuthorizationHeader(accessToken);
@@ -21,6 +22,7 @@ export const registerUser = createAsyncThunk(
       return {
         user: { id, name, avatarUrl },
         accessToken,
+        savedArticles,
       };
     } catch (axiosError) {
       const errStatus = axiosError.response?.status;
@@ -62,6 +64,7 @@ export const loginUser = createAsyncThunk(
       const {
         user: { _id: id, name, avatarUrl },
         accessToken,
+        savedArticles,
       } = data;
 
       api.setAuthorizationHeader(accessToken);
@@ -69,6 +72,7 @@ export const loginUser = createAsyncThunk(
       return {
         user: { id, name, avatarUrl },
         accessToken,
+        savedArticles,
       };
     } catch (axiosError) {
       const errStatus = axiosError.response?.status;
@@ -117,10 +121,11 @@ export const getUserData = createAsyncThunk(
 
     try {
       const data = await api.getUserData();
-      const { _id: id, name, avatarUrl } = data;
+      const { _id: id, name, avatarUrl, savedArticles } = data;
 
       return {
         user: { id, name, avatarUrl },
+        savedArticles,
       };
     } catch {
       await thunkAPI.dispatch(logoutUser());
