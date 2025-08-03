@@ -12,7 +12,7 @@ const ArticlesItem = ({id, image, author, title, description, isSaved=false, isA
   };
   return (
     <li key={id} className= {s.card}>
-      <img src={image} alt={title} className={s.image}/>
+      <div className={s.containerImage}><img src={image} alt={title} className={s.image}/></div>
       <div className={s.content}>
         <p className={s.author}>
           {author}
