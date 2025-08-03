@@ -80,6 +80,8 @@
 }
 
 .btn {
+  width: 296px;
+  align-self: center;
   border-radius: 64px;
   padding: 8px 87.5px;
   margin-top: 27px;
@@ -88,7 +90,7 @@
   font-size: 16px;
   color: #f7fffb;
   line-height: 22px;
-  transition: background-color 200ms ease-out;
+  transition: all 200ms ease-out;
 }
 .btn:hover {
   background-color: #374f42;
@@ -132,6 +134,10 @@
     justify-self: center;
     max-width: 278px;
   }
+  .btn {
+    width: 458px;
+    align-self: center;
+  }
 }
 
 /* Styles for Desktop devices */
@@ -156,6 +162,10 @@
 
   .field {
     min-width: 328px;
+  }
+  .btn {
+    width: 328px;
+    align-self: center;
   }
 }
 
