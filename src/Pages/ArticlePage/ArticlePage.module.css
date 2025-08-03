@@ -20,6 +20,18 @@
     line-height: 155%;
 
     padding-bottom: 24px;
+
+    hyphens: auto;
+    overflow-wrap: break-word;
+    word-break: normal;
+    white-space: pre-wrap;
+}
+
+.articleText p{
+    hyphens: auto;
+    word-break: normal;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
 }
 
 .flexContainer{
@@ -50,6 +62,7 @@
     }
     .articleText{
         padding-bottom: 0;
+        width: 800px;
     }
 
     .image{

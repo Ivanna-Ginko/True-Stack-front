@@ -20,7 +20,7 @@ const ArticlesList = ({ articles, user }) => {
             id={article._id}
             title={article.title}
             author={article.author}
-            description={article.description}
+            description={article.article}
             image={article.img}
             isAuthor={isAuthor}
             saved={isSaved}
