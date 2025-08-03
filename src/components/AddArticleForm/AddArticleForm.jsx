@@ -4,25 +4,43 @@ import { articleFormValidation } from './articleFormValidation';
 import ArticleTextArea from './ArticleTextArea';
 import styles from './AddArticleForm.module.css';
 import cameraIcon from '../../assets/icons/camera.svg';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+import { createArticle } from '../../services/api';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../redux/selectors';
 
 const initialValues = {
   title: '',
-  text: '',
-  image: null,
+  article: '',
+  img: null,
 };
 
 export default function ArticleForm() {
   const fileRef = useRef();
-
+  const author = useSelector(selectUser)
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      await new Promise((res) => setTimeout(res, 1000));
+      console.log(values)
+      const formData = new FormData();
+      formData.append('title', values.title);
+      formData.append('article', values.article);
+      formData.append('img', values.img);
+      formData.append('author', author.id);
+      formData.append('date', new Date().toISOString().split('T')[0]); // Add date field
+      await createArticle(formData);
       toast.success('Article successfully published!');
       resetForm();
-    } catch {
-      toast.error('Server error. Please try again.');
+    } catch (error) {
+      console.error('Backend error:', error.response?.data);
+      // Show backend validation errors
+      if (error.response?.data?.data?.errors) {
+        const errors = error.response.data.data.errors;
+        errors.forEach(err => {
+          toast.error(err.message);
+        });
+      } else {
+        toast.error(error.response?.data?.message || 'Server error. Please try again.');
+      }
     } finally {
       setSubmitting(false);
     }
@@ -30,15 +48,19 @@ export default function ArticleForm() {
 
   return (
     <div className={styles.formWrapper}>
-      <ToastContainer />
-      <h1 className={styles.heading}>Create an article</h1>
       <Formik
         initialValues={initialValues}
         validationSchema={articleFormValidation}
         onSubmit={handleSubmit}
       >
-        {({ setFieldValue, isSubmitting, values }) => (
+        {({ setFieldValue, isSubmitting, values, errors, touched }) => (
           <Form className={styles.form}>
+            {/* Debug info */}
+            {console.log('Form values:', values)}
+            {console.log('Form errors:', errors)}
+            {console.log('Form touched:', touched)}
+            {console.log('Form isSubmitting:', isSubmitting)}
+
             <div className={styles.left}>
               <label className={styles.label}>
                 Title
@@ -55,7 +77,7 @@ export default function ArticleForm() {
 
               {/* Використання кастомного textarea */}
               <ArticleTextArea
-                name="text"
+                name="article"
                 placeholder="Enter a text"
               />
 
@@ -63,6 +85,9 @@ export default function ArticleForm() {
                 type="submit"
                 className={styles.button}
                 disabled={isSubmitting}
+                onClick={() => {
+                  console.log(values)
+                }}
               >
                 Publish Article
               </button>
@@ -75,19 +100,19 @@ export default function ArticleForm() {
                 accept="image/*"
                 className={styles.imageInput}
                 onChange={e => {
-                  setFieldValue('image', e.target.files[0]);
+                  setFieldValue('img', e.target.files[0]);
                 }}
               />
-              {values.image ? (
+              {values.img ? (
                 <img
-                  src={URL.createObjectURL(values.image)}
+                  src={URL.createObjectURL(values.img)}
                   alt="Preview"
                   style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '16px' }}
                 />
               ) : (
                 <img src={cameraIcon} alt="camera icon" className={styles.cameraIcon} />
               )}
-              <ErrorMessage name="image" component="div" className={styles.errorImg} />
+              <ErrorMessage name="img" component="div" className={styles.errorImg} />
             </label>
           </Form>
         )}
