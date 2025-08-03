@@ -49,7 +49,7 @@ return (
                 <Loader variant="skeleton" small inline />
             ) : (
                 <div className={s.containerLink}>
-                    <AppLink size='md' to={`/authors/${author}`} variant="link" className={s.linkOverride}>
+                    <AppLink size='md' to={`/authors/${id}`} variant="link" className={s.linkOverride}>
                         <span className={s.spanAuthor}>{author}</span>
                     </AppLink>
                 </div>
@@ -80,6 +80,7 @@ return (
         articleId={id} 
         onUpdate={handleToggle}
         variant={saved ? "saved" : 'default'}
+        isWideStyle
     /> 
 </div>
 );
