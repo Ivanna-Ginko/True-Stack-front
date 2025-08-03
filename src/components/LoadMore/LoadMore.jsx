@@ -19,12 +19,12 @@ const LoadMore = ({ loadData, onDataLoaded, perPage = 12 }) => {
   const handleClick = async () => {
     if (loading) return;
     const nextPage = page + 1;
-    console.log('NExt Page', nextPage);
+    //console.log('NExt Page', nextPage);
     setLoading(true);
 
     try {
       const newItems = await loadData(nextPage);
-      console.log('NEW_ITEM_LENGTH', newItems.length );
+      //console.log('NEW_ITEM_LENGTH', newItems.length );
       if (newItems.length < perPage) {
         setHasMore(false);
       }

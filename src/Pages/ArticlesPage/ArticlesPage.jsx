@@ -55,7 +55,7 @@ const ArticlesPage = () => {
 
   const loadArticles = async (page) => {
     const res = await fetchArticles({ params: { page, perPage: 12 } });
-    return res.data.data.data; // возвращаем только массив статей
+    return res.data.data.data; 
   };
 
   const handleAppendArticles = (newArticles) => {

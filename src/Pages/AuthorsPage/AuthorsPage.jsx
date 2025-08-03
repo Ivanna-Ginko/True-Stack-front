@@ -42,8 +42,8 @@ const AuthorsPage = () => {
     getAuthors();
   }, []);
 
-  const loadAuthors = async (page) => {
-    const res = await fetchAuthors({ page, perPage:20 });
+  const loadAuthors = async (page, perPage) => {
+    const res = await fetchAuthors(page, perPage );
     return res.data;
   };
 
