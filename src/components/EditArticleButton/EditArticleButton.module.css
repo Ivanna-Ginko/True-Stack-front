@@ -1,4 +1,4 @@
-.button {
+/* .button {
   width: 40px;
   height: 40px;
   padding: 8px;
@@ -48,4 +48,48 @@
 .button:hover svg path,
 .button:active svg path {
   stroke: #ffffff;
+} */
+
+.button {
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  border-radius: 64px;
+  border: 1px solid #649179;
+  background-color: #d1e0d8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s, border-color 0.3s;
+  cursor: pointer;
+}
+
+.button:hover,
+.button:active {
+  background-color: #649179;
+}
+
+.button:focus {
+  outline: none;
+  background-color: #649179;
+}
+
+.edit {
+  background-color: #649179;
+  border-color: transparent;
+}
+
+.icon {
+  width: 15px;
+  height: 15px;
+  display: block;
+  transition: filter 0.3s; /* Додаємо плавний перехід для фільтра */
+}
+
+.editIcon,
+.button:hover .icon,
+.button:active .icon,
+.button:focus .icon {
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(0deg)
+    brightness(100%) contrast(100%); /* Білий колір для іконки */
 }

@@ -19,7 +19,7 @@ const ButtonAddToBookmarks = ({
   const [loading, setLoading] = useState(false);
   const [bookmarkStatus, setBookmarkStatus] = useState(variant);
 
-  // Синхронізація bookmarkStatus із savedArticles
+
   useEffect(() => {
     if (!articleId) {
       console.warn('ButtonAddToBookmarks - useEffect - Invalid articleId:', articleId, 'type:', typeof articleId);
