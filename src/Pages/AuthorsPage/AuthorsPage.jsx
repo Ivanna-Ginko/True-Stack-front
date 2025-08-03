@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import LoadMore from '../../components/LoadMore/LoadMore_orig'
+import LoadMore from '../../components/LoadMore/LoadMore'
 import AuthorsList from '../../components/AuthorsList/AuthorsList'
 import { useNavigate } from 'react-router-dom';
 import { fetchAuthors } from '../../services/api';
@@ -21,7 +21,7 @@ const AuthorsPage = () => {
       try {
         setIsLoading(true);
         const data = await fetchAuthors();
-        //console.log('API response:', data);
+        console.log('API response:', data);
         const normalizedAuthors = data.data.map((item) => ({
           ...item,
           _id: item._id?.$oid || item._id,

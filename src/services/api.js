@@ -24,14 +24,8 @@ export const registerUser = async formData => {
   return response.data.data;
 };
 
-export const fetchAuthors = async (page, perPage) => {
-  const response = await axios.get('/users', {
-    params: {
-      page: page,
-      perPage: perPage,
-      sortBy: 'name'
-    },
-  });
+export const fetchAuthors = async () => {
+  const response = await axios.get('/users');   
   
   return response.data;
 };

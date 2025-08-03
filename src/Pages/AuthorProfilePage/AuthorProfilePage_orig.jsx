@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import s from "./AuthorProfilePage.module.css";
-import LoadMore from "../../components/LoadMore/LoadMore";
-import ArticlesList from "../../components/ArticlesList/ArticlesList";
-import Container from "../../components/container/Container";
+import LoadMore from "../../components/LoadMore/LoadMore.jsx";
+import ArticlesList from "../../components/ArticlesList/ArticlesList.jsx";
+import Container from "../../components/container/Container.jsx";
 import { useSelector } from "react-redux";
-import SectionTitle from "../../components/SectionTitle/SectionTitle";
+import SectionTitle from "../../components/SectionTitle/SectionTitle.jsx";
 import { useParams } from "react-router-dom";
 import {
   fetchArticles,
   fetchAuthorById,
   getSavedArticles,
-} from "../../services/api";
-import { selectIsLoggedIn, selectUser } from "../../redux/selectors";
-import { ProfileTabs } from "../../components/ProfileTabs/ProfileTabs";
+} from "../../services/api.js";
+import { selectIsLoggedIn, selectUser } from "../../redux/selectors.js";
+import { ProfileTabs } from "../../components/ProfileTabs/ProfileTabs.jsx";
 import NothingFound from "../../components/NothingFound/NothingFound.jsx";
 import { Loader } from "../../components/Loader/Loader.jsx";
 import { toast } from "react-toastify";
