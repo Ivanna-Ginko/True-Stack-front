@@ -29,10 +29,6 @@ export const fetchAuthors = async () => {
   return response.data;
 };
 
-export const fetchPopularAuthors = async () => {
-  const response = await axios.get('/users/top-by-articles-rating');
-  return response.data;
-};
 
 export const loginUser = async formData => {
   const response = await axios.post('/auth/login', formData);
@@ -70,7 +66,7 @@ export const getSavedArticles = async () => {
 };
 
 export const addArticleToBookmarks = async articleId => {
-  const response = await axios.post('/saved-articles', {
+  const response = await axios.post('/users/saved-articles', {
     articleId,
   });
 
@@ -78,9 +74,14 @@ export const addArticleToBookmarks = async articleId => {
 };
 
 export const deleteArticleFromBookmarks = async articleId => {
-  const response = await axios.delete(`/saved-articles/${articleId}`, {
+  const response = await axios.delete(`/users/saved-articles/${articleId}`, {
     articleId,
   });
 
+  return response.data.data;
+};
+
+export const createArticle = async (articleData) => {
+  const response = await axios.post('/articles', articleData);
   return response.data.data;
 };

@@ -21,7 +21,7 @@ const Footer = () => {
                 </AppLink>
               </li>
               <li>
-                <AppLink to="/account" variant="link" size="md">
+                <AppLink to="/profile" variant="link" size="md">
                 Account
                 </AppLink>
               </li>

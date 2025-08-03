@@ -1,0 +1,31 @@
+.itemwrapper {
+    padding: 12px;
+}
+
+.img {
+    border-radius: 50%;
+}
+
+.img_default,
+.img_tc {
+    width: 148px;
+}
+
+.text {
+font-family: "Manrope", sans-serif;
+font-weight: 700;
+font-size: 24px;
+text-align: center;
+padding-top: 16px;
+}
+
+@media only screen and (min-width: 768px) {
+.img_default { 
+    width: 262px;
+}
+
+.img_tc {
+    width: 160px;
+}
+}
+

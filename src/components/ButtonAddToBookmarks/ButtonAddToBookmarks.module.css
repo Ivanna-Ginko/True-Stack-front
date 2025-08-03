@@ -26,4 +26,54 @@
 .button:hover svg path,
 .button:active svg path {
   stroke: #ffffff;
+  fill: none;
+}
+
+.buttonWideStyle {
+  width: 100%;
+  height: 57px;
+  border-radius: 64px;
+  opacity: 1;
+  gap: 16px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #649179;
+  color: #f7fffb;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+}
+
+@media screen and (max-width: 767px) {
+  .buttonWideStyle {
+    width: 361px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1439px) {
+  .buttonWideStyle {
+    width: 704px;
+  }
+}
+
+.buttonWideStyle svg path {
+  fill: none;
+  stroke: #f7fffb;
+}
+
+.buttonWideStyle:hover,
+.buttonWideStyle:active {
+  background: #374f42;
+}
+
+.buttonWideStyle:hover svg path,
+.buttonWideStyle:active svg path {
+  stroke: #f7fffb;
 }
