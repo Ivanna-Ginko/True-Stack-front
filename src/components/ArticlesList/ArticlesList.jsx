@@ -4,13 +4,11 @@ import css from './ArticlesList.module.css'
 
 
 
-const ArticlesList = ({ articles, user }) => {
+const ArticlesList = ({ articles, user, hideFourthOnDesktop}) => {
 
 
-  
- //${hideFourthOnDesktop ? css.hideFourth : ''}
     return(
-      <ul className={`${css.list} `}>
+      <ul className={`${css.list} ${hideFourthOnDesktop ? css.hideFourth : ''}`}>
       {Array.isArray(articles) && articles.map(article => { 
         const isAuthor = article.author === user?.user?.id;
         const isSaved = isAuthor && user.savedArticles?.includes(article.id);        
