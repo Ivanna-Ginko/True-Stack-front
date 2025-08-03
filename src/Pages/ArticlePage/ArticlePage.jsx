@@ -16,7 +16,6 @@ const ArticlePage = () => {
 
   const config = {
     params: {
-      sortBy: 'rate',
       perPage: 3
     }
   };
