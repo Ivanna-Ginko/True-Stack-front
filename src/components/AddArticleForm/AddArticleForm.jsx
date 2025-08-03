@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { createArticle } from '../../services/api';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../redux/selectors';
+import { useNavigate } from 'react-router-dom';
 
 const initialValues = {
   title: '',
@@ -18,29 +19,33 @@ const initialValues = {
 export default function ArticleForm() {
   const fileRef = useRef();
   const author = useSelector(selectUser)
+  const navigate = useNavigate();
+
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      console.log(values)
       const formData = new FormData();
       formData.append('title', values.title);
       formData.append('article', values.article);
       formData.append('img', values.img);
-      formData.append('author', author.id);
+      formData.append('author', author.name);
       formData.append('date', new Date().toISOString().split('T')[0]); // Add date field
-      await createArticle(formData);
+      const response = await createArticle(formData);
+      console.log('Article creation response:', response);
+      console.log('Response.data:', response._id);
+      console.log('Response.data._id:', response._id);
       toast.success('Article successfully published!');
       resetForm();
-    } catch (error) {
-      console.error('Backend error:', error.response?.data);
-      // Show backend validation errors
-      if (error.response?.data?.data?.errors) {
-        const errors = error.response.data.data.errors;
-        errors.forEach(err => {
-          toast.error(err.message);
-        });
+      // Redirect to the created article
+      if (response._id) {
+        console.log('Navigating to article:', response._id);
+        navigate(`/articles/${response._id}`);
       } else {
-        toast.error(error.response?.data?.message || 'Server error. Please try again.');
+        console.log('No article ID, navigating to articles list');
+        console.log('Response structure:', JSON.stringify(response, null, 2));
+        navigate('/articles'); // Fallback to articles list
       }
+    } catch (error) {
+      console.log(error)
     } finally {
       setSubmitting(false);
     }
@@ -53,14 +58,8 @@ export default function ArticleForm() {
         validationSchema={articleFormValidation}
         onSubmit={handleSubmit}
       >
-        {({ setFieldValue, isSubmitting, values, errors, touched }) => (
+        {({ setFieldValue, isSubmitting, values }) => (
           <Form className={styles.form}>
-            {/* Debug info */}
-            {console.log('Form values:', values)}
-            {console.log('Form errors:', errors)}
-            {console.log('Form touched:', touched)}
-            {console.log('Form isSubmitting:', isSubmitting)}
-
             <div className={styles.left}>
               <label className={styles.label}>
                 Title
@@ -85,9 +84,6 @@ export default function ArticleForm() {
                 type="submit"
                 className={styles.button}
                 disabled={isSubmitting}
-                onClick={() => {
-                  console.log(values)
-                }}
               >
                 Publish Article
               </button>
