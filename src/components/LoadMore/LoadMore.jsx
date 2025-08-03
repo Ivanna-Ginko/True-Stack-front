@@ -1,24 +1,57 @@
+import { useRef, useState } from 'react';
 import css from './LoadMore.module.css';
 import Button from '../Button/Button';
-import { useRef } from 'react';
 
-const LoadMore = ({ onLoadMore, hasMore }) => {
-  const scrollRef = useRef(null);
+const LoadMore = ({ loadData, onDataLoaded, perPage = 12 }) => {
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const containerRef = useRef(null);
 
-  const handleOnClick = async () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-    await onLoadMore();
+  const scrollToBottom = () => {
+    setTimeout(() => {
+      if (containerRef.current) {
+        containerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
   };
+
+  const handleClick = async () => {
+    if (loading) return;
+    const nextPage = page + 1;
+    setLoading(true);
+
+    try {
+      const newItems = await loadData(nextPage);
+      //console.log('NEW_ITEM_LENGTH');
+      if (newItems.length < perPage) {
+        setHasMore(false);
+      }
+      
+      onDataLoaded(newItems);
+      setPage(nextPage);
+      scrollToBottom();
+    } catch (error) {
+      console.error('LoadMore error:', error);
+      setHasMore(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   if (!hasMore) return null;
 
   return (
-    <>      
-      <div ref={scrollRef}></div>
+    <>
+      <div ref={containerRef} />
       <div className={css.loadmore}>
-        <Button variant="fill" size="xl" onClick={handleOnClick}>
-          Load More
+        <Button
+          variant="fill"
+          size="xl"
+          onClick={handleClick}
+          disabled={loading}
+        >
+          {loading ? 'Loading...' : 'Load More'}
         </Button>
       </div>
     </>

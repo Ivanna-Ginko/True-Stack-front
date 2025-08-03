@@ -38,8 +38,6 @@ const AuthorProfilePage = () => {
   const [totalSavedPages, setTotalSavedPages] = useState(1);
   const [isError, setIsError] = useState(false);
 
-  const isSavedTab = selectedTab === 'Saved Articles';
-
   useEffect(() => {
     const getAuthorData = async () => {
       try {
@@ -121,26 +119,6 @@ const AuthorProfilePage = () => {
     getArticles();
   }, [userId]);
 
-  const loadArticles = async (page) => {
-  const config = { params: { page, perPage: 12 } };
-
-  if (isSavedTab && user.id === authorId) {
-    const res = await getSavedArticles(config);
-    return res.data?.items || [];
-  } else {
-    const res = await fetchArticles({ ...config, params: { ownerId: authorId, ...config.params } });
-    return res.data?.data || [];
-  }
-  };
-
-  const handleAppend = (newData) => {
-    if (isSavedTab) {
-      setSavedArticles(prev => [...prev, ...newData]);
-    } else {
-      setCreatedArticles(prev => [...prev, ...newData]);
-    }
-  };
-
   return (
     <div>
       <Container>
@@ -209,8 +187,7 @@ const AuthorProfilePage = () => {
           ) : (
             <>
               <ArticlesList articles={createdArticles} user={user} />
-                {/* {totalPages > 1 && <LoadMore />} */}
-                <LoadMore loadData={loadArticles} onDataLoaded={handleAppend} />
+              {totalPages > 1 && <LoadMore />}
             </>
           )}
         </div>

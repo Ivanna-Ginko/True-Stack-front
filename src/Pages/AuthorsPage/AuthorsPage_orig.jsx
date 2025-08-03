@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import LoadMore from '../../components/LoadMore/LoadMore_orig'
+import LoadMore from '../../components/LoadMore/LoadMore'
 import AuthorsList from '../../components/AuthorsList/AuthorsList'
 import { useNavigate } from 'react-router-dom';
 import { fetchAuthors } from '../../services/api';
@@ -21,7 +21,7 @@ const AuthorsPage = () => {
       try {
         setIsLoading(true);
         const data = await fetchAuthors();
-        //console.log('API response:', data);
+        console.log('API response:', data);
         const normalizedAuthors = data.data.map((item) => ({
           ...item,
           _id: item._id?.$oid || item._id,
@@ -42,14 +42,6 @@ const AuthorsPage = () => {
     getAuthors();
   }, []);
 
-  const loadAuthors = async (page) => {
-    const res = await fetchAuthors({ page, perPage:20 });
-    return res.data;
-  };
-
-  const handleAppendAuthors = (newAuthors) => {
-    setAuthors(prev => [...prev, ...newAuthors]);
-  };
 
   const handleAuthorClick = (authorId) => {
     navigate(`/authors/${authorId}`);
@@ -63,7 +55,7 @@ const AuthorsPage = () => {
       { authors &&  
             <>
             <AuthorsList authors={authors} onAuthCardClick={handleAuthorClick} />
-            <LoadMore loadData={loadAuthors} onDataLoaded={handleAppendAuthors} perPage={20} />
+            <LoadMore />
             </>    
       }
       
@@ -72,4 +64,4 @@ const AuthorsPage = () => {
   )
 }
 
-export default AuthorsPage;
+export default AuthorsPage

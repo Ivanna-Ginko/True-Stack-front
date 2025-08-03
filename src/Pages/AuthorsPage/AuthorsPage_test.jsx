@@ -8,11 +8,15 @@ import SectionTitle from '../../components/SectionTitle/SectionTitle';
 import { Loader } from '../../components/Loader/Loader'
 import { toast } from 'react-toastify';
 
+const PER_PAGE = 20;
+
 const AuthorsPage = () => {
 
   const [authors, setAuthors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalAuthors, setTotalAuthors] = useState(0);
 
   const navigate = useNavigate();
 
@@ -20,13 +24,22 @@ const AuthorsPage = () => {
     const getAuthors = async () => {
       try {
         setIsLoading(true);
-        const data = await fetchAuthors();
-        //console.log('API response:', data);
-        const normalizedAuthors = data.data.map((item) => ({
+        const data = await fetchAuthors(page, PER_PAGE);
+        console.log('API response:', data);
+        // const normalizedAuthors = data.data.map((item) => ({
+        //   ...item,
+        //   _id: item._id?.$oid || item._id,
+        // }));
+        const normalized = data.data.map((item) => ({
           ...item,
           _id: item._id?.$oid || item._id,
-        }));
-        setAuthors(normalizedAuthors);
+        }));        
+        // setAuthors(normalizedAuthors);
+        setAuthors(prev =>
+          page === 1 ? normalized : [...prev, ...normalized]
+        );
+        console.log('total author:',data.pagination.totalItems);
+        setTotalAuthors(data.pagination.totalItems);
       } catch (error) {
         setIsError(true);
         toast.warning('No authors found', {
@@ -40,20 +53,18 @@ const AuthorsPage = () => {
       }
     };
     getAuthors();
-  }, []);
+  }, [page]);
 
-  const loadAuthors = async (page) => {
-    const res = await fetchAuthors({ page, perPage:20 });
-    return res.data;
-  };
-
-  const handleAppendAuthors = (newAuthors) => {
-    setAuthors(prev => [...prev, ...newAuthors]);
-  };
 
   const handleAuthorClick = (authorId) => {
     navigate(`/authors/${authorId}`);
   };
+
+  const handleLoadMore = () => {
+    setPage(prev => prev + 1);
+  };
+
+  const hasMore = authors.length < totalAuthors;
 
   return (
     <>
@@ -63,7 +74,7 @@ const AuthorsPage = () => {
       { authors &&  
             <>
             <AuthorsList authors={authors} onAuthCardClick={handleAuthorClick} />
-            <LoadMore loadData={loadAuthors} onDataLoaded={handleAppendAuthors} perPage={20} />
+            <LoadMore onLoadMore={handleLoadMore} hasMore={hasMore} />
             </>    
       }
       
@@ -72,4 +83,4 @@ const AuthorsPage = () => {
   )
 }
 
-export default AuthorsPage;
+export default AuthorsPage

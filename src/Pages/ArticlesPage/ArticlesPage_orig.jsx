@@ -15,8 +15,7 @@ import NothingFound from '../../components/NothingFound/NothingFound.jsx'
 const ArticlesPage = () => {
   const title = 'Articles';
   const [selectedFilter, setSelectedFilter] = useState('Popular');
-  //const [articleList, setArticleList] = useState([]);
-  const [articleList, setArticleList] = useState({ data: [], totalPage: 1 });
+  const [articleList, setArticleList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -53,18 +52,6 @@ const ArticlesPage = () => {
     getArticles();
   }, [selectedFilter]);
 
-  const loadArticles = async (page) => {
-    const res = await fetchArticles({ params: { page, perPage: 12 } });
-    return res.data.data.data; // возвращаем только массив статей
-  };
-
-  const handleAppendArticles = (newArticles) => {
-    setArticleList(prev => ({
-      ...prev,
-      data: [...prev.data, ...newArticles],
-    }));
-  };
-
   const articlesArr = articleList?.data || [];
   const totalItems = articleList?.totalItems || 0;
 
@@ -81,7 +68,7 @@ const ArticlesPage = () => {
       {!isLoading && articlesArr.length > 0 && (
         <>
           <ArticlesList articles={articlesArr} user={user} />
-          <LoadMore loadData={loadArticles} onDataLoaded={handleAppendArticles} />
+          <LoadMore />
         </>
       )}
 
