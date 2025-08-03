@@ -44,9 +44,9 @@ const ArticlePage = () => {
       <h2 className={s.title}>{article.title}</h2>
       <img src={article.img} alt={article.title} className={s.image} />
       <div className={s.flexContainer}>
-        <div className={s.articleText}>
+        <div className={s.articleText} lang="uk">
           {article.article.replace(/\/n/g, '\n').split('\n').map((line, i) => (
-            <p key={i}>{line.trim()}</p>
+            <p key={i} > {line.trim()}</p>
           ))}
         </div>
         <YouCanAlsoInterested
