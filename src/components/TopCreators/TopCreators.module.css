@@ -24,11 +24,12 @@
     gap: 12px;    
 }
 
-
 @media only screen and (min-width: 768px) {
 
-    .tc_link {
-        display: none;
+    .tc_header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;        
     }
 }
 
@@ -36,15 +37,5 @@
 
     .tc_title {
         font-size: 40px;
-    }
-
-    .tc_header {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;        
-    }
-
-    .tc_link {
-        display: flex;
     }
 }
