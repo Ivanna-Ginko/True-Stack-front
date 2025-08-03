@@ -22,7 +22,7 @@ const ButtonAddToBookmarks = ({
   const [loading, setLoading] = useState(false);
   const [bookmarkStatus, setBookmarkStatus] = useState(variant);
 
-  // Оновлення bookmarkStatus на основі savedArticles
+  
   useEffect(() => {
     if (!articleId) {
       console.warn('ButtonAddToBookmarks - useEffect - Invalid articleId:', articleId);
