@@ -54,6 +54,7 @@ const ArticlePage = () => {
           config={config}
           author={article.author}
           publishDate={article.date}
+          idAuthor={article.ownerId}
         />
       </div>
     </Container>
