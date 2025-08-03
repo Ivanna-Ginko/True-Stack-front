@@ -5,6 +5,7 @@ import YouCanAlsoInterested from '../../components/YouCanAlsoInterested/YouCanAl
 import { fetchArticleById } from '../../services/api';
 import { Loader } from '../../components/Loader/Loader';
 import s from './ArticlePage.module.css';
+import SectionTitle from '../../components/SectionTitle/SectionTitle';
 
 const ArticlePage = () => {
   const { id } = useParams();
@@ -41,7 +42,7 @@ const ArticlePage = () => {
   
   return (
     <Container>
-      <h2 className={s.title}>{article.title}</h2>
+      <SectionTitle title={article.title}/>
       <img src={article.img} alt={article.title} className={s.image} />
       <div className={s.flexContainer}>
         <div className={s.articleText} lang="uk">
