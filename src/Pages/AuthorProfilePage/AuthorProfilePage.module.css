@@ -35,6 +35,9 @@
   font-weight: 700;
   font-size: 18px;
 }
+.container {
+  margin-bottom: 46px;
+}
 .nothing {
   margin-top: 42px;
 }

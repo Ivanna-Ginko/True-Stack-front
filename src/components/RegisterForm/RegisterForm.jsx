@@ -2,8 +2,8 @@ import { Form, Formik, Field, ErrorMessage } from "formik";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import * as Yup from "yup";
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { authActions } from "../../redux/slice";
+// import { useDispatch } from "react-redux";
+// import { authActions } from "../../redux/slice";
 // import { registerUser } from "../../redux/operations";
 import css from "./RegisterForm.module.css";
 // import { toast } from "react-toastify";
@@ -12,7 +12,7 @@ import hidePwd from "../../assets/icons/crossed-eye.svg";
 import showPwd from "../../assets/icons/eye.svg";
 
 const RegisterForm = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const [initialFormValues, setInitialFormValues] = useState({
