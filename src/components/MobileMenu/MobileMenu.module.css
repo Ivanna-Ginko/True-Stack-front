@@ -79,11 +79,11 @@
     align-items: center;
     gap: 12px;
 }
-.userInfo {
+/* .userInfo {
     display: flex;
     align-items: center;
     gap: 12px;
-}
+} */
 .avatar {
     width: 32px;
     height: 32px;
