@@ -39,7 +39,7 @@ const PopularArticles = () => {
     return (
         <>
             <Container>
-                {isLoading ? <Loader/> : (<div id="popularArticles" className={s.innerContainer}>
+                <div id="popularArticles" className={s.innerContainer}>
                     <div className={s.titleContainer}>
                         <h2 className={s.title}>Popular Articles</h2>
                         <div className={s.linkContainer}>
@@ -49,8 +49,8 @@ const PopularArticles = () => {
                             </AppLink>
                         </div>
                     </div>
-                    <ArticlesList articles= {articleArr} hideFourthOnDesktop/>
-                </div>)}
+                    {isLoading ? <Loader small className={s.loader}/> : (<ArticlesList articles= {articleArr} hideFourthOnDesktop/>)}
+                </div>
             </Container>
         </>
     )

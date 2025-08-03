@@ -22,6 +22,10 @@
     font-size: 32px;
 }
 
+.loader{
+    margin-left: 50%;
+}
+
 
 @media only screen and (min-width: 768px) {
     .titleContainer{

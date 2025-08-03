@@ -24,6 +24,10 @@
     gap: 12px;    
 }
 
+.loader{
+    margin-left: 3.5%;
+}
+
 @media only screen and (min-width: 768px) {
 
     .tc_header {
@@ -37,5 +41,9 @@
 
     .tc_title {
         font-size: 40px;
+    }
+
+    .loader{
+        margin-left: 2.5%;
     }
 }
