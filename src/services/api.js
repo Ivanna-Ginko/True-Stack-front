@@ -80,3 +80,8 @@ export const deleteArticleFromBookmarks = async articleId => {
 
   return response.data.data;
 };
+
+export const createArticle = async (articleData) => {
+  const response = await axios.post('/articles', articleData);
+  return response.data.data;
+};
