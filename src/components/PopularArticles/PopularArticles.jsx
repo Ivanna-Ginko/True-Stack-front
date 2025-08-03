@@ -49,7 +49,7 @@ const PopularArticles = () => {
                             </AppLink>
                         </div>
                     </div>
-                    {isLoading ? <Loader small className={s.loader}/> : (<ArticlesList articles= {articleArr} hideFourthOnDesktop/>)}
+                    {isLoading ? <Loader small className={s.loader}/> : (<ArticlesList articles= {articleArr} user hideFourthOnDesktop/>)}
                 </div>
             </Container>
         </>
