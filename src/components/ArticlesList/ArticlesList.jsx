@@ -10,8 +10,8 @@ const ArticlesList = ({ articles, user, hideFourthOnDesktop}) => {
     return(
       <ul className={`${css.list} ${hideFourthOnDesktop ? css.hideFourth : ''}`}>
       {Array.isArray(articles) && articles.map(article => { 
-        const isAuthor = article.author === user?.user?.id;
-        const isSaved = isAuthor && user.savedArticles?.includes(article.id);        
+        const isAuthor = article.ownerId === user.id;
+        const isSaved = isAuthor && user.savedArticles?.includes(article._id);        
         return(
       <ArticlesItem
             key={article._id}

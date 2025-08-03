@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import ButtonAddToBookmarks from '../ButtonAddToBookmarks/ButtonAddToBookmarks'
+import EditArticleButton from '../EditArticleButton/EditArticleButton'
 import AppLink from '../AppLink/AppLink'
 import s from '../ArticlesItem/ArticlesItem.module.css'
 
