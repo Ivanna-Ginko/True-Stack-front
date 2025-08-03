@@ -32,6 +32,3 @@ const ArticlesList = ({ articles, user }) => {
 }
 
 export default ArticlesList
-
-
-
