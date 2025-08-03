@@ -175,6 +175,10 @@
   margin-right: 45px;
 }
 
+.eyeIcon:hover {
+  cursor: pointer;
+}
+
 .pwdField .field.is-invalid + .iconWrap .eyeIcon {
   filter: brightness(0) saturate(100%) invert(39%) sepia(24%) saturate(1118%)
     hue-rotate(316deg) brightness(91%) contrast(93%);
