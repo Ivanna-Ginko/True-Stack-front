@@ -6,17 +6,22 @@ import Container from '../container/Container';
 import AuthorsList from '../AuthorsList/AuthorsList';
 import svg from '../../assets/icons/arrow.svg';
 import { fetchAuthors } from '../../services/api';
+import { Loader } from '../Loader/Loader';
 
 const TopCreators = () => {
   const [topCreators, setTopCreators] = useState([]);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(()=>{
     const getTopCreators = async () =>{
       try {
+        setIsLoading(true);
         const response = await fetchAuthors();        
         setTopCreators(response.data.slice(0, 6));        
       } catch (err) {
         console.log('Error loading TopCreators', err.message);
+      }finally{
+        setIsLoading(false);
       }
     };
     getTopCreators();
@@ -39,11 +44,11 @@ const TopCreators = () => {
               </AppLink>
             </div>
           </div>          
-          <AuthorsList
+          {isLoading ? <Loader small className={css.loader}/> : (<AuthorsList
             authors={topCreators}
             imgSize="tc"
             onAuthCardClick={handleAuthorClick}
-          />          
+          />)}        
         </div>
       </Container>
     </>    

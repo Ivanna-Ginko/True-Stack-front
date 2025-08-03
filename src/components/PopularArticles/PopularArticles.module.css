@@ -12,14 +12,14 @@
     
 }
 
-.linkContainer{
-    margin-left: -16px;
-}
-
 .title{
     font-weight: 700;
     min-width: 309px;
     font-size: 32px;
+}
+
+.loader{
+    margin-left: 50%;
 }
 
 
@@ -30,6 +30,9 @@
         align-items: center;
     }
 
+    .linkContainer{
+        margin-left: -16px;
+    }
     .linkContainer{
         margin-left: 0;
     }
