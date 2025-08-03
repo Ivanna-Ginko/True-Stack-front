@@ -1,33 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import s from './Header.module.css';
-import { useSelector, useDispatch } from "react-redux";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import divider from '../../assets/icons/divider.svg';
 import LogoutIcon from '../../assets/icons/exit.svg?react';
 import AppLink from '../AppLink/AppLink';
-import { logoutUser } from '../../redux/operations';
-import { toast } from "react-toastify";
-import ModalNotification from "../ModalErrorSave/ModalErrorSave";
 
-const UserNav = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const user = useSelector(state => state.user?.user);
-
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const openModal = () => setIsModalOpen(true);
-    const closeModal = () => setIsModalOpen(false);
-
-    const handleLogout = async () => {
-        try {
-            await dispatch(logoutUser()).unwrap();
-        } catch (error) {
-            toast.error(`Logout failed. ${error.message}`);
-        } finally {
-            closeModal();
-            navigate("/login");
-        }
-    };
+const UserNav = ({user,openModal}) => {
+    
     const navLink = ({ isActive }) =>
         (isActive ? s.activeLink : s.navLink);
     return (
@@ -65,16 +44,6 @@ const UserNav = () => {
                     </div>
                 )}
             </nav>
-            {isModalOpen && (
-                <ModalNotification
-                    isOpen={isModalOpen}
-                    onClose={closeModal}
-                    title='Are you sure?'
-                    text='We will miss you!'
-                    onConfirm={handleLogout}
-                    logOut={true}
-                />
-            )}
         </>
     );
 };
