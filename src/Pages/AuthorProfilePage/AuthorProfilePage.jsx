@@ -6,12 +6,16 @@ import Container from "../../components/container/Container";
 import { useSelector } from "react-redux";
 import SectionTitle from "../../components/SectionTitle/SectionTitle";
 import { useParams } from "react-router-dom";
-import { fetchAuthorById } from "../../services/api";
+import {
+  fetchArticles,
+  fetchAuthorById,
+  getSavedArticles,
+} from "../../services/api";
 import { selectIsLoggedIn, selectUser } from "../../redux/selectors";
 import { ProfileTabs } from "../../components/ProfileTabs/ProfileTabs";
 import NothingFound from "../../components/NothingFound/NothingFound.jsx";
 import { Loader } from "../../components/Loader/Loader.jsx";
-import ProfileArticlesList from "../../components/ProfileArticlesList/ProfileArticlesList.jsx";
+import { toast } from "react-toastify";
 
 const AuthorProfilePage = () => {
   const title = "My Profile";
@@ -25,39 +29,95 @@ const AuthorProfilePage = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [authorData, setAuthorData] = useState(null);
-  const [articlesAmount, setArticlesAmount] = useState(0);
+  const [createdArticles, setCreatedArticles] = useState([]);
+  const [savedArticles, setSavedArticles] = useState([]);
   const [selectedTab, setSelectedTab] = useState("My Articles");
   const [totalItems, setTotalItems] = useState(0);
   const [totalItemsSaved, setTotalItemsSaved] = useState(0);
-
-  const handleTotalItemsChange = (count) => {
-    setTotalItems(count);
-  };
-  const handleSavedTotalItemsChange = (count) => {
-    setTotalItemsSaved(count);
-  };
-
-  const config = {
-    params: {
-      ownerId: userId,
-    },
-  };
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalSavedPages, setTotalSavedPages] = useState(1);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     const getAuthorData = async () => {
       try {
         setIsLoading(true);
+        setIsError(false);
+
         const res = await fetchAuthorById(userId);
         setAuthorData(res.data);
-        setArticlesAmount(totalItems);
       } catch (error) {
-        console.error("Помилка при отриманні автора", error);
+        setIsError(true);
+        toast.warning("No author found", {
+          style: {
+            backgroundColor: "rgba(209, 224, 216, 1)",
+            color: "#333",
+          },
+        });
       } finally {
         setIsLoading(false);
       }
     };
     getAuthorData();
-  }, [userId, totalItems]);
+  }, [userId]);
+
+  useEffect(() => {
+    const fetchSaved = async () => {
+      if (selectedTab === "Saved Articles") {
+        try {
+          setIsLoading(true);
+          setIsError(false);
+
+          const response = await getSavedArticles();
+          setSavedArticles(response.data);
+          setTotalItemsSaved(response.pagination.totalItems);
+          setTotalSavedPages(response.pagination.totalPage);
+        } catch (error) {
+          setIsError(true);
+          toast.warning("No articles found", {
+            style: {
+              backgroundColor: "rgba(209, 224, 216, 1)",
+              color: "#333",
+            },
+          });
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    };
+    fetchSaved();
+  }, [selectedTab]);
+
+  useEffect(() => {
+    const getArticles = async () => {
+      try {
+        setIsLoading(true);
+        setIsError(false);
+
+        const config = {
+          params: {
+            ownerId: userId,
+          },
+        };
+        const response = await fetchArticles(config);
+        setCreatedArticles(response.data.data.data);
+        setTotalItems(response.data.data.totalItems);
+        setTotalPages(response.data.data.totaPage);
+      } catch (error) {
+        setIsError(true);
+        toast.warning("No articles found", {
+          style: {
+            backgroundColor: "rgba(209, 224, 216, 1)",
+            color: "#333",
+          },
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    getArticles();
+  }, [userId]);
 
   return (
     <div>
@@ -74,11 +134,11 @@ const AuthorProfilePage = () => {
               <img
                 className={s.authorAvatar}
                 src={authorData.avatarUrl}
-                alr={`Фото автора ${authorData.name}`}
+                alt={`Фото автора ${authorData.name}`}
               />
               <div className={s.authorInfo}>
                 <h2 className={s.authorName}>{authorData.name}</h2>
-                <p className={s.articlesAmount}>{articlesAmount} articles</p>
+                <p className={s.articlesAmount}>{totalItems} articles</p>
               </div>
             </div>
           )}
@@ -89,51 +149,48 @@ const AuthorProfilePage = () => {
             />
           ) : null}
         </div>
-        {isMyPage ? (
-          <>
-            {selectedTab === "My Articles" && (
-              <>
-                <ArticlesList
-                  config={config}
-                  onTotalItemsChange={handleTotalItemsChange}
-                />
-                {totalItems === 0 && (
-                  <div className={s.nothing}>
-                    <NothingFound
-                      description="Write your first article"
-                      buttonText="Create an article"
-                      buttonLink="/create"
-                    />
-                  </div>
-                )}
-              </>
-            )}
+        <div className={s.container}>
+          {isMyPage ? (
+            <>
+              {selectedTab === "My Articles" && (
+                <>
+                  <ArticlesList articles={createdArticles} user={user} />
+                  {totalItems === 0 && (
+                    <div className={s.nothing}>
+                      <NothingFound
+                        description="Write your first article"
+                        buttonText="Create an article"
+                        buttonLink="/create"
+                      />
+                    </div>
+                  )}
+                  {totalPages > 1 && <LoadMore />}
+                </>
+              )}
 
-            {selectedTab === "Saved Articles" && (
-              <>
-                <ProfileArticlesList
-                  selectedTab={selectedTab}
-                  onTotalItemsChange={handleSavedTotalItemsChange}
-                />
-                {totalItemsSaved === 0 && (
-                  <div className={s.nothing}>
-                    <NothingFound
-                      description="Save your first article"
-                      buttonText="Go to articles"
-                      buttonLink="/articles"
-                    />
-                  </div>
-                )}
-              </>
-            )}
-          </>
-        ) : (
-          <ArticlesList
-            config={config}
-            onTotalItemsChange={handleTotalItemsChange}
-          />
-        )}
-        <LoadMore />
+              {selectedTab === "Saved Articles" && (
+                <>
+                  <ArticlesList articles={savedArticles} user={user} />
+                  {totalItemsSaved === 0 && (
+                    <div className={s.nothing}>
+                      <NothingFound
+                        description="Save your first article"
+                        buttonText="Go to articles"
+                        buttonLink="/articles"
+                      />
+                    </div>
+                  )}
+                  {totalSavedPages > 1 && <LoadMore />}
+                </>
+              )}
+            </>
+          ) : (
+            <>
+              <ArticlesList articles={createdArticles} user={user} />
+              {totalPages > 1 && <LoadMore />}
+            </>
+          )}
+        </div>
       </Container>
     </div>
   );
