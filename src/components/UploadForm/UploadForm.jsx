@@ -91,11 +91,6 @@ const UploadForm = ({ formData }) => {
     formDataInstance.delete('repeatPwd');
 
 
-    for (let [key, value] of formDataInstance.entries()) {
-      console.log(`${key}:`, value);
-    }
-    
-
     try {
       await dispatch(registerUser(formDataInstance)).unwrap();
     } catch (err) {
