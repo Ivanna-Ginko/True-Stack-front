@@ -6,7 +6,7 @@ import UserNav from './UserNav';
 import GuestNav from './GuestNav';
 import { useDispatch, useSelector } from 'react-redux';
 import Container from '../container/Container';
-import BurgerIcon from '../../assets/icons/menu.svg';
+import BurgerIcon from '../../assets/icons/menu.svg?react';
 import AppLink from '../AppLink/AppLink';
 import MobileMenu from '../MobileMenu/MobileMenu';
 import { toast } from 'react-toastify';
@@ -36,6 +36,7 @@ const Header = () => {
       toast.error(`Logout failed. ${error.message}`);
     } finally {
       closeModal();
+      closeMenu();
     }
   };
   
@@ -65,7 +66,8 @@ const Header = () => {
               </div>
             )}
             <button className={s.burgerBtn} onClick={toggleMenu}>
-              <img src={BurgerIcon} alt='burgerIcon' className={s.burgerIcon} />
+              {/* <img src={BurgerIcon} alt='burgerIcon' className={s.burgerIcon} /> */}
+              <BurgerIcon className={s.burgerIcon} />
             </button>
           </div>
         </div>

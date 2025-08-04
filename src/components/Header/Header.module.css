@@ -36,7 +36,7 @@
     background: none;
     border: none;
     cursor: pointer;
-    display: block;
+    display: none;
     color: #374F42;
     border-radius: 6px;
     padding: 0px 0px 5px 0px;
@@ -46,6 +46,9 @@
 .createBtn {
     display: none;
 }
+.tabletOnly {
+    display: none;
+}
 @media screen and (min-width: 768px) {
     .joinBtn {
         display: block;
@@ -53,7 +56,17 @@
     .userBlock {
         display: none;
     }
+    /* .tabletOnly {
+        display: block;
+    } */
+}
+@media screen and (min-width: 768px) and (max-width: 1439px) {
     .tabletOnly {
+        display: block;
+    }
+}
+@media screen and (max-width: 1439px) {
+    .burgerBtn {
         display: block;
     }
 }
@@ -137,12 +150,6 @@
         height: 28px;
         color: #374F42;
     }
-    .burgerBtn {
-        display: none;
-    }
     .desktopOnly {
         display: block;
-    }
-    .tabletOnly {
-        display: none;
     }
