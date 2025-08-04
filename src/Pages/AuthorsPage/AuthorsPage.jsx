@@ -21,7 +21,6 @@ const AuthorsPage = () => {
       try {
         setIsLoading(true);
         const data = await fetchAuthors();
-        console.log('API response:', data);
         const normalizedAuthors = data.data.map((item) => ({
           ...item,
           _id: item._id?.$oid || item._id,

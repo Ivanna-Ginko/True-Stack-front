@@ -74,11 +74,11 @@ const RegisterForm = () => {
   // const handleSubmit = async (values, actions) => {
   //   try {
   //     const { name, email, password } = values;
-  //     console.log("Waiting:", values);
+ 
   //     const result = await dispatch(
   //       registerUser({ name, email, password })
   //     ).unwrap();
-  //     console.log("Registration:", result);
+
   //     navigate("/photo");
   //   } catch (error) {
   //     console.error("Registration error:", error);
