@@ -59,7 +59,7 @@ const ArticleListSelect = ({ onChange }) => {
       onChange(selected.value); 
     }
   };
-  //console.log(selectedOption)
+
   return (
     <Select
       options={options}

@@ -9,7 +9,7 @@ const AuthorsItem = ({ item, onAuthCardClick, imgSize = 'default' }) => {
 
   const fullName = item.name;
   const firstName = fullName.split(' ')[0]
-  console.log(firstName)
+
 
   return (
     <div onClick={handleClick} className={css.itemwrapper}>
