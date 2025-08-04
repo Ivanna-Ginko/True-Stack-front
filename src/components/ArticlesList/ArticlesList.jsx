@@ -14,7 +14,7 @@ const ArticlesList = ({ articles, user, hideFourthOnDesktop}) => {
         const isSaved = isAuthor && user.savedArticles?.includes(article._id);        
         return(
       <ArticlesItem
-            key={article._id}
+            key={`${article._id}-${article._keySuffix}`}
             id={article._id}
             title={article.title}
             author={article.author}

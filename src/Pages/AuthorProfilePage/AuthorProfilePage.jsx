@@ -186,7 +186,7 @@ const AuthorProfilePage = () => {
                       />
                     </div>
                   )}
-                  {totalPages > 1 && <LoadMore />}
+                  {totalSavedPages > 1 && <LoadMore loadData={loadArticles} onDataLoaded={handleAppend} />}
                 </>
               )}
 
@@ -202,15 +202,15 @@ const AuthorProfilePage = () => {
                       />
                     </div>
                   )}
-                  {totalSavedPages > 1 && <LoadMore />}
+                  {totalSavedPages > 1 && <LoadMore loadData={loadArticles} onDataLoaded={handleAppend} />}
+                  
                 </>
               )}
             </>
           ) : (
             <>
               <ArticlesList articles={createdArticles} user={user} />
-                {/* {totalPages > 1 && <LoadMore />} */}
-                <LoadMore loadData={loadArticles} onDataLoaded={handleAppend} />
+                {totalSavedPages > 1 && <LoadMore loadData={loadArticles} onDataLoaded={handleAppend} />}
             </>
           )}
         </div>

@@ -22,10 +22,19 @@ const AuthorsPage = () => {
 
     try {
       const data = await fetchAuthors(page, perPage);
-      const normalizedAuthors = data.data.map((item) => ({
-        ...item,
-        _id: item._id?.$oid || item._id,
-      }));
+      // const normalizedAuthors = data.data.map((item) => ({
+      //   ...item,
+      //   _id: item._id?.$oid || item._id,
+      // }));
+      const timestamp = Date.now();
+      const normalizedAuthors = data.data.map((item) => {
+        const id = item._id?.$oid || item._id;
+        return {
+          ...item,
+          _id: id,
+          _keySuffix: `${timestamp}-${Math.random().toString(36).slice(2, 6)}`,
+        };
+      });
 
       if (page === 1) {
         setAuthors(normalizedAuthors);
