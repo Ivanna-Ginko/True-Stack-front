@@ -5,8 +5,8 @@ import React, { useState, useEffect } from "react";
 // import { useDispatch } from "react-redux";
 // import { authActions } from "../../redux/slice";
 // import { registerUser } from "../../redux/operations";
-import css from "./RegisterForm.module.css";
 // import { toast } from "react-toastify";
+import css from "./RegisterForm.module.css";
 
 import hidePwd from "../../assets/icons/crossed-eye.svg";
 import showPwd from "../../assets/icons/eye.svg";
@@ -74,11 +74,11 @@ const RegisterForm = () => {
   // const handleSubmit = async (values, actions) => {
   //   try {
   //     const { name, email, password } = values;
-  //     console.log("Waiting:", values);
+ 
   //     const result = await dispatch(
   //       registerUser({ name, email, password })
   //     ).unwrap();
-  //     console.log("Registration:", result);
+
   //     navigate("/photo");
   //   } catch (error) {
   //     console.error("Registration error:", error);
@@ -111,7 +111,7 @@ const RegisterForm = () => {
       >
         {({ isSubmitting, isValid }) => (
           <Form className={css.formContainer}>
-            <label className={css.label} htmlFor="name">
+            <label className={css.labelName} htmlFor="name">
               Enter your name
             </label>
             <Field name="name">

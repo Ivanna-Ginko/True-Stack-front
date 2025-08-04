@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { articleFormValidation } from './articleFormValidation';
 import ArticleTextArea from './ArticleTextArea';
 import styles from './AddArticleForm.module.css';
-import cameraIcon from '../../assets/icons/camera.svg';
+import cameraImg from '../../assets/images/normal/CreateArticlePage/camera-article.png';
 import { toast } from 'react-toastify';
 import { createArticle } from '../../services/api';
 import { useSelector } from 'react-redux';
@@ -30,19 +30,12 @@ export default function ArticleForm() {
       formData.append('author', author.name);
       formData.append('date', new Date().toISOString().split('T')[0]); // Add date field
       const response = await createArticle(formData);
-      console.log('Article creation response:', response);
-      console.log('Response.data:', response._id);
-      console.log('Response.data._id:', response._id);
       toast.success('Article successfully published!');
       resetForm();
-      // Redirect to the created article
       if (response._id) {
-        console.log('Navigating to article:', response._id);
         navigate(`/articles/${response._id}`);
       } else {
-        console.log('No article ID, navigating to articles list');
-        console.log('Response structure:', JSON.stringify(response, null, 2));
-        navigate('/articles'); // Fallback to articles list
+        navigate('/articles');
       }
     } catch (error) {
       console.log(error)
@@ -52,67 +45,71 @@ export default function ArticleForm() {
   };
 
   return (
-    <div className={styles.formWrapper}>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={articleFormValidation}
-        onSubmit={handleSubmit}
-      >
-        {({ setFieldValue, isSubmitting, values }) => (
-          <Form className={styles.form}>
-            <div className={styles.left}>
-              <label className={styles.label}>
-                Title
-                <Field
-                  className={styles.input}
-                  type="text"
-                  name="title"
-                  placeholder="Enter the title"
-                  maxLength={48}
-                  autoFocus
-                />
-                <ErrorMessage name="title" component="div" className={styles.error} />
-              </label>
-
-              {/* Використання кастомного textarea */}
-              <ArticleTextArea
-                name="article"
-                placeholder="Enter a text"
+    <Formik
+      initialValues={initialValues}
+      validationSchema={articleFormValidation}
+      onSubmit={handleSubmit}
+    >
+      {({ setFieldValue, isSubmitting, values }) => (
+        <Form className={styles.form}>
+          <div className={styles.imageBox}>
+            <input
+              ref={fileRef}
+              type="file"
+              accept="image/*"
+              className={styles.imageInput}
+              onChange={e => {
+                setFieldValue('img', e.target.files[0]);
+              }}
+            />
+            {values.img ? (
+              <img
+                src={URL.createObjectURL(values.img)}
+                alt="Preview"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '16px' }}
               />
-
-              <button
-                type="submit"
-                className={styles.button}
-                disabled={isSubmitting}
-              >
-                Publish Article
-              </button>
-            </div>
-
-            <label className={styles.imageBox}>
-              <input
-                ref={fileRef}
-                type="file"
-                accept="image/*"
-                className={styles.imageInput}
-                onChange={e => {
-                  setFieldValue('img', e.target.files[0]);
-                }}
+            ) : (
+              <img src={cameraImg} alt="Camera icon" />
+            )}
+            <ErrorMessage name="img" component="div" className={styles.errorImg} />
+          </div>
+          <div className={styles.left}>
+            <label className={styles.label}>
+              Title
+              <Field
+                className={styles.input}
+                type="text"
+                name="title"
+                placeholder="Enter the title"
+                maxLength={48}
+              // autoFocus
               />
-              {values.img ? (
-                <img
-                  src={URL.createObjectURL(values.img)}
-                  alt="Preview"
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '16px' }}
-                />
-              ) : (
-                <img src={cameraIcon} alt="camera icon" className={styles.cameraIcon} />
-              )}
-              <ErrorMessage name="img" component="div" className={styles.errorImg} />
+              <ErrorMessage name="title" component="div" className={styles.error} />
             </label>
-          </Form>
-        )}
-      </Formik>
-    </div>
+            <div className={styles.rightBox}>
+              <div className={styles.right}>
+                {/* Використання кастомного textarea */}
+                <ArticleTextArea
+                  className={styles.textarea}
+                  name="article"
+                  placeholder="Enter a text"
+                />
+
+                <button
+                  type="submit"
+                  className={styles.button}
+                  disabled={isSubmitting}
+                >
+                  Publish Article
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+
+        </Form>
+      )}
+    </Formik>
   );
 }

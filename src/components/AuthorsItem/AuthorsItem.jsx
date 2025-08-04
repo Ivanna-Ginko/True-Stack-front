@@ -1,7 +1,8 @@
 import css from './AuthorsItem.module.css'
 import clsx from 'clsx';
+import defaultAvatar from '../../../public/img/defaultAvatar.png'
 
-const AuthorsItem = ({ item, onAuthCardClick,imgSize = 'default' }) => {
+const AuthorsItem = ({ item, onAuthCardClick, imgSize = 'default' }) => {
   const handleClick = () => {
     onAuthCardClick(item._id);
   };
@@ -17,6 +18,7 @@ const firstName = fullName.split(' ')[0]
         src={avatarSrc}
         className={clsx(css.img, css[`img_${imgSize}`])}
         alt={`Фото автора ${item.name}`}
+        onError={(e) => e.target.src = defaultAvatar}
       />
       <p className={css.text}>{firstName}</p>
     </div>

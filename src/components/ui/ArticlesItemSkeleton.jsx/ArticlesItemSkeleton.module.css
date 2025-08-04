@@ -1,0 +1,45 @@
+.card{
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    row-gap: 12px;
+    justify-content: space-between;
+    background: #D1E0D8;
+    border-radius: 32px;
+    width: 361px;
+    height: 492px;
+    min-width: 320px;
+}
+
+.buttons {
+  display: flex;
+  gap: 8px;
+}
+
+@media (min-width: 768px) and (max-width: 1439px) {
+    .card{
+        width: 340px;
+    }
+    .containerImage{
+        width: 316px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .card{
+        width: 392px;
+    }
+    .containerImage{
+        width: 368px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
