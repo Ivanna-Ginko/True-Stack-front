@@ -90,11 +90,11 @@ const UploadForm = ({ formData }) => {
     // Don't append avatarUrl - send empty or skip it
     formDataInstance.delete('repeatPwd');
 
-    console.log('=== FormData Contents (skip avatar) ===');
+
     for (let [key, value] of formDataInstance.entries()) {
       console.log(`${key}:`, value);
     }
-    console.log('=== End FormData Contents ===');
+    
 
     try {
       await dispatch(registerUser(formDataInstance)).unwrap();

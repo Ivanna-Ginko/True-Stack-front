@@ -13,7 +13,8 @@
 
 .header {
   margin: 0;
-  line-height: 155%;
+  /* line-height: 155%; */
+  line-height: 44px;
 }
 
 .text {
@@ -31,11 +32,13 @@
 }
 
 .labelName {
+  line-height: 135%;
   font-size: 12px;
   text-align: left;
   margin-bottom: 4px;
 }
 .label {
+  line-height: 135%;
   font-size: 12px;
   text-align: left;
   /* margin-top: 16px;
@@ -45,7 +48,7 @@
 .labelText {
   display: inline-block;
   margin-bottom: 4px;
-  line-height: 14.8px;
+  line-height: 16px;
 }
 
 .field {
