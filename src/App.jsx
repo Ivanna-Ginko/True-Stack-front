@@ -1,22 +1,38 @@
 import { Routes, Route } from 'react-router-dom';
-import Footer from './components/Footer/Footer.jsx';
-import Header from './components/Header/Header.jsx';
-import RegisterPage from './Pages/RegisterPage/RegisterPage.jsx';
-import LoginPage from './Pages/LoginPage/LoginPage.jsx';
-import ArticlesPage from './Pages/ArticlesPage/ArticlesPage.jsx';
-import ArticlePage from './Pages/ArticlePage/ArticlePage.jsx';
-import AuthorsPage from './Pages/AuthorsPage/AuthorsPage.jsx';
-import AuthorProfilePage from './Pages/AuthorProfilePage/AuthorProfilePage.jsx';
-import CreateArticlePage from './Pages/CreateArticlePage/CreateArticlePage.jsx';
-import UploadPhoto from './Pages/UploadPhoto/UploadPhoto.jsx';
+// import RegisterPage from './Pages/RegisterPage/RegisterPage.jsx';
+// import LoginPage from './Pages/LoginPage/LoginPage.jsx';
+// import ArticlesPage from './Pages/ArticlesPage/ArticlesPage.jsx';
+// import ArticlePage from './Pages/ArticlePage/ArticlePage.jsx';
+// import AuthorsPage from './Pages/AuthorsPage/AuthorsPage.jsx';
+// import AuthorProfilePage from './Pages/AuthorProfilePage/AuthorProfilePage.jsx';
+// import CreateArticlePage from './Pages/CreateArticlePage/CreateArticlePage.jsx';
+// import UploadPhoto from './Pages/UploadPhoto/UploadPhoto.jsx';
+// import HomePage from './Pages/HomePage/HomePage.jsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { lazy, useEffect } from 'react';
 import { getUserData } from './redux/operations.js';
-import HomePage from './Pages/HomePage/HomePage.jsx';
 import { selectIsFetchingUser } from './redux/selectors.js';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Layout from './components/Layout/Layout.jsx';
+
+const RegisterPage = lazy(() =>
+  import('./Pages/RegisterPage/RegisterPage.jsx')
+);
+const LoginPage = lazy(() => import('./Pages/LoginPage/LoginPage.jsx'));
+const ArticlesPage = lazy(() =>
+  import('./Pages/ArticlesPage/ArticlesPage.jsx')
+);
+const ArticlePage = lazy(() => import('./Pages/ArticlePage/ArticlePage.jsx'));
+const AuthorsPage = lazy(() => import('./Pages/AuthorsPage/AuthorsPage.jsx'));
+const AuthorProfilePage = lazy(() =>
+  import('./Pages/AuthorProfilePage/AuthorProfilePage.jsx')
+);
+const CreateArticlePage = lazy(() =>
+  import('./Pages/CreateArticlePage/CreateArticlePage.jsx')
+);
+const UploadPhoto = lazy(() => import('./Pages/UploadPhoto/UploadPhoto.jsx'));
+const HomePage = lazy(() => import('./Pages/HomePage/HomePage.jsx'));
 
 function App() {
   const dispatch = useDispatch();
