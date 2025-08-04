@@ -17,6 +17,7 @@ import { selectIsFetchingUser } from './redux/selectors.js';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Layout from './components/Layout/Layout.jsx';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx'
 
 function App() {
   const dispatch = useDispatch();
@@ -32,42 +33,19 @@ function App() {
     <>
       <Layout>
         <Routes>
-          <Route
-            path='/register'
-            element={<RegisterPage />}
-          />
-          <Route
-            path='/photo'
-            element={<UploadPhoto />}
-          />
-          <Route
-            path='/login'
-            element={<LoginPage />}
-          />
-          <Route
-            path='/'
-            element={<HomePage />}
-          />
-          <Route
-            path='/articles'
-            element={<ArticlesPage />}
-          />
-          <Route
-            path='/articles/:id'
-            element={<ArticlePage />}
-          />
-          <Route
-            path='/authors'
-            element={<AuthorsPage />}
-          />
-          <Route
-            path='/authors/:id'
-            element={<AuthorProfilePage />}
-          />
-          <Route
-            path='/create'
-            element={<CreateArticlePage />}
-          />
+          <Route path='/register' element={<RegisterPage />}/>
+          <Route path='/photo' element={<UploadPhoto />} />
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/' element={<HomePage />} />
+
+            <Route element={<PrivateRoute />}>             
+              <Route path='/articles' element={<ArticlesPage />} />
+              <Route path='/articles/:id' element={<ArticlePage />}/>
+              <Route path='/authors' element={<AuthorsPage />} />
+              <Route path='/authors/:id' element={<AuthorProfilePage />}/>
+              <Route path='/create' element={<CreateArticlePage />}/>
+            </Route>
+
         </Routes>
       </Layout>
       <ToastContainer
@@ -80,3 +58,6 @@ function App() {
 }
 
 export default App;
+
+
+
