@@ -35,6 +35,8 @@ const CreateArticlePage = lazy(() =>
 const UploadPhoto = lazy(() => import('./Pages/UploadPhoto/UploadPhoto.jsx'));
 const HomePage = lazy(() => import('./Pages/HomePage/HomePage.jsx'));
 
+import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx';
+
 function App() {
   const dispatch = useDispatch();
   const isFetchingUser = useSelector(selectIsFetchingUser);
