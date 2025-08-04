@@ -15,8 +15,8 @@ const AuthorsList = ({ authors, onAuthCardClick, imgSize }) => {
     <>
 
       <ul className={css.list}>
-    {authors && authors.map((item) => (
-          <li key={item._id}>
+        {authors && authors.map((item) => (
+          <li key={item._id} className={css.authli}>
             <div>
               <AuthorsItem
                 item={item}
