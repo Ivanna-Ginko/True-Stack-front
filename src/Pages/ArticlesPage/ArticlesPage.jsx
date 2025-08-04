@@ -64,7 +64,7 @@ const ArticlesPage = () => {
         </>
       )}
 
-      {totalItems === 0 && (
+      {!isLoading && totalItems === 0 && (
           <div className='css.card'>
               <NothingFound
               description="Be the first, who create an article"
