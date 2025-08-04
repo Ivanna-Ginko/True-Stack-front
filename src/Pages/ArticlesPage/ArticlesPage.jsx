@@ -8,7 +8,6 @@ import LoadMore from '../../components/LoadMore/LoadMore';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../redux/selectors';
 import { fetchArticles } from '../../services/api.js';
-import { toast } from 'react-toastify';
 import { Loader } from '../../components/Loader/Loader'; // ✅ не забудь импорт
 import NothingFound from '../../components/NothingFound/NothingFound.jsx'
 
@@ -35,15 +34,8 @@ const ArticlesPage = () => {
           : {};
         const response = await fetchArticles(config);
         setArticleList(response.data.data);
-        
-      } catch (error) {
+      } catch {
         setIsError(true);
-        toast.warning('No articles found', {
-          style: {
-            backgroundColor: 'rgba(209, 224, 216, 1)',
-            color: '#333',
-          },
-        });
       } finally {
         setIsLoading(false);
       }
@@ -72,9 +64,15 @@ const ArticlesPage = () => {
         </>
       )}
 
-      {!isLoading && !articlesArr.length && !isError && (
-        <NothingFound/>
-      )}
+      {totalItems === 0 && (
+          <div className='css.card'>
+              <NothingFound
+              description="Be the first, who create an article"
+              buttonText="Create an article"
+              buttonLink="/create"
+              />
+          </div>
+        )}
     </Container>
   );
 };
