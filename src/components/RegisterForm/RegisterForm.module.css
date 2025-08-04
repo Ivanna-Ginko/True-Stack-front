@@ -2,25 +2,24 @@
   border-radius: 32px;
   padding: 48px 32px;
   max-width: 360px;
-  /* height: 632px; */
   height: 100%;
   background-color: #d1e0d8;
   align-items: center;
   text-align: center;
-  margin: 85px 16.5px;
+  margin: 85px auto;
   justify-self: center;
 }
 
 .header {
   margin-top: 0;
   margin-bottom: 20px;
-  line-height: 155%;
+  height: 44px;
 }
 .text {
   font-size: 16px;
   line-height: 155%;
   text-align: center;
-  margin-left: 11px;
+  margin-left: 12px;
   margin-bottom: 20px;
 }
 
@@ -30,11 +29,13 @@
 }
 
 .labelName {
+  line-height: 135%;
   font-size: 12px;
   text-align: left;
   margin-bottom: 4px;
 }
 .label {
+  line-height: 135%;
   font-size: 12px;
   text-align: left;
   margin-top: 16px;
@@ -126,6 +127,7 @@
 @media only screen and (min-width: 768px) {
   .container {
     min-width: 522px;
+    margin: 120px auto;
   }
   /* .field {
     max-width: 458px;
@@ -144,7 +146,7 @@
 @media only screen and (min-width: 1440px) {
   .container {
     border-radius: 32px;
-    margin: 85px 0;
+    margin: 50px auto;
     min-width: 392px;
     height: 100%;
   }

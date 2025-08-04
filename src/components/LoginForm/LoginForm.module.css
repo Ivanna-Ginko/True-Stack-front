@@ -7,14 +7,17 @@
   background-color: #d1e0d8;
   align-items: center;
   text-align: center;
-  margin: 85px 16.5px;
+  margin: 85px auto;
   justify-self: center;
 }
 
 .header {
   margin-top: 0;
   margin-bottom: 20px;
-  line-height: 155%;
+  font-size: 32px;
+  font-weight: 700;
+  height: 44px;
+  /* line-height: 115%; */
 }
 .text {
   font-size: 16px;
@@ -30,11 +33,14 @@
 }
 
 .labelName {
+  line-height: 135%;
   font-size: 12px;
   text-align: left;
   margin-bottom: 4px;
 }
 .label {
+  line-height: 135%;
+  font-weight: 400;
   font-size: 12px;
   text-align: left;
   margin-top: 16px;
@@ -126,6 +132,7 @@
 @media only screen and (min-width: 768px) {
   .container {
     min-width: 522px;
+    margin: 232px auto;
   }
   /* .field {
     max-width: 458px;
@@ -144,7 +151,8 @@
 @media only screen and (min-width: 1440px) {
   .container {
     border-radius: 32px;
-    margin: 85px 0;
+    margin: 172px auto;
+    /* margin: 172px 524px; */
     min-width: 392px;
     height: 100%;
   }
