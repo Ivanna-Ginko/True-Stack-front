@@ -63,6 +63,7 @@
     border-radius: 128px;
     width: 136px;
     height: 136px;
+    object-fit: cover;
 }
 
 .up_image_upload:hover {
