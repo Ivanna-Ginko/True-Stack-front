@@ -68,26 +68,28 @@ function App() {
               path='/'
               element={<HomePage />}
             />
-            <Route
-              path='/articles'
-              element={<ArticlesPage />}
-            />
-            <Route
-              path='/articles/:id'
-              element={<ArticlePage />}
-            />
-            <Route
-              path='/authors'
-              element={<AuthorsPage />}
-            />
-            <Route
-              path='/authors/:id'
-              element={<AuthorProfilePage />}
-            />
-            <Route
-              path='/create'
-              element={<CreateArticlePage />}
-            />
+              <Route element={<PrivateRoute />}>
+                <Route
+                  path='/articles'
+                  element={<ArticlesPage />}
+                />
+                <Route
+                  path='/articles/:id'
+                  element={<ArticlePage />}
+                />
+                <Route
+                  path='/authors'
+                  element={<AuthorsPage />}
+                />
+                <Route
+                  path='/authors/:id'
+                  element={<AuthorProfilePage />}
+                />
+                <Route
+                  path='/create'
+                  element={<CreateArticlePage />}
+                />
+              </Route>
           </Routes>
         </Suspense>
       </Layout>
