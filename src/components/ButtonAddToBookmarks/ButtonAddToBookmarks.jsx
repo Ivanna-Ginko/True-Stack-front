@@ -34,7 +34,7 @@ const ButtonAddToBookmarks = ({
     }
 
     const isSaved = savedArticles.some(id => String(id) === String(articleId));
-    console.log('ButtonAddToBookmarks - useEffect - articleId:', articleId, 'savedArticles:', savedArticles, 'isSaved:', isSaved);
+    // console.log('ButtonAddToBookmarks - useEffect - articleId:', articleId, 'savedArticles:', savedArticles, 'isSaved:', isSaved);
     setBookmarkStatus(isSaved ? 'saved' : 'default');
   }, [articleId, savedArticles]);
 

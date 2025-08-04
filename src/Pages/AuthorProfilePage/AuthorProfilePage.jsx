@@ -1,24 +1,25 @@
-import React, { useEffect, useState } from "react";
-import s from "./AuthorProfilePage.module.css";
-import LoadMore from "../../components/LoadMore/LoadMore.jsx";
-import ArticlesList from "../../components/ArticlesList/ArticlesList.jsx";
-import Container from "../../components/container/Container.jsx";
-import { useSelector } from "react-redux";
-import SectionTitle from "../../components/SectionTitle/SectionTitle.jsx";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import s from './AuthorProfilePage.module.css';
+import LoadMore from '../../components/LoadMore/LoadMore.jsx';
+import ArticlesList from '../../components/ArticlesList/ArticlesList.jsx';
+import Container from '../../components/container/Container.jsx';
+import { useSelector } from 'react-redux';
+import SectionTitle from '../../components/SectionTitle/SectionTitle.jsx';
+import { useParams } from 'react-router-dom';
 import {
   fetchArticles,
   fetchAuthorById,
   getSavedArticles,
-} from "../../services/api.js";
-import { selectIsLoggedIn, selectUser } from "../../redux/selectors.js";
-import { ProfileTabs } from "../../components/ProfileTabs/ProfileTabs.jsx";
-import NothingFound from "../../components/NothingFound/NothingFound.jsx";
-import { Loader } from "../../components/Loader/Loader.jsx";
-import { toast } from "react-toastify";
+} from '../../services/api.js';
+import { selectIsLoggedIn, selectUser } from '../../redux/selectors.js';
+import { ProfileTabs } from '../../components/ProfileTabs/ProfileTabs.jsx';
+import NothingFound from '../../components/NothingFound/NothingFound.jsx';
+import { Loader } from '../../components/Loader/Loader.jsx';
+import { toast } from 'react-toastify';
+import PaginatedArticles from '../../components/PaginatedArticles/PaginatedArticles.jsx';
 
 const AuthorProfilePage = () => {
-  const title = "My Profile";
+  const title = 'My Profile';
   const { id: userId } = useParams();
 
   const user = useSelector(selectUser);
@@ -31,7 +32,7 @@ const AuthorProfilePage = () => {
   const [authorData, setAuthorData] = useState(null);
   const [createdArticles, setCreatedArticles] = useState([]);
   const [savedArticles, setSavedArticles] = useState([]);
-  const [selectedTab, setSelectedTab] = useState("My Articles");
+  const [selectedTab, setSelectedTab] = useState('My Articles');
   const [totalItems, setTotalItems] = useState(0);
   const [totalItemsSaved, setTotalItemsSaved] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
@@ -50,10 +51,10 @@ const AuthorProfilePage = () => {
         setAuthorData(res.data);
       } catch (error) {
         setIsError(true);
-        toast.warning("No author found", {
+        toast.warning('No author found', {
           style: {
-            backgroundColor: "rgba(209, 224, 216, 1)",
-            color: "#333",
+            backgroundColor: 'rgba(209, 224, 216, 1)',
+            color: '#333',
           },
         });
       } finally {
@@ -65,7 +66,7 @@ const AuthorProfilePage = () => {
 
   useEffect(() => {
     const fetchSaved = async () => {
-      if (selectedTab === "Saved Articles") {
+      if (selectedTab === 'Saved Articles') {
         try {
           setIsLoading(true);
           setIsError(false);
@@ -76,10 +77,10 @@ const AuthorProfilePage = () => {
           setTotalSavedPages(response.pagination.totalPage);
         } catch (error) {
           setIsError(true);
-          toast.warning("No articles found", {
+          toast.warning('No articles found', {
             style: {
-              backgroundColor: "rgba(209, 224, 216, 1)",
-              color: "#333",
+              backgroundColor: 'rgba(209, 224, 216, 1)',
+              color: '#333',
             },
           });
         } finally {
@@ -107,10 +108,10 @@ const AuthorProfilePage = () => {
         setTotalPages(response.data.data.totaPage);
       } catch (error) {
         setIsError(true);
-        toast.warning("No articles found", {
+        toast.warning('No articles found', {
           style: {
-            backgroundColor: "rgba(209, 224, 216, 1)",
-            color: "#333",
+            backgroundColor: 'rgba(209, 224, 216, 1)',
+            color: '#333',
           },
         });
       } finally {
@@ -121,23 +122,22 @@ const AuthorProfilePage = () => {
     getArticles();
   }, [userId]);
 
-  const loadArticles = async (page) => {
-  const config = { params: { page, perPage: 12 } };
+  const loadArticles = async page => {
+    const config = { params: { page, perPage: 12 } };
 
-  if (isSavedTab && user.id === authorId) {
-    const res = await getSavedArticles(config);
-    return res.data?.items || [];
-  } else {
-    const res = await fetchArticles({ ...config, params: { ownerId: authorId, ...config.params } });
-    return res.data?.data || [];
-  }
-  };
-
-  const handleAppend = (newData) => {
-    if (isSavedTab) {
-      setSavedArticles(prev => [...prev, ...newData]);
+    if (isSavedTab && user.id === userId) {
+      const res = await getSavedArticles(config);
+      const articlesToAdd = res.data || [];
+      
+      setSavedArticles(as => [...as, ...articlesToAdd]);
     } else {
-      setCreatedArticles(prev => [...prev, ...newData]);
+      const res = await fetchArticles({
+        ...config,
+        params: { ownerId: userId, ...config.params },
+      });
+      const articlesToAdd = res.data?.data?.data || [];
+
+      setCreatedArticles(as => [...as, ...articlesToAdd])
     }
   };
 
@@ -150,7 +150,7 @@ const AuthorProfilePage = () => {
           {authorData && (
             <div
               className={`${s.aboutAuthor} ${
-                !isMyPage ? s.aboutAuthorShifted : ""
+                !isMyPage ? s.aboutAuthorShifted : ''
               }`}
             >
               <img
@@ -171,47 +171,36 @@ const AuthorProfilePage = () => {
             />
           ) : null}
         </div>
-        <div className={s.container}>
-          {isMyPage ? (
-            <>
-              {selectedTab === "My Articles" && (
-                <>
-                  <ArticlesList articles={createdArticles} user={user} />
-                  {totalItems === 0 && (
-                    <div className={s.nothing}>
-                      <NothingFound
-                        description="Write your first article"
-                        buttonText="Create an article"
-                        buttonLink="/create"
-                      />
-                    </div>
-                  )}
-                  {totalSavedPages > 1 && <LoadMore loadData={loadArticles} onDataLoaded={handleAppend} />}
-                </>
-              )}
 
-              {selectedTab === "Saved Articles" && (
-                <>
-                  <ArticlesList articles={savedArticles} user={user} />
-                  {totalItemsSaved === 0 && (
-                    <div className={s.nothing}>
-                      <NothingFound
-                        description="Save your first article"
-                        buttonText="Go to articles"
-                        buttonLink="/articles"
-                      />
-                    </div>
-                  )}
-                  {totalSavedPages > 1 && <LoadMore loadData={loadArticles} onDataLoaded={handleAppend} />}
-                  
-                </>
-              )}
-            </>
-          ) : (
-            <>
-              <ArticlesList articles={createdArticles} user={user} />
-                {totalSavedPages > 1 && <LoadMore loadData={loadArticles} onDataLoaded={handleAppend} />}
-            </>
+        <div className={s.container}>
+          {isMyPage && selectedTab === 'My Articles' && (
+            <PaginatedArticles
+              user={user}
+              totalItems={totalItems}
+              isLoading={isLoading}
+              articles={createdArticles}
+              loadArticles={loadArticles}
+            />
+          )}
+
+          {isMyPage && selectedTab === 'Saved Articles' && (
+            <PaginatedArticles
+              user={user}
+              totalItems={totalItemsSaved}
+              isLoading={isLoading}
+              articles={savedArticles}
+              loadArticles={loadArticles}
+            />
+          )}
+
+          {!isMyPage && (
+            <PaginatedArticles
+              user={user}
+              totalItems={totalItems}
+              isLoading={isLoading}
+              articles={createdArticles}
+              loadArticles={loadArticles}
+            />
           )}
         </div>
       </Container>
