@@ -6,7 +6,7 @@ import UserNav from './UserNav';
 import GuestNav from './GuestNav';
 import { useDispatch, useSelector } from 'react-redux';
 import Container from '../container/Container';
-import BurgerIcon from '../../assets/icons/menu.svg?react';
+import BurgerIcon from '../../assets/icons/menu.svg';
 import AppLink from '../AppLink/AppLink';
 import MobileMenu from '../MobileMenu/MobileMenu';
 import { toast } from 'react-toastify';
@@ -65,7 +65,7 @@ const Header = () => {
               </div>
             )}
             <button className={s.burgerBtn} onClick={toggleMenu}>
-              <BurgerIcon className={s.burgerIcon} width={32} height={32} />
+              <img src={BurgerIcon} alt='burgerIcon' className={s.burgerIcon} />
             </button>
           </div>
         </div>
@@ -76,7 +76,7 @@ const Header = () => {
           closeMenu={closeMenu}
           openModal={openModal}
           isMenuOpen={isMenuOpen}
-          
+
         />
       )}
       {isModalOpen && (
