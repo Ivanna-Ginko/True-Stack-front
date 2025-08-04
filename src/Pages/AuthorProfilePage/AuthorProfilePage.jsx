@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import s from "./AuthorProfilePage.module.css";
-import LoadMore from "../../components/LoadMore/LoadMore.jsx";
-import ArticlesList from "../../components/ArticlesList/ArticlesList.jsx";
-import Container from "../../components/container/Container.jsx";
+import LoadMore from "../../components/LoadMore/LoadMore";
+import ArticlesList from "../../components/ArticlesList/ArticlesList";
+import Container from "../../components/container/Container";
 import { useSelector } from "react-redux";
-import SectionTitle from "../../components/SectionTitle/SectionTitle.jsx";
+import SectionTitle from "../../components/SectionTitle/SectionTitle";
 import { useParams } from "react-router-dom";
 import {
   fetchArticles,
   fetchAuthorById,
   getSavedArticles,
-} from "../../services/api.js";
-import { selectIsLoggedIn, selectUser } from "../../redux/selectors.js";
-import { ProfileTabs } from "../../components/ProfileTabs/ProfileTabs.jsx";
+} from "../../services/api";
+import { selectIsLoggedIn, selectUser } from "../../redux/selectors";
+import { ProfileTabs } from "../../components/ProfileTabs/ProfileTabs";
 import NothingFound from "../../components/NothingFound/NothingFound.jsx";
 import { Loader } from "../../components/Loader/Loader.jsx";
 import { toast } from "react-toastify";
@@ -39,7 +39,8 @@ const AuthorProfilePage = () => {
   const [isError, setIsError] = useState(false);
 
   const isSavedTab = selectedTab === 'Saved Articles';
-
+  const perPage = 12;
+  
   useEffect(() => {
     const getAuthorData = async () => {
       try {
@@ -122,26 +123,40 @@ const AuthorProfilePage = () => {
   }, [userId]);
 
   const loadArticles = async (page) => {
-  const config = { params: { page, perPage: 12 } };
+  const config = { params: { page, perPage } };
 
-  if (isSavedTab && user.id === authorId) {
-    const res = await getSavedArticles(config);
-    return res.data?.items || [];
-  } else {
-    const res = await fetchArticles({ ...config, params: { ownerId: authorId, ...config.params } });
-    return res.data?.data || [];
+  try {
+    if (isSavedTab && user.id === userId) {
+      const res = await getSavedArticles(config);
+      return Array.isArray(res.data?.items) ? res.data.items : [];
+    } else {
+      const res = await fetchArticles({
+        ...config,
+        params: { ownerId: userId, ...config.params },
+      });
+      return Array.isArray(res.data?.data?.data) ? res.data.data.data : [];
+    }
+  } catch (error) {
+    console.error("loadArticles error:", error);
+    return [];
   }
   };
+  
 
   const handleAppend = (newData) => {
-    if (isSavedTab) {
-      setSavedArticles(prev => [...prev, ...newData]);
-    } else {
-      setCreatedArticles(prev => [...prev, ...newData]);
-    }
-  };
+  if (!Array.isArray(newData)) {
+    console.warn("handleAppend received invalid data:", newData);
+    return;
+  }
 
-  return (
+  if (isSavedTab) {
+    setSavedArticles(prev => [...prev, ...newData]);
+  } else {
+    setCreatedArticles(prev => [...prev, ...newData]);
+  }
+};
+
+return (
     <div>
       <Container>
         {isLoading && <Loader />}
@@ -155,7 +170,7 @@ const AuthorProfilePage = () => {
             >
               <img
                 className={s.authorAvatar}
-                src={authorData.avatarUrl}
+                src={authorData.avatarUrl || null}
                 alt={`Фото автора ${authorData.name}`}
               />
               <div className={s.authorInfo}>
@@ -186,7 +201,13 @@ const AuthorProfilePage = () => {
                       />
                     </div>
                   )}
-                  {totalSavedPages > 1 && <LoadMore loadData={loadArticles} onDataLoaded={handleAppend} />}
+                  {/* {totalPages > 1 && ( */}
+                    <LoadMore
+                      loadData={loadArticles}
+                      onDataLoaded={handleAppend}
+                      perPage={perPage}
+                    />
+                  {/* )} */}
                 </>
               )}
 
@@ -202,15 +223,26 @@ const AuthorProfilePage = () => {
                       />
                     </div>
                   )}
-                  {totalSavedPages > 1 && <LoadMore loadData={loadArticles} onDataLoaded={handleAppend} />}
-                  
+                  {/* {totalSavedPages > 1 && ( */}
+                    <LoadMore
+                      loadData={loadArticles}
+                      onDataLoaded={handleAppend}
+                      perPage={perPage}
+                    />
+                  {/* )} */}
                 </>
               )}
             </>
           ) : (
             <>
               <ArticlesList articles={createdArticles} user={user} />
-                {totalSavedPages > 1 && <LoadMore loadData={loadArticles} onDataLoaded={handleAppend} />}
+              {/* {totalPages > 1 && ( */}
+                  <LoadMore
+                    loadData={loadArticles}
+                    onDataLoaded={handleAppend}
+                    perPage={perPage}
+                  />
+              {/* )} */}
             </>
           )}
         </div>
