@@ -42,6 +42,10 @@
 .linkOverride {
     color: black !important;
 }
+
+.hideFourth li:nth-child(n+4) {
+    display: none;
+}
 @media only screen and (min-width: 768px) {
     .body{
         padding: 32px 32px 40px 32px;

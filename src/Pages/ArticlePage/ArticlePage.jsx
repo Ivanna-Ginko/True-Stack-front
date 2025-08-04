@@ -16,7 +16,7 @@ const ArticlePage = () => {
 
   const config = {
     params: {
-      perPage: 3
+      perPage: 15
     }
   };
 
@@ -56,6 +56,7 @@ const ArticlePage = () => {
           author={article.author}
           publishDate={article.date}
           idAuthor={article.ownerId}
+          hideFourth
         />
       </div>
     </Container>
