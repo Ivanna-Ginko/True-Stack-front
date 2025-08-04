@@ -9,12 +9,13 @@ import { Routes, Route } from 'react-router-dom';
 // import UploadPhoto from './Pages/UploadPhoto/UploadPhoto.jsx';
 // import HomePage from './Pages/HomePage/HomePage.jsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { lazy, useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { getUserData } from './redux/operations.js';
 import { selectIsFetchingUser } from './redux/selectors.js';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Layout from './components/Layout/Layout.jsx';
+import { Loader } from './components/Loader/Loader.jsx';
 
 const RegisterPage = lazy(() =>
   import('./Pages/RegisterPage/RegisterPage.jsx')
@@ -47,44 +48,46 @@ function App() {
   return (
     <>
       <Layout>
-        <Routes>
-          <Route
-            path='/register'
-            element={<RegisterPage />}
-          />
-          <Route
-            path='/photo'
-            element={<UploadPhoto />}
-          />
-          <Route
-            path='/login'
-            element={<LoginPage />}
-          />
-          <Route
-            path='/'
-            element={<HomePage />}
-          />
-          <Route
-            path='/articles'
-            element={<ArticlesPage />}
-          />
-          <Route
-            path='/articles/:id'
-            element={<ArticlePage />}
-          />
-          <Route
-            path='/authors'
-            element={<AuthorsPage />}
-          />
-          <Route
-            path='/authors/:id'
-            element={<AuthorProfilePage />}
-          />
-          <Route
-            path='/create'
-            element={<CreateArticlePage />}
-          />
-        </Routes>
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            <Route
+              path='/register'
+              element={<RegisterPage />}
+            />
+            <Route
+              path='/photo'
+              element={<UploadPhoto />}
+            />
+            <Route
+              path='/login'
+              element={<LoginPage />}
+            />
+            <Route
+              path='/'
+              element={<HomePage />}
+            />
+            <Route
+              path='/articles'
+              element={<ArticlesPage />}
+            />
+            <Route
+              path='/articles/:id'
+              element={<ArticlePage />}
+            />
+            <Route
+              path='/authors'
+              element={<AuthorsPage />}
+            />
+            <Route
+              path='/authors/:id'
+              element={<AuthorProfilePage />}
+            />
+            <Route
+              path='/create'
+              element={<CreateArticlePage />}
+            />
+          </Routes>
+        </Suspense>
       </Layout>
       <ToastContainer
         position='top-right'
