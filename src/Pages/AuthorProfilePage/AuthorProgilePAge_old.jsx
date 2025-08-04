@@ -38,7 +38,7 @@ const AuthorProfilePage = () => {
   const [totalSavedPages, setTotalSavedPages] = useState(1);
   const [isError, setIsError] = useState(false);
 
-  const isSavedTab = selectedTab === "Saved Articles";
+  const isSavedTab = selectedTab === 'Saved Articles';
 
   useEffect(() => {
     const getAuthorData = async () => {
@@ -64,35 +64,47 @@ const AuthorProfilePage = () => {
   }, [userId]);
 
   useEffect(() => {
-    const getInitialArticles = async () => {
+    const fetchSaved = async () => {
+      if (selectedTab === "Saved Articles") {
+        try {
+          setIsLoading(true);
+          setIsError(false);
+
+          const response = await getSavedArticles();
+          setSavedArticles(response.data);
+          setTotalItemsSaved(response.pagination.totalItems);
+          setTotalSavedPages(response.pagination.totalPage);
+        } catch (error) {
+          setIsError(true);
+          toast.warning("No articles found", {
+            style: {
+              backgroundColor: "rgba(209, 224, 216, 1)",
+              color: "#333",
+            },
+          });
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    };
+    fetchSaved();
+  }, [selectedTab]);
+
+  useEffect(() => {
+    const getArticles = async () => {
       try {
         setIsLoading(true);
         setIsError(false);
 
         const config = {
           params: {
-            page: 1,
-            perPage: 12,
             ownerId: userId,
           },
         };
-
-        const res = await fetchArticles(config);
-        const fetched = res.data?.data || [];
-
-        const timestamp = Date.now();
-        const normalized = fetched.map((item) => {
-          const id = item._id?.$oid || item._id;
-          return {
-            ...item,
-            _id: id,
-            _keySuffix: `${timestamp}-${Math.random().toString(36).slice(2, 6)}`,
-          };
-        });
-
-        setCreatedArticles(normalized);
-        setTotalItems(res.data?.totalItems || 0);
-        setTotalPages(res.data?.totaPage || 1);
+        const response = await fetchArticles(config);
+        setCreatedArticles(response.data.data.data);
+        setTotalItems(response.data.data.totalItems);
+        setTotalPages(response.data.data.totaPage);
       } catch (error) {
         setIsError(true);
         toast.warning("No articles found", {
@@ -106,64 +118,26 @@ const AuthorProfilePage = () => {
       }
     };
 
-    if (!isSavedTab) getInitialArticles();
-  }, [userId, selectedTab]);
+    getArticles();
+  }, [userId]);
 
   const loadArticles = async (page) => {
-    const config = { params: { page, perPage: 12 } };
-      const timestamp = Date.now();
-    try {
-      if (isSavedTab) {
-        const res = await getSavedArticles(config);
-        const fetched = res.data || [];
-        
-        const normalized = fetched.map((item) => {
-          const id = item._id?.$oid || item._id;
-          return {
-            ...item,
-            _id: id,
-            _keySuffix: `${timestamp}-${Math.random().toString(36).slice(2, 6)}`,
-          };
-        });
+  const config = { params: { page, perPage: 12 } };
 
-        if (page === 1) {
-          setSavedArticles(normalized);
-        }
-
-        setTotalItemsSaved(res.pagination?.totalItems || 0);
-        setTotalSavedPages(res.pagination?.totalPage || 1);
-
-        return normalized;
-      } else {
-        const res = await fetchArticles({
-          ...config,
-          params: { ...config.params, ownerId: userId },
-        });
-
-        const fetched = res.data?.data || [];
-        
-        const normalized = fetched.map((item) => {
-          const id = item._id?.$oid || item._id;
-          return {
-            ...item,
-            _id: id,
-            _keySuffix: `${timestamp}-${Math.random().toString(36).slice(2, 6)}`,
-          };
-        });
-
-        return normalized;
-      }
-    } catch (error) {
-      toast.warning("Error loading articles");
-      return [];
-    }
+  if (isSavedTab && user.id === authorId) {
+    const res = await getSavedArticles(config);
+    return res.data?.items || [];
+  } else {
+    const res = await fetchArticles({ ...config, params: { ownerId: authorId, ...config.params } });
+    return res.data?.data || [];
+  }
   };
 
   const handleAppend = (newData) => {
     if (isSavedTab) {
-      setSavedArticles((prev) => [...prev, ...newData]);
+      setSavedArticles(prev => [...prev, ...newData]);
     } else {
-      setCreatedArticles((prev) => [...prev, ...newData]);
+      setCreatedArticles(prev => [...prev, ...newData]);
     }
   };
 
@@ -181,7 +155,7 @@ const AuthorProfilePage = () => {
             >
               <img
                 className={s.authorAvatar}
-                src={authorData.avatarUrl || null}
+                src={authorData.avatarUrl}
                 alt={`Фото автора ${authorData.name}`}
               />
               <div className={s.authorInfo}>
@@ -212,12 +186,7 @@ const AuthorProfilePage = () => {
                       />
                     </div>
                   )}
-                  {totalPages > 1 && (
-                    <LoadMore
-                      loadData={loadArticles}
-                      onDataLoaded={handleAppend}
-                    />
-                  )}
+                  {totalSavedPages > 1 && <LoadMore loadData={loadArticles} onDataLoaded={handleAppend} />}
                 </>
               )}
 
@@ -233,24 +202,15 @@ const AuthorProfilePage = () => {
                       />
                     </div>
                   )}
-                  {totalSavedPages > 1 && (
-                    <LoadMore
-                      loadData={loadArticles}
-                      onDataLoaded={handleAppend}
-                    />
-                  )}
+                  {totalSavedPages > 1 && <LoadMore loadData={loadArticles} onDataLoaded={handleAppend} />}
+                  
                 </>
               )}
             </>
           ) : (
             <>
               <ArticlesList articles={createdArticles} user={user} />
-              {totalPages > 1 && (
-                  <LoadMore
-                    loadData={loadArticles}
-                    onDataLoaded={handleAppend}
-                  />
-              )}
+                {totalSavedPages > 1 && <LoadMore loadData={loadArticles} onDataLoaded={handleAppend} />}
             </>
           )}
         </div>
