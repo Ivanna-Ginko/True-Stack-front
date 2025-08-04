@@ -74,7 +74,7 @@ const RegisterForm = () => {
   // const handleSubmit = async (values, actions) => {
   //   try {
   //     const { name, email, password } = values;
- 
+
   //     const result = await dispatch(
   //       registerUser({ name, email, password })
   //     ).unwrap();
@@ -111,105 +111,111 @@ const RegisterForm = () => {
       >
         {({ isSubmitting, isValid }) => (
           <Form className={css.formContainer}>
-            <label className={css.labelName} htmlFor="name">
-              Enter your name
+            <label className={css.label} htmlFor="name">
+              <span className={css.labelText}>Enter your name</span>
+              <Field name="name">
+                {({ field, meta }) => (
+                  <input
+                    {...field}
+                    type="text"
+                    placeholder="Max"
+                    className={`${css.field} ${
+                      meta.touched && meta.error ? css["is-invalid"] : ""
+                    }`}
+                  />
+                )}
+              </Field>
+              <ErrorMessage
+                name="name"
+                component="div"
+                className={css.errMsg}
+              />
             </label>
-            <Field name="name">
-              {({ field, meta }) => (
-                <input
-                  {...field}
-                  type="text"
-                  placeholder="Max"
-                  className={`${css.field} ${
-                    meta.touched && meta.error ? css["is-invalid"] : ""
-                  }`}
-                />
-              )}
-            </Field>
-            <ErrorMessage name="name" component="div" className={css.errMsg} />
 
             <label className={css.label} htmlFor="email">
-              Enter your email address
+              <span className={css.labelText}>Enter your email address</span>
+              <Field name="email">
+                {({ field, meta }) => (
+                  <input
+                    {...field}
+                    type="email"
+                    placeholder="email@gmail.com"
+                    className={`${css.field} ${
+                      meta.touched && meta.error ? css["is-invalid"] : ""
+                    }`}
+                  />
+                )}
+              </Field>
+              <ErrorMessage
+                name="email"
+                component="div"
+                className={css.errMsg}
+              />
             </label>
-
-            <Field name="email">
-              {({ field, meta }) => (
-                <input
-                  {...field}
-                  type="email"
-                  placeholder="email@gmail.com"
-                  className={`${css.field} ${
-                    meta.touched && meta.error ? css["is-invalid"] : ""
-                  }`}
-                />
-              )}
-            </Field>
-
-            <ErrorMessage name="email" component="div" className={css.errMsg} />
 
             <label className={css.label} htmlFor="password">
-              Create a strong password
-            </label>
-            <Field name="password">
-              {({ field, meta }) => (
-                <div className={css.pwdField}>
-                  <input
-                    {...field}
-                    type={showPassword ? "text" : "password"}
-                    id="password"
-                    placeholder="*********"
-                    className={`${css.field} ${
-                      meta.touched && meta.error ? css["is-invalid"] : ""
-                    }`}
-                  />
-                  <span className={css.iconWrap}>
-                    <img
-                      src={showPassword ? showPwd : hidePwd}
-                      alt={showPassword ? "Hide password" : "Show password"}
-                      onClick={togglePassword}
-                      className={css.eyeIcon}
+              <span className={css.labelText}>Create a strong password</span>
+              <Field name="password">
+                {({ field, meta }) => (
+                  <div className={css.pwdField}>
+                    <input
+                      {...field}
+                      type={showPassword ? "text" : "password"}
+                      id="password"
+                      placeholder="*********"
+                      className={`${css.field} ${
+                        meta.touched && meta.error ? css["is-invalid"] : ""
+                      }`}
                     />
-                  </span>
-                </div>
-              )}
-            </Field>
-            <ErrorMessage
-              name="password"
-              component="div"
-              className={css.errMsg}
-            />
+                    <span className={css.iconWrap}>
+                      <img
+                        src={showPassword ? showPwd : hidePwd}
+                        alt={showPassword ? "Hide password" : "Show password"}
+                        onClick={togglePassword}
+                        className={css.eyeIcon}
+                      />
+                    </span>
+                  </div>
+                )}
+              </Field>
+              <ErrorMessage
+                name="password"
+                component="div"
+                className={css.errMsg}
+              />
+            </label>
 
             <label className={css.label} htmlFor="repeatPwd">
-              Repeat your password
-            </label>
-            <Field name="repeatPwd">
-              {({ field, meta }) => (
-                <div className={css.pwdField}>
-                  <input
-                    {...field}
-                    type={showRepeat ? "text" : "password"}
-                    id="repeatPwd"
-                    placeholder="*********"
-                    className={`${css.field} ${
-                      meta.touched && meta.error ? css["is-invalid"] : ""
-                    }`}
-                  />
-                  <span className={css.iconWrap}>
-                    <img
-                      src={showRepeat ? showPwd : hidePwd}
-                      alt={showPassword ? "Hide password" : "Show password"}
-                      onClick={toggleRepeat}
-                      className={css.eyeIcon}
+              <span className={css.labelText}>Repeat your password</span>
+              <Field name="repeatPwd">
+                {({ field, meta }) => (
+                  <div className={css.pwdField}>
+                    <input
+                      {...field}
+                      type={showRepeat ? "text" : "password"}
+                      id="repeatPwd"
+                      placeholder="*********"
+                      className={`${css.field} ${
+                        meta.touched && meta.error ? css["is-invalid"] : ""
+                      }`}
                     />
-                  </span>
-                </div>
-              )}
-            </Field>
-            <ErrorMessage
-              name="repeatPwd"
-              component="div"
-              className={css.errMsg}
-            />
+                    <span className={css.iconWrap}>
+                      <img
+                        src={showRepeat ? showPwd : hidePwd}
+                        alt={showPassword ? "Hide password" : "Show password"}
+                        onClick={toggleRepeat}
+                        className={css.eyeIcon}
+                      />
+                    </span>
+                  </div>
+                )}
+              </Field>
+              <ErrorMessage
+                name="repeatPwd"
+                component="div"
+                className={css.errMsg}
+              />
+            </label>
 
             {isSubmitting && (
               <div className={css.progressBar}>
