@@ -16,8 +16,7 @@ const ArticlePage = () => {
 
   const config = {
     params: {
-      sortBy: 'rate',
-      perPage: 3
+      perPage: 15
     }
   };
 
@@ -44,7 +43,7 @@ const ArticlePage = () => {
   return (
     <Container>
       <SectionTitle title={article.title}/>
-      <img src={article.img} alt={article.title} className={s.image} />
+      <div className={s.containerImage}><img src={article.img} alt={article.title} className={s.image} /></div>
       <div className={s.flexContainer}>
         <div className={s.articleText} lang="uk">
           {article.article.replace(/\/n/g, '\n').split('\n').map((line, i) => (
@@ -57,6 +56,7 @@ const ArticlePage = () => {
           author={article.author}
           publishDate={article.date}
           idAuthor={article.ownerId}
+          hideFourth
         />
       </div>
     </Container>

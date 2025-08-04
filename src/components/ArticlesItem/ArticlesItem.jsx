@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import ButtonAddToBookmarks from '../ButtonAddToBookmarks/ButtonAddToBookmarks'
+import EditArticleButton from '../EditArticleButton/EditArticleButton'
 import AppLink from '../AppLink/AppLink'
 import s from '../ArticlesItem/ArticlesItem.module.css'
 
@@ -11,7 +12,7 @@ const ArticlesItem = ({id, image, author, title, description, isSaved=false, isA
   };
   return (
     <li key={id} className= {s.card}>
-      <img src={image} alt={title} className={s.image}/>
+      <div className={s.containerImage}><img src={image} alt={title} className={s.image}/></div>
       <div className={s.content}>
         <p className={s.author}>
           {author}

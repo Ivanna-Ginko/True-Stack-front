@@ -8,15 +8,15 @@ import AppLink from "../AppLink/AppLink";
 import LogoutIcon from '../../assets/icons/exit.svg?react';
 import divider from '../../assets/icons/divider.svg';
 
-const MobileMenu = ({ closeMenu }) => {
+const MobileMenu = ({ closeMenu, isAuthenticated, openModal, isMenuOpen }) => {
     const user = useSelector(state => state.user.user);
-    const isAuthenticated = Boolean(user?.name);
     const handleLinkClick = () => closeMenu();
     const navLinkClass = ({ isActive }) =>
         (isActive ? `${s.navLink} ${s.active}` : s.navLink);
     return (
-        <div className={s.menuBackdrop}>
-            <div className={s.menu}>
+        <div className={`${s.menuBackdrop} ${isMenuOpen ? s.isMenuOpen : ''}`}>
+            <div
+                className={s.menu} onClick={e=>e.stopPropagation()}>
                 <div className={s.topRow}>
                     <img src={logo} alt='Harmoniq logo' className={s.logo} />
                     <div className={s.menuActions}>
@@ -48,11 +48,11 @@ const MobileMenu = ({ closeMenu }) => {
                     <NavLink to='/articles' className={navLinkClass} onClick={handleLinkClick}>
                         Articles
                     </NavLink>
-                    <NavLink to='/authors' className={navLinkClass} onClick={handleLinkClick}>
+                    <NavLink to='/authors' end className={navLinkClass} onClick={handleLinkClick}>
                         Creators
                     </NavLink>
                     {isAuthenticated ? (
-                        <NavLink to='/profile' className={navLinkClass} onClick={handleLinkClick}>
+                        <NavLink to={`/authors/${user.id}`} className={navLinkClass} onClick={handleLinkClick}>
                             My Profile
                         </NavLink>
                     ) : (
@@ -77,7 +77,7 @@ const MobileMenu = ({ closeMenu }) => {
                                     </AppLink>
                                 </div>
                                 <img src={divider} alt="divider" className={s.divider} />
-                                <button className={s.logoutBtn} onClick={handleLinkClick}>
+                                <button className={s.logoutBtn} onClick={openModal}>
                                     <LogoutIcon className={s.logoutIcon} width={24} height={28} />
                                 </button>
                             </div>
@@ -94,7 +94,7 @@ const MobileMenu = ({ closeMenu }) => {
                                     <AppLink variant="fill" size="lg" to="/register" onClick={handleLinkClick}>
                                         Join now
                                     </AppLink>
-                                    </div>
+                                </div>
                             )}
                         </div>
                     </div>
