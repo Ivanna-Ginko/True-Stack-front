@@ -4,8 +4,10 @@ import { Link } from 'react-router-dom';
 import logo from '../../assets/icons-footer/harmoniq.svg'
 import Container from '../container/Container';
 import AppLink from '../AppLink/AppLink';
+import { useSelector } from 'react-redux';
 
 const Footer = () => {
+  const user = useSelector(state => state.user?.user);
   return (
     <footer className={s.footer}>
       <Container>
@@ -21,7 +23,7 @@ const Footer = () => {
                 </AppLink>
               </li>
               <li>
-                <AppLink to="/profile" variant="link" size="md">
+                <AppLink to={`/authors/${user.id}`} variant="link" size="md">
                 Account
                 </AppLink>
               </li>

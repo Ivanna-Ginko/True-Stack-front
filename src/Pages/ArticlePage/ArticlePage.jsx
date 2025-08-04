@@ -5,6 +5,8 @@ import YouCanAlsoInterested from '../../components/YouCanAlsoInterested/YouCanAl
 import { fetchArticleById } from '../../services/api';
 import { Loader } from '../../components/Loader/Loader';
 import s from './ArticlePage.module.css';
+import SectionTitle from '../../components/SectionTitle/SectionTitle';
+import { insertSoftHyphens } from '../../utils/hyphenator';
 
 const ArticlePage = () => {
   const { id } = useParams();
@@ -14,7 +16,6 @@ const ArticlePage = () => {
 
   const config = {
     params: {
-      sortBy: 'rate',
       perPage: 3
     }
   };
@@ -41,12 +42,12 @@ const ArticlePage = () => {
   
   return (
     <Container>
-      <h2 className={s.title}>{article.title}</h2>
-      <img src={article.img} alt={article.title} className={s.image} />
+      <SectionTitle title={article.title}/>
+      <div className={s.containerImage}><img src={article.img} alt={article.title} className={s.image} /></div>
       <div className={s.flexContainer}>
-        <div className={s.articleText}>
+        <div className={s.articleText} lang="uk">
           {article.article.replace(/\/n/g, '\n').split('\n').map((line, i) => (
-            <p key={i}>{line.trim()}</p>
+            <p key={i} > {insertSoftHyphens(line.trim())}</p>
           ))}
         </div>
         <YouCanAlsoInterested

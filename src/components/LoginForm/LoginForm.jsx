@@ -39,11 +39,15 @@ const LoginForm = () => {
         const error = resultAction.payload;
 
         if (Array.isArray(error)) {
-          error.forEach((err) => {
+          const unwrappedErrors = Array.isArray(error[0]) ? error[0] : error;
+          unwrappedErrors.forEach((err) => {
             setFieldError(err.field, err.message);
           });
-        } else if (error?.message) {
-          toast.error(error.message);
+          // error.forEach((err) => {
+          //   setFieldError(err.field, err.message);
+          // });
+        } else if (error?.message === "NotFoundError") {
+          toast.error("Email is not found");
         } else {
           toast.error("Unauthorized error");
         }

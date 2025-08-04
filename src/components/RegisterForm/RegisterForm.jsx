@@ -41,7 +41,7 @@ const RegisterForm = () => {
       if (location.state.image && location.state.file) {
         setPreservedPhoto({
           image: location.state.image,
-          file: location.state.file
+          file: location.state.file,
         });
       }
     }
@@ -89,7 +89,6 @@ const RegisterForm = () => {
   ////////
 
   // hide show pwd
-
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeat, setShowRepeat] = useState(false);
 
@@ -121,8 +120,9 @@ const RegisterForm = () => {
                   {...field}
                   type="text"
                   placeholder="Max"
-                  className={`${css.field} ${meta.touched && meta.error ? css["is-invalid"] : ""
-                    }`}
+                  className={`${css.field} ${
+                    meta.touched && meta.error ? css["is-invalid"] : ""
+                  }`}
                 />
               )}
             </Field>
@@ -138,8 +138,9 @@ const RegisterForm = () => {
                   {...field}
                   type="email"
                   placeholder="email@gmail.com"
-                  className={`${css.field} ${meta.touched && meta.error ? css["is-invalid"] : ""
-                    }`}
+                  className={`${css.field} ${
+                    meta.touched && meta.error ? css["is-invalid"] : ""
+                  }`}
                 />
               )}
             </Field>
@@ -157,8 +158,9 @@ const RegisterForm = () => {
                     type={showPassword ? "text" : "password"}
                     id="password"
                     placeholder="*********"
-                    className={`${css.field} ${meta.touched && meta.error ? css["is-invalid"] : ""
-                      }`}
+                    className={`${css.field} ${
+                      meta.touched && meta.error ? css["is-invalid"] : ""
+                    }`}
                   />
                   <span className={css.iconWrap}>
                     <img
@@ -188,8 +190,9 @@ const RegisterForm = () => {
                     type={showRepeat ? "text" : "password"}
                     id="repeatPwd"
                     placeholder="*********"
-                    className={`${css.field} ${meta.touched && meta.error ? css["is-invalid"] : ""
-                      }`}
+                    className={`${css.field} ${
+                      meta.touched && meta.error ? css["is-invalid"] : ""
+                    }`}
                   />
                   <span className={css.iconWrap}>
                     <img
@@ -215,8 +218,9 @@ const RegisterForm = () => {
             )}
 
             <button
-              className={`${css.btn} ${!isValid || isSubmitting ? css.disabledBtn : ""
-                }`}
+              className={`${css.btn} ${
+                !isValid || isSubmitting ? css.disabledBtn : ""
+              }`}
               disabled={!isValid || isSubmitting}
               type="submit"
             >

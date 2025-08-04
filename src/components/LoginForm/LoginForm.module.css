@@ -1,7 +1,7 @@
 .container {
   border-radius: 32px;
   padding: 48px 32px;
-  /* width: 360px; */
+  max-width: 360px;
   /* height: 632px; */
   height: 100%;
   background-color: #d1e0d8;
@@ -80,6 +80,8 @@
 }
 
 .btn {
+  width: 266px;
+  align-self: center;
   border-radius: 64px;
   padding: 8px 87.5px;
   margin-top: 27px;
@@ -88,7 +90,7 @@
   font-size: 16px;
   color: #f7fffb;
   line-height: 22px;
-  transition: background-color 200ms ease-out;
+  transition: all 200ms ease-out;
 }
 .btn:hover {
   background-color: #374f42;
@@ -132,6 +134,10 @@
     justify-self: center;
     max-width: 278px;
   }
+  .btn {
+    width: 458px;
+    align-self: center;
+  }
 }
 
 /* Styles for Desktop devices */
@@ -157,6 +163,10 @@
   .field {
     min-width: 328px;
   }
+  .btn {
+    width: 328px;
+    align-self: center;
+  }
 }
 
 .pwdField {
@@ -173,6 +183,10 @@
   position: absolute;
   align-self: center;
   margin-right: 45px;
+}
+
+.eyeIcon:hover {
+  cursor: pointer;
 }
 
 .pwdField .field.is-invalid + .iconWrap .eyeIcon {
