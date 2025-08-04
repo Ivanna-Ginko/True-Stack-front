@@ -39,6 +39,7 @@ const AuthorProfilePage = () => {
   const [isError, setIsError] = useState(false);
 
   const isSavedTab = selectedTab === "Saved Articles";
+  const perPage = 12;
 
   useEffect(() => {
     const getAuthorData = async () => {
@@ -72,7 +73,7 @@ const AuthorProfilePage = () => {
         const config = {
           params: {
             page: 1,
-            perPage: 12,
+            perPage: perPage,
             ownerId: userId,
           },
         };
@@ -110,7 +111,7 @@ const AuthorProfilePage = () => {
   }, [userId, selectedTab]);
 
   const loadArticles = async (page) => {
-    const config = { params: { page, perPage: 12 } };
+    const config = { params: { page, perPage: perPage } };
       const timestamp = Date.now();
     try {
       if (isSavedTab) {
@@ -216,6 +217,7 @@ const AuthorProfilePage = () => {
                     <LoadMore
                       loadData={loadArticles}
                       onDataLoaded={handleAppend}
+                      perPage={perPage}
                     />
                   )}
                 </>
@@ -237,6 +239,7 @@ const AuthorProfilePage = () => {
                     <LoadMore
                       loadData={loadArticles}
                       onDataLoaded={handleAppend}
+                      perPage={perPage}
                     />
                   )}
                 </>
@@ -249,6 +252,7 @@ const AuthorProfilePage = () => {
                   <LoadMore
                     loadData={loadArticles}
                     onDataLoaded={handleAppend}
+                    perPage={perPage}
                   />
               )}
             </>
