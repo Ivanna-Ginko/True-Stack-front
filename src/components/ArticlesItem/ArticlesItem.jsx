@@ -11,7 +11,8 @@ const ArticlesItem = ({id, image, author, title, description, isSaved=false, isA
     setSaved(!saved);
   };
   return (
-    <li key={id} className= {s.card}>
+    // <li key={id} className= {s.card}>
+    <li className= {s.card}>
       <div className={s.containerImage}><img src={image} alt={title} className={s.image}/></div>
       <div className={s.content}>
         <p className={s.author}>
