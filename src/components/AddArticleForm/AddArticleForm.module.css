@@ -1,42 +1,151 @@
-.formWrapper {
-    width: 100%;
-    max-width: 1226px;
-    min-height: 656px;
-    border-radius: 16px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-}
-
-
-
 .form {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
+    height: 100%;
     gap: 24px;
+    position: relative;
+}
+
+.left {
+    margin-bottom: 48px;
+    width: 361px;
+}
+
+.imageInput {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    cursor: pointer;
+    outline: none;
+}
+
+.textarea {
+    margin-top: 24px;
+}
+
+.imageBox img {
+    width: 361px;
+    height: 233px;
+}
+
+.imageBox {
+    width: 361px;
+    height: 233px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: 16px;
+    background-color: #bccbbf;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.button {
+    margin-top: 24px;
+}
+
+
+
+@media only screen and (min-width: 768px) {
+    .form {
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: flex-start;
+        width: 100%;
+        height: 100%;
+    }
+
+    .imageBox img {
+        width: 340px;
+        height: 219px;
+    }
+
+    .imageBox {
+        width: 340px;
+        height: 219px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        border-radius: 16px;
+        background-color: #bccbbf;
+        cursor: pointer;
+        overflow: hidden;
+    }
+
+    .textarea {
+        width: 704px;
+        margin-top: 0;
+    }
+
+    .left {
+        width: 340px;
+    }
+
+    .rightBox {
+        margin-bottom: 655px;
+    }
+
+    .right {
+        margin-top: 175px;
+        width: 704px;
+        position: absolute;
+        right: 0;
+    }
+
+
 }
 
 @media only screen and (min-width: 1440px) {
     .form {
-        flex-direction: row;
+        flex-direction: row-reverse;
         align-items: flex-start;
-        gap: 40px;
+        gap: 24px;
         height: 100%;
+    }
+
+    .rightBox {
+        margin-bottom: 0;
+    }
+
+    .right {
+        width: 100%;
+        position: relative;
+        margin-top: 0;
+    }
+
+    .button {
+        margin-top: 32px;
+    }
+
+    .left {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+        min-width: 0;
+        width: 100%;
+    }
+
+    .imageBox {
+        min-width: 391px;
+        height: 280px;
+        margin-top: 24px;
+    }
+
+    .imageBox img {
+        width: 391px;
+        height: 280px;
     }
 }
 
-.left {
-    flex: 2;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    min-width: 0;
-    width: 100%;
-    max-width: 700px;
-}
+
 
 .label {
     font-size: 1.1rem;
@@ -90,7 +199,6 @@
     color: #fff;
     border: none;
     font-size: 16px;
-    margin-top: 18px;
     font-weight: 600;
     cursor: pointer;
     transition: background 0.2s;
@@ -100,30 +208,26 @@
     background-color: #437a5a;
 }
 
+/* 
 .imageBox {
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     width: 100%;
-    height: 233px;
     border-radius: 16px;
     background-color: #bccbbf;
     cursor: pointer;
     overflow: hidden;
-    margin-top: 0;
-    max-width: 391px;
-    margin-left: auto;
-    margin-right: auto;
-}
+} */
 
-@media only screen and (min-width: 1440px) {
+/* @media only screen and (min-width: 1440px) {
     .imageBox {
         width: 391px;
         height: 233px;
         margin-top: 29px;
     }
-}
+} */
 
 .imageInput {
     opacity: 0;
@@ -136,12 +240,6 @@
     outline: none;
 }
 
-.cameraIcon {
-    width: 48px;
-    height: 48px;
-    color: #787878;
-    z-index: 1;
-}
 
 .error {
     color: #e74c3c;
@@ -157,6 +255,7 @@
     text-align: center;
 }
 
+/* 
 @media only screen and (max-width: 1439px) {
     .imageBox {
         width: 100%;
@@ -165,4 +264,4 @@
         margin-left: auto;
         margin-right: auto;
     }
-}
+} */
