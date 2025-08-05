@@ -7,11 +7,18 @@ const AuthorsItem = ({ item, onAuthCardClick, imgSize = 'default' }) => {
     onAuthCardClick(item._id);
   };
 
-const fullName = item.name;
-const firstName = fullName.split(' ')[0]
-//console.log(firstName)
+  const fullName = item.name;
+  const firstName = fullName.split(' ')[0];
 
-  const avatarSrc = item.avatarUrl && item.avatarUrl.trim() !== '' ? item.avatarUrl : null;
+  const isValidAvatar =
+    item.avatarUrl &&
+    item.avatarUrl.trim() !== '' &&
+    item.avatarUrl.trim().toLowerCase() !== 'null' &&
+    item.avatarUrl.trim().toLowerCase() !== 'undefined';
+
+  const avatarSrc = isValidAvatar ? item.avatarUrl : defaultAvatar;
+
+  //const avatarSrc = item.avatarUrl && item.avatarUrl.trim() !== '' ? item.avatarUrl : null;
   return (
     <div onClick={handleClick} className={css.itemwrapper}>
       <img
