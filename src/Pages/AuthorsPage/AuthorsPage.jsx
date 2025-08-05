@@ -71,13 +71,18 @@ const AuthorsPage = () => {
       { authors &&  
         <>
           <AuthorsList authors={authors} onAuthCardClick={handleAuthorClick} />
-          <LoadMore 
+          {!isLoading && <LoadMore
             loadData={loadAuthors}
-            onDataLoaded={() => {}}
+            onDataLoaded={() => { }}
             perPage={perPage}
           />
+          }
         </>
-      }      
+        }
+        {!authors &&
+          <div>
+            <p>Авторів не знайдено</p>
+          </div>}  
     </Container>
     </>
   )
