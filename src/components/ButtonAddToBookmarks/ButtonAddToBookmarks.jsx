@@ -20,13 +20,14 @@ const ButtonAddToBookmarks = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Визначаємо, чи стаття збережена
   const isSaved =
     savedArticles && Array.isArray(savedArticles)
       ? savedArticles.some(id => String(id) === String(articleId))
       : variant === 'saved';
 
-  // console.log('ButtonAddToBookmarks - Render - articleId:', articleId, 'isSaved:', isSaved, 'savedArticles:', savedArticles);
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   const toggleBookmark = async () => {
     if (!articleId) {
@@ -45,7 +46,6 @@ const ButtonAddToBookmarks = ({
       if (isSaved) {
         const result = await dispatch(removeArticleFromBookmarks(String(articleId))).unwrap();
         console.log('ButtonAddToBookmarks - toggleBookmark - removeArticleFromBookmarks result:', result);
-        // Оновлюємо savedArticles через getUserData
         const userData = await dispatch(getUserData()).unwrap();
         console.log('ButtonAddToBookmarks - toggleBookmark - getUserData result:', userData);
         toast.success('Article removed from bookmarks');
@@ -121,9 +121,9 @@ const ButtonAddToBookmarks = ({
 
       <ModalNotification
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title="Authorization Required"
-        text="To save this article, you need to log in first"
+        onClose={closeModal}
+        title="Error while saving"
+        text="To save this article, you need to authorize first"
         ErrorSave={true}
       />
     </>
