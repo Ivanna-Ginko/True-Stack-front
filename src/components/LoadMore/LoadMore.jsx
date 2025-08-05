@@ -11,7 +11,10 @@ const LoadMore = ({ loadData, onDataLoaded, perPage = 12 }) => {
   const scrollToBottom = () => {
     setTimeout(() => {
       if (containerRef.current) {
-        containerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        containerRef.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
       }
     }, 100);
   };
@@ -25,10 +28,11 @@ const LoadMore = ({ loadData, onDataLoaded, perPage = 12 }) => {
     try {
       const newItems = await loadData(nextPage);
       //console.log('NEW_ITEM_LENGTH', newItems.length );
+      console.log(newItems);
       if (newItems.length < perPage) {
         setHasMore(false);
       }
-      
+
       onDataLoaded(newItems);
       setPage(nextPage);
       scrollToBottom();
@@ -40,20 +44,22 @@ const LoadMore = ({ loadData, onDataLoaded, perPage = 12 }) => {
     }
   };
 
-  if (!hasMore) return null;
+  // if (!hasMore) return null;
 
   return (
     <>
       <div ref={containerRef} />
       <div className={css.loadmore}>
-        <Button
-          variant="fill"
-          size="xl"
-          onClick={handleClick}
-          disabled={loading}
-        >
-          {loading ? 'Loading...' : 'Load More'}
-        </Button>
+        {hasMore && (
+          <Button
+            variant='fill'
+            size='xl'
+            onClick={handleClick}
+            disabled={loading}
+          >
+            {loading ? 'Loading...' : 'Load More'}
+          </Button>
+        )}
       </div>
     </>
   );

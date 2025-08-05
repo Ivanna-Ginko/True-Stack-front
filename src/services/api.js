@@ -66,8 +66,8 @@ export const fetchAuthorById = async userId => {
 //   const response = await axios.get(`/user/created-articles}`);
 //   return response.data;
 // };
-export const getSavedArticles = async () => {
-  const response = await axios.get("/users/saved-articles");
+export const getSavedArticles = async (config) => {
+  const response = await axios.get("/users/saved-articles", config);
   return response.data;
 };
 

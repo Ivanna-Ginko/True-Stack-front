@@ -9,7 +9,8 @@ import { useSelector } from 'react-redux';
 import { selectUser } from '../../redux/selectors';
 import { fetchArticles } from '../../services/api.js';
 import { Loader } from '../../components/Loader/Loader'; // ✅ не забудь импорт
-import NothingFound from '../../components/NothingFound/NothingFound.jsx'
+import NothingFound from '../../components/NothingFound/NothingFound.jsx';
+import PaginatedArticles from '../../components/PaginatedArticles/PaginatedArticles.jsx';
 
 const ArticlesPage = () => {
   const title = 'Articles';
@@ -19,7 +20,7 @@ const ArticlesPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  const handleSelectChange = (value) => {
+  const handleSelectChange = value => {
     setSelectedFilter(value);
   };
 
@@ -47,7 +48,7 @@ const ArticlesPage = () => {
       //   ...item,
       //   _id: item._id?.$oid || item._id,
       // }));
-      
+
       // const normalizedArticles = fetched.map((item) => {
       //   const id = item._id?.$oid || item._id;
       //   return {
@@ -67,18 +68,18 @@ const ArticlesPage = () => {
       // });
 
       const timestamp = Date.now();
-      const normalizedArticles = fetched.map((item) => {
+      const normalizedArticles = fetched.map(item => {
         const id = item._id?.$oid || item._id;
         return {
           ...item,
           _id: id,
           _keySuffix: `${timestamp}-${Math.random().toString(36).slice(2, 6)}`,
         };
-      });      
+      });
 
-      if (page === 1) {        
+      if (page === 1) {
         setArticleList({ data: normalizedArticles, totalItems });
-      } else {        
+      } else {
         setArticleList(prev => ({
           data: [...prev.data, ...normalizedArticles],
           totalItems: prev.totalItems,
@@ -116,27 +117,15 @@ const ArticlesPage = () => {
           <ArticleListSelect onChange={handleSelectChange} />
         </div>
       </div>
-      {isLoading && <Loader />}
-      {!isLoading && articlesArr.length > 0 && (
-        <>
-          <ArticlesList articles={articlesArr} user={user} />
-          <LoadMore
-            loadData={loadArticles}
-            onDataLoaded={() => {}}
-            perPage={perPage}
-          />
-        </>
-      )}
 
-      {!isLoading && totalItems === 0 && (
-          <div className='css.card'>
-              <NothingFound
-              description="Be the first, who create an article"
-              buttonText="Create an article"
-              buttonLink="/create"
-              />
-          </div>
-        )}
+      <PaginatedArticles
+        user={user}
+        totalItems={totalItems}
+        isLoading={isLoading}
+        articles={articlesArr}
+        loadArticles={loadArticles}
+        perPage={perPage}
+      />
     </Container>
   );
 };

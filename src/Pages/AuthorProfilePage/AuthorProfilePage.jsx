@@ -1,24 +1,22 @@
-import React, { useEffect, useState } from "react";
-import s from "./AuthorProfilePage.module.css";
-import LoadMore from "../../components/LoadMore/LoadMore";
-import ArticlesList from "../../components/ArticlesList/ArticlesList";
-import Container from "../../components/container/Container";
-import { useSelector } from "react-redux";
-import SectionTitle from "../../components/SectionTitle/SectionTitle";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import s from './AuthorProfilePage.module.css';
+import Container from '../../components/container/Container';
+import { useSelector } from 'react-redux';
+import SectionTitle from '../../components/SectionTitle/SectionTitle';
+import { useParams } from 'react-router-dom';
 import {
   fetchArticles,
   fetchAuthorById,
   getSavedArticles,
-} from "../../services/api";
-import { selectIsLoggedIn, selectUser } from "../../redux/selectors";
-import { ProfileTabs } from "../../components/ProfileTabs/ProfileTabs";
-import NothingFound from "../../components/NothingFound/NothingFound.jsx";
-import { Loader } from "../../components/Loader/Loader.jsx";
-import { toast } from "react-toastify";
+} from '../../services/api';
+import { selectIsLoggedIn, selectUser } from '../../redux/selectors';
+import { ProfileTabs } from '../../components/ProfileTabs/ProfileTabs';
+import { Loader } from '../../components/Loader/Loader.jsx';
+import { toast } from 'react-toastify';
+import PaginatedArticles from '../../components/PaginatedArticles/PaginatedArticles.jsx';
 
 const AuthorProfilePage = () => {
-  const title = "My Profile";
+  const title = 'My Profile';
   const { id: userId } = useParams();
 
   const user = useSelector(selectUser);
@@ -31,20 +29,17 @@ const AuthorProfilePage = () => {
   const [authorData, setAuthorData] = useState(null);
   const [createdArticles, setCreatedArticles] = useState([]);
   const [savedArticles, setSavedArticles] = useState([]);
-  const [selectedTab, setSelectedTab] = useState("My Articles");
+  const [selectedTab, setSelectedTab] = useState('My Articles');
   const [totalItems, setTotalItems] = useState(0);
   const [totalItemsSaved, setTotalItemsSaved] = useState(0);
-  const [totalPages, setTotalPages] = useState(1);
-  const [totalSavedPages, setTotalSavedPages] = useState(1);
-  const [isError, setIsError] = useState(false);
 
-  const isSavedTab = selectedTab === "Saved Articles";
+  const isSavedTab = selectedTab === 'Saved Articles';
   const perPage = 12;
 
   // 🔁 Нормализация данных
-  const normalizeArticles = (fetched) => {
+  const normalizeArticles = fetched => {
     const timestamp = Date.now();
-    return fetched.map((item) => {
+    return fetched.map(item => {
       const id = item._id?.$oid || item._id;
       return {
         ...item,
@@ -58,16 +53,14 @@ const AuthorProfilePage = () => {
     const getAuthorData = async () => {
       try {
         setIsLoading(true);
-        setIsError(false);
 
         const res = await fetchAuthorById(userId);
         setAuthorData(res.data);
       } catch (error) {
-        setIsError(true);
-        toast.warning("No author found", {
+        toast.warning('No author found', {
           style: {
-            backgroundColor: "rgba(209, 224, 216, 1)",
-            color: "#333",
+            backgroundColor: 'rgba(209, 224, 216, 1)',
+            color: '#333',
           },
         });
       } finally {
@@ -79,23 +72,20 @@ const AuthorProfilePage = () => {
 
   useEffect(() => {
     const fetchSaved = async () => {
-      if (selectedTab === "Saved Articles") {
+      if (selectedTab === 'Saved Articles') {
         try {
           setIsLoading(true);
-          setIsError(false);
 
           const response = await getSavedArticles();
           const savedItems = Array.isArray(response.data) ? response.data : [];
           const normalizedSaved = normalizeArticles(savedItems);
           setSavedArticles(normalizedSaved);
           setTotalItemsSaved(response.pagination.totalItems);
-          setTotalSavedPages(response.pagination.totalPage);
         } catch (error) {
-          setIsError(true);
-          toast.warning("No articles found", {
+          toast.warning('No articles found', {
             style: {
-              backgroundColor: "rgba(209, 224, 216, 1)",
-              color: "#333",
+              backgroundColor: 'rgba(209, 224, 216, 1)',
+              color: '#333',
             },
           });
         } finally {
@@ -110,7 +100,6 @@ const AuthorProfilePage = () => {
     const getArticles = async () => {
       try {
         setIsLoading(true);
-        setIsError(false);
 
         const config = {
           params: {
@@ -122,13 +111,11 @@ const AuthorProfilePage = () => {
         const normalizedCreated = normalizeArticles(fetched);
         setCreatedArticles(normalizedCreated);
         setTotalItems(response.data.data.totalItems);
-        setTotalPages(response.data.data.totaPage);
       } catch (error) {
-        setIsError(true);
-        toast.warning("No articles found", {
+        toast.warning('No articles found', {
           style: {
-            backgroundColor: "rgba(209, 224, 216, 1)",
-            color: "#333",
+            backgroundColor: 'rgba(209, 224, 216, 1)',
+            color: '#333',
           },
         });
       } finally {
@@ -139,38 +126,38 @@ const AuthorProfilePage = () => {
     getArticles();
   }, [userId]);
 
-  const loadArticles = async (page) => {
+  const loadArticles = async page => {
     const config = { params: { page, perPage } };
 
     try {
       if (isSavedTab && user.id === userId) {
         const res = await getSavedArticles(config);
         const items = Array.isArray(res.data) ? res.data : [];
-        return normalizeArticles(items);
+        const normalizedArticles = normalizeArticles(items);
+
+        console.log(normalizedArticles);
+
+        setSavedArticles(as => [...as, ...normalizedArticles]);
+
+        return normalizedArticles;
+        // return normalizeArticles(items);
       } else {
         const res = await fetchArticles({
           ...config,
           params: { ownerId: userId, ...config.params },
         });
-        const items = Array.isArray(res.data?.data?.data) ? res.data.data.data : [];
-        return normalizeArticles(items);
+        const items = Array.isArray(res.data?.data?.data)
+          ? res.data.data.data
+          : [];
+        const normalizedArticles = normalizeArticles(items);
+
+        setCreatedArticles(as => [...as, ...normalizedArticles]);
+
+        return normalizedArticles;
       }
     } catch (error) {
-      console.error("loadArticles error:", error);
+      console.error('loadArticles error:', error);
       return [];
-    }
-  };
-
-  const handleAppend = (newData) => {
-    if (!Array.isArray(newData)) {
-      console.warn("handleAppend received invalid data:", newData);
-      return;
-    }
-
-    if (isSavedTab) {
-      setSavedArticles((prev) => [...prev, ...newData]);
-    } else {
-      setCreatedArticles((prev) => [...prev, ...newData]);
     }
   };
 
@@ -183,7 +170,7 @@ const AuthorProfilePage = () => {
           {authorData && (
             <div
               className={`${s.aboutAuthor} ${
-                !isMyPage ? s.aboutAuthorShifted : ""
+                !isMyPage ? s.aboutAuthorShifted : ''
               }`}
             >
               <img
@@ -204,58 +191,36 @@ const AuthorProfilePage = () => {
             />
           ) : null}
         </div>
-        <div className={s.container}>
-          {isMyPage ? (
-            <>
-              {selectedTab === "My Articles" && (
-                <>
-                  <ArticlesList articles={createdArticles} user={user} />
-                  {totalItems === 0 && (
-                    <div className={s.nothing}>
-                      <NothingFound
-                        description="Write your first article"
-                        buttonText="Create an article"
-                        buttonLink="/create"
-                      />
-                    </div>
-                  )}
-                  <LoadMore
-                    loadData={loadArticles}
-                    onDataLoaded={handleAppend}
-                    perPage={perPage}
-                  />
-                </>
-              )}
 
-              {selectedTab === "Saved Articles" && (
-                <>
-                  <ArticlesList articles={savedArticles} user={user} />
-                  {totalItemsSaved === 0 && (
-                    <div className={s.nothing}>
-                      <NothingFound
-                        description="Save your first article"
-                        buttonText="Go to articles"
-                        buttonLink="/articles"
-                      />
-                    </div>
-                  )}
-                  <LoadMore
-                    loadData={loadArticles}
-                    onDataLoaded={handleAppend}
-                    perPage={perPage}
-                  />
-                </>
-              )}
-            </>
-          ) : (
-            <>
-              <ArticlesList articles={createdArticles} user={user} />
-              <LoadMore
-                loadData={loadArticles}
-                onDataLoaded={handleAppend}
-                perPage={perPage}
-              />
-            </>
+        <div className={s.container}>
+          {isMyPage && selectedTab === 'My Articles' && (
+            <PaginatedArticles
+              user={user}
+              totalItems={totalItems}
+              isLoading={isLoading}
+              articles={createdArticles}
+              loadArticles={loadArticles}
+            />
+          )}
+
+          {isMyPage && selectedTab === 'Saved Articles' && (
+            <PaginatedArticles
+              user={user}
+              totalItems={totalItemsSaved}
+              isLoading={isLoading}
+              articles={savedArticles}
+              loadArticles={loadArticles}
+            />
+          )}
+
+          {!isMyPage && (
+            <PaginatedArticles
+              user={user}
+              totalItems={totalItems}
+              isLoading={isLoading}
+              articles={createdArticles}
+              loadArticles={loadArticles}
+            />
           )}
         </div>
       </Container>
