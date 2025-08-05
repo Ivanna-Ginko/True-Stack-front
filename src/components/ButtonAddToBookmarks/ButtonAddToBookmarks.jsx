@@ -49,7 +49,6 @@ const ButtonAddToBookmarks = ({
       if (isSaved) {
         const result = await dispatch(removeArticleFromBookmarks(String(articleId))).unwrap();
         console.log('ButtonAddToBookmarks - toggleBookmark - removeArticleFromBookmarks result:', result);
-        // Оновлюємо savedArticles через getUserData
         const userData = await dispatch(getUserData()).unwrap();
         console.log('ButtonAddToBookmarks - toggleBookmark - getUserData result:', userData);
         toast.success('Article removed from bookmarks');
