@@ -34,6 +34,7 @@ const AuthorProfilePage = () => {
   const [totalItemsSaved, setTotalItemsSaved] = useState(0);
 
   const [isFirstLoadFinished, setIsFirstLoadFinished] = useState(false);
+  const [refetchSavedArticles, setRefetchSavedArticles ] = useState(false);
 
   const isSavedTab = selectedTab === "Saved Articles";
   const perPage = 12;
@@ -97,7 +98,7 @@ const AuthorProfilePage = () => {
       }
     };
     fetchSaved();
-  }, [selectedTab, savedArticles]);
+  }, [selectedTab, refetchSavedArticles]);
 
   useEffect(() => {
     const getArticles = async () => {
@@ -222,6 +223,7 @@ const AuthorProfilePage = () => {
               loadArticles={loadArticles}
               selectedTab={selectedTab}
               isFirstLoadFinished={isFirstLoadFinished}
+              refresh={setRefetchSavedArticles}
             />
           )}
 

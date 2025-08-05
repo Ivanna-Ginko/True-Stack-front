@@ -4,7 +4,7 @@ import EditArticleButton from '../EditArticleButton/EditArticleButton'
 import AppLink from '../AppLink/AppLink'
 import s from '../ArticlesItem/ArticlesItem.module.css'
 
-const ArticlesItem = ({id, image, author, title, description, isSaved=false, isAuthor=false}) => {
+const ArticlesItem = ({id, image, author, title, description, isSaved=false, isAuthor=false, refresh}) => {
   const [saved, setSaved] = useState(isSaved);
 
   const handleToggle = ()=>{
@@ -36,6 +36,7 @@ const ArticlesItem = ({id, image, author, title, description, isSaved=false, isA
         articleId={id} 
         onUpdate={handleToggle}
         variant={saved ? "saved" : 'default'}
+        refresh={refresh}
       /> 
       )}
       </div>
