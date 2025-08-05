@@ -12,7 +12,7 @@ const ButtonAddToBookmarks = ({
   variant = 'default',
   styleVariant = 'primary',
   isWideStyle = false,
-  refresh
+  refresh = () => {},
 }) => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
