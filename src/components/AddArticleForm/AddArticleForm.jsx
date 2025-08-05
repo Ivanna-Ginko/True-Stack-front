@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import ArticleTextArea from './ArticleTextArea';
@@ -9,6 +9,7 @@ import { createArticle, updateArticle } from '../../services/api';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../redux/selectors';
 import { useNavigate } from 'react-router-dom';
+import { Loader } from '../Loader/Loader';
 
 const initialValues = {
   title: '',
@@ -20,6 +21,33 @@ export default function ArticleForm({ editData, isEditing }) {
   const fileRef = useRef();
   const author = useSelector(selectUser)
   const navigate = useNavigate();
+  const [isTablet, setIsTablet] = useState(false);
+
+  // Check if screen size is tablet (768px to 1440px)
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const width = window.innerWidth;
+      setIsTablet(width >= 768 && width < 1440);
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
+  // Function to calculate empty div height based on textarea content
+  const calculateEmptyDivHeight = (textLength) => {
+    if (textLength === 0) return 0; // Return to initial value when empty
+    if (textLength < 500) return 30;
+    if (textLength < 1000) return 100;
+    if (textLength < 1500) return 200;
+    if (textLength < 2000) return 400;
+    if (textLength < 2500) return 600;
+    if (textLength < 3000) return 900;
+    if (textLength < 3500) return 1000;
+    return 1050; // For 3500+ characters
+  };
 
 
   // Create validation schema based on edit mode
@@ -109,6 +137,9 @@ export default function ArticleForm({ editData, isEditing }) {
       enableReinitialize={true}
     >
       {({ setFieldValue, isSubmitting, values }) => {
+        // Calculate empty div height based on current text length (only for tablet)
+        const currentEmptyDivHeight = isTablet ? calculateEmptyDivHeight(values.article?.length || 0) : 0;
+
         return (
           <Form className={styles.form}>
 
@@ -168,10 +199,21 @@ export default function ArticleForm({ editData, isEditing }) {
                     className={styles.button}
                     disabled={isSubmitting}
                   >
-                    {isEditing ? 'Update Article' : 'Publish Article'}
+                    {isSubmitting ? (
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                        <Loader small={true} inline={true} />
+                        <span >{isEditing ? 'Updating...' : 'Publishing...'}</span>
+                      </div>
+                    ) : (
+                      <span>{isEditing ? 'Update Article' : 'Publish Article'}</span>
+                    )}
                   </button>
                 </div>
               </div>
+              <div
+                className={styles.emptyDiv}
+                style={{ height: `${currentEmptyDivHeight}px` }}
+              ></div>
             </div>
 
 

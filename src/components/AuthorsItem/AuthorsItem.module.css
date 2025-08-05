@@ -10,6 +10,7 @@
 .img {
     border-radius: 50%;
     object-fit: cover;
+    cursor: pointer;
 }
 
 .img_default,
@@ -28,6 +29,7 @@
     word-break: break-word;
     overflow-wrap: break-word;
     white-space: normal;
+    cursor: pointer;
 }
 
 @media only screen and (min-width: 768px) {
