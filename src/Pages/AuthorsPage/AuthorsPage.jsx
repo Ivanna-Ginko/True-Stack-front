@@ -18,47 +18,37 @@ const AuthorsPage = () => {
   const perPage = 20;
 
   const loadAuthors = async (page) => {
-    setIsLoading(true);
-
-    try {
-      const data = await fetchAuthors(page, perPage);
-      // const normalizedAuthors = data.data.map((item) => ({
-      //   ...item,
-      //   _id: item._id?.$oid || item._id,
-      // }));
-      const timestamp = Date.now();
-      const normalizedAuthors = data.data.map((item) => {
-        const id = item._id?.$oid || item._id;
-        return {
-          ...item,
-          _id: id,
-          _keySuffix: `${timestamp}-${Math.random().toString(36).slice(2, 6)}`,
-        };
-      });
-
-      if (page === 1) {
-        setAuthors(normalizedAuthors);
-      } else {
-        setAuthors(prev => [...prev, ...normalizedAuthors]);
-      }
-      return normalizedAuthors;
-    } catch (error) {
-      setIsError(true);
-      toast.warning('No authors found', {
-        style: {
-          backgroundColor: 'rgba(209, 224, 216, 1)',
-          color: '#333',
-        },
-      });
-      return [];
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  try {
+    const data = await fetchAuthors(page, perPage);
+    const timestamp = Date.now();
+    const normalizedAuthors = data.data.map((item) => {
+      const id = item._id?.$oid || item._id;
+      return {
+        ...item,
+        _id: id,
+        _keySuffix: `${timestamp}-${Math.random().toString(36).slice(2, 6)}`,
+      };
+    });
+    return normalizedAuthors;
+  } catch (error) {
+    setIsError(true);
+    toast.warning('No authors found', {
+      style: {
+        backgroundColor: 'rgba(209, 224, 216, 1)',
+        color: '#333',
+      },
+    });
+    return [];
+  }
+};
 
   useEffect(() => {
-    loadAuthors(1);
-  }, []);
+  setIsLoading(true);
+  loadAuthors(1).then((initialAuthors) => {
+    setAuthors(initialAuthors);
+    setIsLoading(false);
+  });
+}, []);
 
   const handleAuthorClick = (authorId) => {
     navigate(`/authors/${authorId}`);
@@ -73,7 +63,9 @@ const AuthorsPage = () => {
           <AuthorsList authors={authors} onAuthCardClick={handleAuthorClick} />
           {!isLoading && <LoadMore
             loadData={loadAuthors}
-            onDataLoaded={() => { }}
+            onDataLoaded={(newItems) => {
+              setAuthors(prev => [...prev, ...newItems]);
+            }}
             perPage={perPage}
           />
           }
