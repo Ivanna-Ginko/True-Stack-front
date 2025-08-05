@@ -50,48 +50,46 @@ function App() {
   return (
     <>
       <Layout>
-        <Suspense fallback={<Loader />}>
-          <Routes>
+        <Routes>
+          <Route
+            path='/register'
+            element={<RegisterPage />}
+          />
+          <Route
+            path='/photo'
+            element={<UploadPhoto />}
+          />
+          <Route
+            path='/login'
+            element={<LoginPage />}
+          />
+          <Route
+            path='/'
+            element={<HomePage />}
+          />
+          <Route
+            path='/articles'
+            element={<ArticlesPage />}
+          />
+          <Route
+            path='/articles/:id'
+            element={<ArticlePage />}
+          />
+          <Route
+            path='/authors'
+            element={<AuthorsPage />}
+          />
+          <Route
+            path='/authors/:id'
+            element={<AuthorProfilePage />}
+          />
+          <Route element={<PrivateRoute />}>
             <Route
-              path='/register'
-              element={<RegisterPage />}
+              path='/create'
+              element={<CreateArticlePage />}
             />
-            <Route
-              path='/photo'
-              element={<UploadPhoto />}
-            />
-            <Route
-              path='/login'
-              element={<LoginPage />}
-            />
-            <Route
-              path='/'
-              element={<HomePage />}
-            />
-            <Route
-              path='/articles'
-              element={<ArticlesPage />}
-            />
-            <Route
-              path='/articles/:id'
-              element={<ArticlePage />}
-            />
-            <Route
-              path='/authors'
-              element={<AuthorsPage />}
-            />
-            <Route
-              path='/authors/:id'
-              element={<AuthorProfilePage />}
-            />
-                <Route element={<PrivateRoute />}>
-                    <Route
-                      path='/create'
-                      element={<CreateArticlePage />}
-                    />
-                </Route>
-          </Routes>
-        </Suspense>
+          </Route>
+        </Routes>
       </Layout>
       <ToastContainer
         position='top-right'
