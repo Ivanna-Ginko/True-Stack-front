@@ -5,7 +5,10 @@
   font-weight: 700;
   font-size: 16px;
 }
+.tab {
+  line-height: 1.8;
+}
 .active {
-	padding-bottom: 4px;
-	border-bottom: 1px solid #374F42;
+  /* padding-bottom: 4px; */
+  border-bottom: 1px solid #374f42;
 }
