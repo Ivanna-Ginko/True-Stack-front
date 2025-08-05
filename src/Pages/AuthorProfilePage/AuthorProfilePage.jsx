@@ -34,7 +34,7 @@ const AuthorProfilePage = () => {
   const [totalItemsSaved, setTotalItemsSaved] = useState(0);
 
   const [isFirstLoadFinished, setIsFirstLoadFinished] = useState(false);
-  const [refetchSavedArticles, setRefetchSavedArticles ] = useState(false);
+  const [refetchSavedArticles, setRefetchSavedArticles] = useState(false);
 
   const isSavedTab = selectedTab === "Saved Articles";
   const perPage = 12;
@@ -211,6 +211,7 @@ const AuthorProfilePage = () => {
               loadArticles={loadArticles}
               selectedTab={selectedTab}
               isFirstLoadFinished={isFirstLoadFinished}
+              isMyPage={isMyPage}
             />
           )}
 
@@ -224,6 +225,7 @@ const AuthorProfilePage = () => {
               selectedTab={selectedTab}
               isFirstLoadFinished={isFirstLoadFinished}
               refresh={setRefetchSavedArticles}
+              isMyPage={isMyPage}
             />
           )}
 
@@ -236,6 +238,7 @@ const AuthorProfilePage = () => {
               loadArticles={loadArticles}
               selectedTab={selectedTab}
               isFirstLoadFinished={isFirstLoadFinished}
+              isMyPage={isMyPage}
             />
           )}
         </div>
