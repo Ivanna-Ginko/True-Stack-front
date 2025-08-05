@@ -1,22 +1,22 @@
-import { useEffect, useState } from 'react';
-import s from './AuthorProfilePage.module.css';
-import Container from '../../components/container/Container';
-import { useSelector } from 'react-redux';
-import SectionTitle from '../../components/SectionTitle/SectionTitle';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import s from "./AuthorProfilePage.module.css";
+import Container from "../../components/container/Container";
+import { useSelector } from "react-redux";
+import SectionTitle from "../../components/SectionTitle/SectionTitle";
+import { useParams } from "react-router-dom";
 import {
   fetchArticles,
   fetchAuthorById,
   getSavedArticles,
-} from '../../services/api';
-import { selectIsLoggedIn, selectUser } from '../../redux/selectors';
-import { ProfileTabs } from '../../components/ProfileTabs/ProfileTabs';
-import { Loader } from '../../components/Loader/Loader.jsx';
-import { toast } from 'react-toastify';
-import PaginatedArticles from '../../components/PaginatedArticles/PaginatedArticles.jsx';
+} from "../../services/api";
+import { selectIsLoggedIn, selectUser } from "../../redux/selectors";
+import { ProfileTabs } from "../../components/ProfileTabs/ProfileTabs";
+import { Loader } from "../../components/Loader/Loader.jsx";
+import { toast } from "react-toastify";
+import PaginatedArticles from "../../components/PaginatedArticles/PaginatedArticles.jsx";
 
 const AuthorProfilePage = () => {
-  const title = 'My Profile';
+  const title = "My Profile";
   const { id: userId } = useParams();
 
   const user = useSelector(selectUser);
@@ -29,17 +29,19 @@ const AuthorProfilePage = () => {
   const [authorData, setAuthorData] = useState(null);
   const [createdArticles, setCreatedArticles] = useState([]);
   const [savedArticles, setSavedArticles] = useState([]);
-  const [selectedTab, setSelectedTab] = useState('My Articles');
+  const [selectedTab, setSelectedTab] = useState("My Articles");
   const [totalItems, setTotalItems] = useState(0);
   const [totalItemsSaved, setTotalItemsSaved] = useState(0);
 
-  const isSavedTab = selectedTab === 'Saved Articles';
+  const [isFirstLoadFinished, setIsFirstLoadFinished] = useState(false);
+
+  const isSavedTab = selectedTab === "Saved Articles";
   const perPage = 12;
 
   // 🔁 Нормализация данных
-  const normalizeArticles = fetched => {
+  const normalizeArticles = (fetched) => {
     const timestamp = Date.now();
-    return fetched.map(item => {
+    return fetched.map((item) => {
       const id = item._id?.$oid || item._id;
       return {
         ...item,
@@ -57,10 +59,10 @@ const AuthorProfilePage = () => {
         const res = await fetchAuthorById(userId);
         setAuthorData(res.data);
       } catch (error) {
-        toast.warning('No author found', {
+        toast.warning("No author found", {
           style: {
-            backgroundColor: 'rgba(209, 224, 216, 1)',
-            color: '#333',
+            backgroundColor: "rgba(209, 224, 216, 1)",
+            color: "#333",
           },
         });
       } finally {
@@ -72,7 +74,7 @@ const AuthorProfilePage = () => {
 
   useEffect(() => {
     const fetchSaved = async () => {
-      if (selectedTab === 'Saved Articles') {
+      if (selectedTab === "Saved Articles") {
         try {
           setIsLoading(true);
 
@@ -82,19 +84,20 @@ const AuthorProfilePage = () => {
           setSavedArticles(normalizedSaved);
           setTotalItemsSaved(response.pagination.totalItems);
         } catch (error) {
-          toast.warning('No articles found', {
+          toast.warning("No articles found", {
             style: {
-              backgroundColor: 'rgba(209, 224, 216, 1)',
-              color: '#333',
+              backgroundColor: "rgba(209, 224, 216, 1)",
+              color: "#333",
             },
           });
         } finally {
           setIsLoading(false);
+          setIsFirstLoadFinished(true);
         }
       }
     };
     fetchSaved();
-  }, [selectedTab]);
+  }, [selectedTab, savedArticles]);
 
   useEffect(() => {
     const getArticles = async () => {
@@ -112,21 +115,22 @@ const AuthorProfilePage = () => {
         setCreatedArticles(normalizedCreated);
         setTotalItems(response.data.data.totalItems);
       } catch (error) {
-        toast.warning('No articles found', {
+        toast.warning("No articles found", {
           style: {
-            backgroundColor: 'rgba(209, 224, 216, 1)',
-            color: '#333',
+            backgroundColor: "rgba(209, 224, 216, 1)",
+            color: "#333",
           },
         });
       } finally {
         setIsLoading(false);
+        setIsFirstLoadFinished(true);
       }
     };
 
     getArticles();
   }, [userId]);
 
-  const loadArticles = async page => {
+  const loadArticles = async (page) => {
     const config = { params: { page, perPage } };
 
     try {
@@ -137,7 +141,7 @@ const AuthorProfilePage = () => {
 
         console.log(normalizedArticles);
 
-        setSavedArticles(as => [...as, ...normalizedArticles]);
+        setSavedArticles((as) => [...as, ...normalizedArticles]);
 
         return normalizedArticles;
         // return normalizeArticles(items);
@@ -151,15 +155,19 @@ const AuthorProfilePage = () => {
           : [];
         const normalizedArticles = normalizeArticles(items);
 
-        setCreatedArticles(as => [...as, ...normalizedArticles]);
+        setCreatedArticles((as) => [...as, ...normalizedArticles]);
 
         return normalizedArticles;
       }
     } catch (error) {
-      console.error('loadArticles error:', error);
+      console.error("loadArticles error:", error);
       return [];
     }
   };
+
+  useEffect(() => {
+    setIsFirstLoadFinished(false);
+  }, [selectedTab]);
 
   return (
     <div>
@@ -170,7 +178,7 @@ const AuthorProfilePage = () => {
           {authorData && (
             <div
               className={`${s.aboutAuthor} ${
-                !isMyPage ? s.aboutAuthorShifted : ''
+                !isMyPage ? s.aboutAuthorShifted : ""
               }`}
             >
               <img
@@ -193,23 +201,27 @@ const AuthorProfilePage = () => {
         </div>
 
         <div className={s.container}>
-          {isMyPage && selectedTab === 'My Articles' && (
+          {isMyPage && selectedTab === "My Articles" && (
             <PaginatedArticles
               user={user}
               totalItems={totalItems}
               isLoading={isLoading}
               articles={createdArticles}
               loadArticles={loadArticles}
+              selectedTab={selectedTab}
+              isFirstLoadFinished={isFirstLoadFinished}
             />
           )}
 
-          {isMyPage && selectedTab === 'Saved Articles' && (
+          {isMyPage && selectedTab === "Saved Articles" && (
             <PaginatedArticles
               user={user}
               totalItems={totalItemsSaved}
               isLoading={isLoading}
               articles={savedArticles}
               loadArticles={loadArticles}
+              selectedTab={selectedTab}
+              isFirstLoadFinished={isFirstLoadFinished}
             />
           )}
 
@@ -220,6 +232,8 @@ const AuthorProfilePage = () => {
               isLoading={isLoading}
               articles={createdArticles}
               loadArticles={loadArticles}
+              selectedTab={selectedTab}
+              isFirstLoadFinished={isFirstLoadFinished}
             />
           )}
         </div>
