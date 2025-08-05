@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from 'react';
 import ArticlesList from '../ArticlesList/ArticlesList';
 import { Loader } from '../Loader/Loader';
 import LoadMore from '../LoadMore/LoadMore';
@@ -13,7 +12,8 @@ function PaginatedArticles({
   perPage = 12,
 }) {
   const hasSecondPage = totalItems / perPage > 1
-  console.log(hasSecondPage);
+  // console.log(hasSecondPage);
+  console.log(articles.length);
 
   return (
     <div>
@@ -25,7 +25,6 @@ function PaginatedArticles({
             user={user}
           />
           {hasSecondPage && <LoadMore
-            hasSecondPage={hasSecondPage}
             loadData={loadArticles}
             onDataLoaded={() => {}}
             perPage={perPage}

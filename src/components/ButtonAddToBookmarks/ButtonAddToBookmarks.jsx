@@ -26,7 +26,7 @@ const ButtonAddToBookmarks = ({
       ? savedArticles.some(id => String(id) === String(articleId))
       : variant === 'saved';
 
-  console.log('ButtonAddToBookmarks - Render - articleId:', articleId, 'isSaved:', isSaved, 'savedArticles:', savedArticles);
+  // console.log('ButtonAddToBookmarks - Render - articleId:', articleId, 'isSaved:', isSaved, 'savedArticles:', savedArticles);
 
   const toggleBookmark = async () => {
     if (!articleId) {

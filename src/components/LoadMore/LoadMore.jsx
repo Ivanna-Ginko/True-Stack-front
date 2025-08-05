@@ -28,6 +28,7 @@ const LoadMore = ({ loadData, onDataLoaded, perPage = 12 }) => {
     try {
       const newItems = await loadData(nextPage);
       //console.log('NEW_ITEM_LENGTH', newItems.length );
+      console.log(newItems);
       if (newItems.length < perPage) {
         setHasMore(false);
       }
