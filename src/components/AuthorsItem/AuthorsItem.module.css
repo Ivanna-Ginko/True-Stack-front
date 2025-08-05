@@ -1,8 +1,5 @@
 .itemwrapper {
     padding: 12px;
-
-    /*-----*/
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -27,6 +24,10 @@
     font-size: 24px;
     text-align: center;
     padding-top: 16px;
+    max-width: 148px;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
 }
 
 @media only screen and (min-width: 768px) {
@@ -38,6 +39,10 @@
     .img_tc {
         width: 160px;
         height: 160px;
+    }
+
+    .text {
+        max-width: 262px;
     }
 
 }
