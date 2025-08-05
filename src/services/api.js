@@ -27,12 +27,12 @@ export const registerUser = async formData => {
 export const fetchAuthors = async (page, perPage) => {
   const response = await axios.get('/users', {
     params: {
-      page:page,
-      perPage:perPage,
+      page: page,
+      perPage: perPage,
       //sortBy: 'name'
     },
   });
-  
+
   return response.data;
 };
 
@@ -89,5 +89,10 @@ export const deleteArticleFromBookmarks = async articleId => {
 
 export const createArticle = async (articleData) => {
   const response = await axios.post('/articles', articleData);
+  return response.data.data;
+};
+
+export const updateArticle = async (articleId, articleData) => {
+  const response = await axios.patch(`/articles/${articleId}`, articleData);
   return response.data.data;
 };

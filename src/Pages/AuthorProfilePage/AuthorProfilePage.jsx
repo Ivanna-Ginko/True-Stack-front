@@ -1,22 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import s from './AuthorProfilePage.module.css';
-import LoadMore from '../../components/LoadMore/LoadMore.jsx';
-import ArticlesList from '../../components/ArticlesList/ArticlesList.jsx';
-import Container from '../../components/container/Container.jsx';
-import { useSelector } from 'react-redux';
-import SectionTitle from '../../components/SectionTitle/SectionTitle.jsx';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import s from "./AuthorProfilePage.module.css";
+import LoadMore from "../../components/LoadMore/LoadMore";
+import ArticlesList from "../../components/ArticlesList/ArticlesList";
+import Container from "../../components/container/Container";
+import { useSelector } from "react-redux";
+import SectionTitle from "../../components/SectionTitle/SectionTitle";
+import { useParams } from "react-router-dom";
 import {
   fetchArticles,
   fetchAuthorById,
   getSavedArticles,
-} from '../../services/api.js';
-import { selectIsLoggedIn, selectUser } from '../../redux/selectors.js';
-import { ProfileTabs } from '../../components/ProfileTabs/ProfileTabs.jsx';
-import NothingFound from '../../components/NothingFound/NothingFound.jsx';
-import { Loader } from '../../components/Loader/Loader.jsx';
-import { toast } from 'react-toastify';
-import PaginatedArticles from '../../components/PaginatedArticles/PaginatedArticles.jsx';
+} from "../../services/api";
+import { selectIsLoggedIn, selectUser } from "../../redux/selectors";
+import { ProfileTabs } from "../../components/ProfileTabs/ProfileTabs";
+import NothingFound from "../../components/NothingFound/NothingFound.jsx";
+import { Loader } from "../../components/Loader/Loader.jsx";
+import { toast } from "react-toastify";
 
 const AuthorProfilePage = () => {
   const title = 'My Profile';
@@ -39,7 +38,21 @@ const AuthorProfilePage = () => {
   const [totalSavedPages, setTotalSavedPages] = useState(1);
   const [isError, setIsError] = useState(false);
 
-  const isSavedTab = selectedTab === 'Saved Articles';
+  const isSavedTab = selectedTab === "Saved Articles";
+  const perPage = 12;
+
+  // 🔁 Нормализация данных
+  const normalizeArticles = (fetched) => {
+    const timestamp = Date.now();
+    return fetched.map((item) => {
+      const id = item._id?.$oid || item._id;
+      return {
+        ...item,
+        _id: id,
+        _keySuffix: `${timestamp}-${Math.random().toString(36).slice(2, 6)}`,
+      };
+    });
+  };
 
   useEffect(() => {
     const getAuthorData = async () => {
@@ -72,7 +85,9 @@ const AuthorProfilePage = () => {
           setIsError(false);
 
           const response = await getSavedArticles();
-          setSavedArticles(response.data);
+          const savedItems = Array.isArray(response.data) ? response.data : [];
+          const normalizedSaved = normalizeArticles(savedItems);
+          setSavedArticles(normalizedSaved);
           setTotalItemsSaved(response.pagination.totalItems);
           setTotalSavedPages(response.pagination.totalPage);
         } catch (error) {
@@ -103,7 +118,9 @@ const AuthorProfilePage = () => {
           },
         };
         const response = await fetchArticles(config);
-        setCreatedArticles(response.data.data.data);
+        const fetched = response.data.data.data;
+        const normalizedCreated = normalizeArticles(fetched);
+        setCreatedArticles(normalizedCreated);
         setTotalItems(response.data.data.totalItems);
         setTotalPages(response.data.data.totaPage);
       } catch (error) {
@@ -122,22 +139,38 @@ const AuthorProfilePage = () => {
     getArticles();
   }, [userId]);
 
-  const loadArticles = async page => {
-    const config = { params: { page, perPage: 12 } };
+  const loadArticles = async (page) => {
+    const config = { params: { page, perPage } };
 
-    if (isSavedTab && user.id === userId) {
-      const res = await getSavedArticles(config);
-      const articlesToAdd = res.data || [];
-      
-      setSavedArticles(as => [...as, ...articlesToAdd]);
+    try {
+      if (isSavedTab && user.id === userId) {
+        const res = await getSavedArticles(config);
+        const items = Array.isArray(res.data) ? res.data : [];
+        return normalizeArticles(items);
+      } else {
+        const res = await fetchArticles({
+          ...config,
+          params: { ownerId: userId, ...config.params },
+        });
+        const items = Array.isArray(res.data?.data?.data) ? res.data.data.data : [];
+        return normalizeArticles(items);
+      }
+    } catch (error) {
+      console.error("loadArticles error:", error);
+      return [];
+    }
+  };
+
+  const handleAppend = (newData) => {
+    if (!Array.isArray(newData)) {
+      console.warn("handleAppend received invalid data:", newData);
+      return;
+    }
+
+    if (isSavedTab) {
+      setSavedArticles((prev) => [...prev, ...newData]);
     } else {
-      const res = await fetchArticles({
-        ...config,
-        params: { ownerId: userId, ...config.params },
-      });
-      const articlesToAdd = res.data?.data?.data || [];
-
-      setCreatedArticles(as => [...as, ...articlesToAdd])
+      setCreatedArticles((prev) => [...prev, ...newData]);
     }
   };
 
@@ -155,7 +188,7 @@ const AuthorProfilePage = () => {
             >
               <img
                 className={s.authorAvatar}
-                src={authorData.avatarUrl}
+                src={authorData.avatarUrl || null}
                 alt={`Фото автора ${authorData.name}`}
               />
               <div className={s.authorInfo}>

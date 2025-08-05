@@ -36,6 +36,7 @@ const Header = () => {
       toast.error(`Logout failed. ${error.message}`);
     } finally {
       closeModal();
+      closeMenu();
     }
   };
   
@@ -65,7 +66,8 @@ const Header = () => {
               </div>
             )}
             <button className={s.burgerBtn} onClick={toggleMenu}>
-              <BurgerIcon className={s.burgerIcon} width={32} height={32} />
+              {/* <img src={BurgerIcon} alt='burgerIcon' className={s.burgerIcon} /> */}
+              <BurgerIcon className={s.burgerIcon} />
             </button>
           </div>
         </div>
@@ -76,7 +78,7 @@ const Header = () => {
           closeMenu={closeMenu}
           openModal={openModal}
           isMenuOpen={isMenuOpen}
-          
+
         />
       )}
       {isModalOpen && (

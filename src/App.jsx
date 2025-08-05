@@ -68,7 +68,6 @@ function App() {
               path='/'
               element={<HomePage />}
             />
-            {/* <Route element={<PrivateRoute />}> */}
             <Route
               path='/articles'
               element={<ArticlesPage />}
@@ -85,11 +84,12 @@ function App() {
               path='/authors/:id'
               element={<AuthorProfilePage />}
             />
-            <Route
-              path='/create'
-              element={<CreateArticlePage />}
-            />
-            {/* </Route> */}
+                <Route element={<PrivateRoute />}>
+                    <Route
+                      path='/create'
+                      element={<CreateArticlePage />}
+                    />
+                </Route>
           </Routes>
         </Suspense>
       </Layout>

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import EditIcon from '../../assets/icons/EditArticleButton.svg';
 import styles from './EditArticleButton.module.css';
+import { fetchArticleById } from '../../services/api';
+import { toast } from 'react-toastify';
 
 const EditArticleButton = ({ articleId }) => {
   const navigate = useNavigate();
@@ -13,28 +15,22 @@ const EditArticleButton = ({ articleId }) => {
     setIsEdit(true);
 
     try {
-      const response = await fetch(`/api/articles/${articleId}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetchArticleById(articleId);
+      const articleData = response.data;
 
-      if (!response.ok) {
-        throw new Error('Failed to fetch article');
-      }
+      const navigationState = {
+        title: articleData.data.title,
+        text: articleData.data.article,
+        photo: articleData.data.img,
+        articleId: articleId,
+      };
 
-      const articleData = await response.json();
-
-      navigate(`/articles/${articleId}`, {
-        state: {
-          title: articleData.title,
-          text: articleData.text,
-          photo: articleData.photo,
-        },
+      navigate(`/create`, {
+        state: navigationState,
       });
     } catch (error) {
-      console.error('Error fetching article:', error);
+      toast.error('Failed to fetch article');
+      console.error('❌ EditArticleButton: Error fetching article:', error);
     } finally {
       setLoading(false);
     }
