@@ -8,14 +8,14 @@ import LoadMore from '../../components/LoadMore/LoadMore';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../redux/selectors';
 import { fetchArticles } from '../../services/api.js';
-import { Loader } from '../../components/Loader/Loader'; // ✅ не забудь импорт
+import { Loader } from '../../components/Loader/Loader';
 import NothingFound from '../../components/NothingFound/NothingFound.jsx';
 import PaginatedArticles from '../../components/PaginatedArticles/PaginatedArticles.jsx';
+import { toast } from 'react-toastify';
 
 const ArticlesPage = () => {
   const title = 'Articles';
-  const [selectedFilter, setSelectedFilter] = useState('Popular');
-  //const [articleList, setArticleList] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState('Popular');  
   const [articleList, setArticleList] = useState({ data: [], totalPage: 1 });
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -43,29 +43,6 @@ const ArticlesPage = () => {
       const res = await fetchArticles(config);
       const fetched = res.data.data.data;
       const totalItems = res.data.data.totalItems;
-
-      // const normalizedArticles = fetched.map(item => ({
-      //   ...item,
-      //   _id: item._id?.$oid || item._id,
-      // }));
-
-      // const normalizedArticles = fetched.map((item) => {
-      //   const id = item._id?.$oid || item._id;
-      //   return {
-      //     ...item,
-      //     _id: `${id}__page${page}`,
-      //     _realId: id,
-      //   };
-      // });
-
-      // const normalizedArticles = fetched.map((item) => {
-      //   const id = item._id?.$oid || item._id;
-      //     return {
-      //       ...item,
-      //       _id: `${id}__${Math.random().toString(36).slice(2, 10)}`,
-      //       _realId: id,
-      //     };
-      // });
 
       const timestamp = Date.now();
       const normalizedArticles = fetched.map(item => {

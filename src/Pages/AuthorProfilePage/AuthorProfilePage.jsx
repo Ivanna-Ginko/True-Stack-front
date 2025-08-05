@@ -164,7 +164,7 @@ const AuthorProfilePage = () => {
   return (
     <div>
       <Container>
-        {isLoading && <Loader />}
+        {/* {isLoading && <Loader />} */}
         <div className={s.box}>
           {isMyPage ? <SectionTitle title={title} /> : null}
           {authorData && (

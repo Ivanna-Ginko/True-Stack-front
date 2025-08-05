@@ -7,9 +7,9 @@ import { Loader } from '../Loader/Loader'
 
 const AuthorsList = ({ authors, onAuthCardClick, imgSize }) => {
 
-  if (!authors || authors.length === 0) {
-    return <p>Авторів не знайдено</p>;
-  }
+  // if (!authors || authors.length === 0) {
+  //   return <p>Авторів не знайдено</p>;
+  // }
 
   return (
     <>
