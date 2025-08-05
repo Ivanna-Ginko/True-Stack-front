@@ -4,7 +4,7 @@ import css from './ArticlesList.module.css'
 
 
 
-const ArticlesList = ({ articles, user, hideFourthOnDesktop}) => {
+const ArticlesList = ({ articles, user, hideFourthOnDesktop, refresh}) => {
 
 
     return(
@@ -22,6 +22,7 @@ const ArticlesList = ({ articles, user, hideFourthOnDesktop}) => {
             image={article.img}
             isAuthor={isAuthor}
             saved={isSaved}
+            refresh={refresh}
       />)
       })
     }

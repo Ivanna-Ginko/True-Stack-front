@@ -12,6 +12,7 @@ const ButtonAddToBookmarks = ({
   variant = 'default',
   styleVariant = 'primary',
   isWideStyle = false,
+  refresh = () => {},
 }) => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -56,6 +57,7 @@ const ButtonAddToBookmarks = ({
         console.log('ButtonAddToBookmarks - toggleBookmark - getUserData result:', userData);
         toast.success('Article added to bookmarks');
       }
+      refresh(prev => !prev);
     } catch (error) {
       console.error('ButtonAddToBookmarks - toggleBookmark - Error:', error.response?.data || error.message);
       if (error.response?.status === 404) {
