@@ -59,7 +59,7 @@ return (
             )}
         </p>
         <p><span className={s.span}>Publication date:</span> {isLoading ? (<Loader variant="skeleton" small inline/>) : formatDate(publishDate)}</p> 
-        <h3>You may also be interested</h3>
+        <h3>You may find interesting</h3>
     </div>
     <ul className={`${s.list} ${hideFourth ? s.hideFourth : ''}`}>
         {isLoading ? (
