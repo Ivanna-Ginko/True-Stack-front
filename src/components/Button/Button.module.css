@@ -80,9 +80,19 @@
 
 .link {
   border: none;
-  padding-inline: 0;
+  padding: 0;
   color: #374f42;
   background-color: transparent;
+}
+
+.link.sm,
+.link.md,
+.link.lg {
+  height: 28px;
+}
+
+.link.xl {
+  height: 29px;
 }
 
 .link:hover,

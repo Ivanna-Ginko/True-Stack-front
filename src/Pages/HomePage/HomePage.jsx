@@ -1,13 +1,51 @@
-import React from 'react'
+import React, { lazy, useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
+import css from './HomePage.module.css';
 // import { useSelector } from 'react-redux'
 // import { selectUser } from '../../redux/selectors'
-import Hero from '../../components/Hero/Hero'
-import About from '../../components/About/About'
-import PopularArticles from '../../components/PopularArticles/PopularArticles'
-import TopCreators from '../../components/TopCreators/TopCreators'
+import Hero from '../../components/Hero/Hero';
+// import About from '../../components/About/About';
+// import PopularArticles from '../../components/PopularArticles/PopularArticles';
+// import TopCreators from '../../components/TopCreators/TopCreators';
 
-const Outlet = () => {
+const About = lazy(() => import('../../components/About/About'));
+const PopularArticles = lazy(() =>
+  import('../../components/PopularArticles/PopularArticles')
+);
+const TopCreators = lazy(() =>
+  import('../../components/TopCreators/TopCreators')
+);
+
+const HomePage = () => {
   // const user = useSelector(selectUser)
+  const [isAboutLoaded, setIsAboutLoaded] = useState(false);
+  const [isPopularArticlesLoaded, setIsPopularArticlesLoaded] = useState(false);
+  const [isTopCreatorsLoaded, setIsTopCreatorsLoaded] = useState(false);
+
+  const [aboutRef, isAboutInView, aboutEntry] = useInView({
+    rootMargin: '100px 0px',
+  });
+  const { ref: popularArticlesRef, inView: isPopularArticlesInView } =
+    useInView({
+      rootMargin: '100px 0px',
+    });
+  const { ref: topCreatorsRef, inView: isTopCreatorsInView } = useInView({
+    rootMargin: '100px 0px',
+  });
+
+  useEffect(() => {
+    console.log({ aboutRef, isAboutInView, aboutEntry });
+    if (isAboutInView) setIsAboutLoaded(true);
+  }, [aboutRef, isAboutInView, aboutEntry]);
+
+  useEffect(() => {
+    if (isPopularArticlesInView) setIsPopularArticlesLoaded(true);
+  }, [isPopularArticlesInView]);
+
+  useEffect(() => {
+    if (isTopCreatorsInView) setIsTopCreatorsLoaded(true);
+  }, [isTopCreatorsInView]);
+
   return (
     <>
       {/* User Info Test Block */}
@@ -22,11 +60,33 @@ const Outlet = () => {
         </div>
       )} */}
       <Hero />
-      <About />
-      <PopularArticles />
-      <TopCreators />
-    </>
-  )
-}
 
-export default Outlet
+      <div
+        ref={aboutRef}
+        className={css.popularArticlesContainer}
+      >
+        {isAboutLoaded && <About />}
+      </div>
+
+      <div
+        ref={popularArticlesRef}
+        className={css.popularArticlesContainer}
+      >
+        {isPopularArticlesLoaded && <PopularArticles />}
+      </div>
+
+      <div
+        ref={topCreatorsRef}
+        className={css.topCreatorsContainer}
+      >
+        {isTopCreatorsLoaded && <TopCreators />}
+      </div>
+
+      {/* <About />
+      <PopularArticles />
+      <TopCreators /> */}
+    </>
+  );
+};
+
+export default HomePage;

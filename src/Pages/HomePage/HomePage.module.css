@@ -1,0 +1,35 @@
+.aboutContainer {
+  min-height: 1215px;
+}
+
+.popularArticlesContainer {
+  min-height: 2216px;
+}
+
+.topCreatorsContainer {
+  min-height: 871px;
+}
+
+@media (min-width: 768px) {
+  .aboutContainer {
+    min-height: 820px;
+  }
+
+  .popularArticlesContainer {
+    min-height: 1140px;
+  }
+
+  .topCreatorsContainer {
+    min-height: 622px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .popularArticlesContainer {
+    min-height: 635px;
+  }
+
+  .topCreatorsContainer {
+    min-height: 376px;
+  }
+}
