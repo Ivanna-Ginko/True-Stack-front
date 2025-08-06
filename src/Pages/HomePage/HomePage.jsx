@@ -63,12 +63,13 @@ const HomePage = () => {
 
       <div
         ref={aboutRef}
-        className={css.popularArticlesContainer}
+        className={css.aboutContainer}
       >
         {isAboutLoaded && <About />}
       </div>
 
       <div
+        id='popularArticles'
         ref={popularArticlesRef}
         className={css.popularArticlesContainer}
       >
@@ -76,6 +77,7 @@ const HomePage = () => {
       </div>
 
       <div
+        id='topCreators'
         ref={topCreatorsRef}
         className={css.topCreatorsContainer}
       >

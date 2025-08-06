@@ -45,7 +45,6 @@ const PopularArticles = () => {
     <>
       <Container>
         <div
-          id='popularArticles'
           className={s.innerContainer}
         >
           <div className={s.titleContainer}>
