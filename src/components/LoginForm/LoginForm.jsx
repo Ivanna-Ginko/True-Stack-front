@@ -43,9 +43,6 @@ const LoginForm = () => {
           unwrappedErrors.forEach((err) => {
             setFieldError(err.field, err.message);
           });
-          // error.forEach((err) => {
-          //   setFieldError(err.field, err.message);
-          // });
         } else if (error?.message === "NotFoundError") {
           toast.error("Email is not found");
         } else {
@@ -82,54 +79,57 @@ const LoginForm = () => {
       >
         {({ isValid, isSubmitting }) => (
           <Form className={css.formContainer}>
-            <label htmlFor="email" className={css.labelName}>
-              Enter your email address
-            </label>
-            <Field name="email">
-              {({ field, meta }) => (
-                <input
-                  {...field}
-                  type="email"
-                  placeholder="email@gmail.com"
-                  className={`${css.field} ${
-                    meta.touched && meta.error ? css["is-invalid"] : ""
-                  }`}
-                />
-              )}
-            </Field>
-            <ErrorMessage className={css.errMsg} name="email" component="div" />
-
-            <label htmlFor="password" className={css.label}>
-              Enter a password
-            </label>
-
-            <Field name="password">
-              {({ field, meta }) => (
-                <div className={css.pwdField}>
+            <label htmlFor="email" className={css.label}>
+              <span className={css.labelText}>Enter your email address</span>
+              <Field name="email">
+                {({ field, meta }) => (
                   <input
                     {...field}
-                    type={type}
-                    placeholder="*********"
+                    type="email"
+                    placeholder="email@gmail.com"
                     className={`${css.field} ${
                       meta.touched && meta.error ? css["is-invalid"] : ""
                     }`}
                   />
-                  <span className={css.iconWrap}>
-                    <img
-                      src={icon}
-                      alt="Toggle visibility"
-                      onClick={handleToggle}
-                      className={css.eyeIcon}
+                )}
+              </Field>
+              <ErrorMessage
+                className={css.errMsg}
+                name="email"
+                component="div"
+              />
+            </label>
+
+            <label htmlFor="password" className={css.label}>
+              <span className={css.labelText}>Enter a password</span>
+              <Field name="password">
+                {({ field, meta }) => (
+                  <div className={css.pwdField}>
+                    <input
+                      {...field}
+                      type={type}
+                      placeholder="*********"
+                      className={`${css.field} ${
+                        meta.touched && meta.error ? css["is-invalid"] : ""
+                      }`}
                     />
-                  </span>
-                </div>
-              )}
-            </Field>
-            <ErrorMessage
-              name="password"
-              component="div"
-              className={css.errMsg}
-            />
+                    <span className={css.iconWrap}>
+                      <img
+                        src={icon}
+                        alt="Toggle visibility"
+                        onClick={handleToggle}
+                        className={css.eyeIcon}
+                      />
+                    </span>
+                  </div>
+                )}
+              </Field>
+              <ErrorMessage
+                name="password"
+                component="div"
+                className={css.errMsg}
+              />
+            </label>
 
             <button
               type="submit"
