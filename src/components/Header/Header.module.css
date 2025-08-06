@@ -1,155 +1,157 @@
 .header {
-    background-color: #D1E0D8;
-    padding: 14px 0;
-    border-bottom: 1px solid #e0e0e0;
-    position: sticky;
-    top: 0;
-    z-index: 10;
+  background-color: #d1e0d8;
+  padding: 14px 0;
+  border-bottom: 1px solid #e0e0e0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 .container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0 auto;
 }
 .logo {
-    width: 100%;
-    height: auto;
-    display: block;
+  width: 100%;
+  height: auto;
+  display: block;
 }
 .logoLink {
-    display: inline-block;
+  display: inline-block;
 }
 .rightSide {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 .joinBtn {
-    display: none;
+  display: none;
 }
 .nav {
-    display: none;
+  display: none;
 }
 .burgerBtn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: none;
-    color: #374F42;
-    border-radius: 6px;
-    padding: 0px 0px 5px 0px;
-    width: 32px;
-    height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: none;
+  color: #374f42;
+  border-radius: 6px;
+  padding: 0px 0px 5px 0px;
+  width: 32px;
+  height: 32px;
 }
 .createBtn {
-    display: none;
+  display: none;
 }
 .tabletOnly {
-    display: none;
+  display: none;
 }
 @media screen and (min-width: 768px) {
-    .joinBtn {
-        display: block;
-    }
-    .userBlock {
-        display: none;
-    }
-    /* .tabletOnly {
+  .joinBtn {
+    display: block;
+  }
+  .userBlock {
+    display: none;
+  }
+  /* .tabletOnly {
         display: block;
     } */
 }
 @media screen and (min-width: 768px) and (max-width: 1439px) {
-    .tabletOnly {
-        display: block;
-    }
+  .tabletOnly {
+    display: block;
+  }
 }
 @media screen and (max-width: 1439px) {
-    .burgerBtn {
-        display: block;
-    }
+  .burgerBtn {
+    display: block;
+  }
 }
 @media screen and (min-width: 1440px) {
-    .nav {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 32px;
-        flex-wrap: wrap;
-    }
-    .navLink {
-        position: relative;
-        padding: 0px 0px 4px 0px;
-        font-weight: 700;
-        color: #374F42;
-    }
-    .activeLink {
-        position: relative;
-        padding-bottom: 4px;
-        font-weight: 700;
-        color: #374F42;
-    }
+  .nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .navLink {
+    position: relative;
+    padding: 0px 0px 4px 0px;
+    font-weight: 700;
+    color: #374f42;
+  }
+  .activeLink {
+    position: relative;
+    padding-bottom: 4px;
+    font-weight: 700;
+    color: #374f42;
+  }
 }
-    .activeLink::after{
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        height: 2px;
-        background-color: #374F42;
-    }
-    .userBlock {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 16px;
-        flex-shrink: 0;
-    }
-    .userWrapper {
-        display: flex;
-        align-items: center;
-        gap: 12px;   
-    }
-    .avatar {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        object-fit: cover;
-    }
-    .userName {
-        font-weight: 700;
-        font-size: 12px;
-        color: #374F42;
-    }
-    .logoutBlock {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-    .logoBtn {
-        all: unset;
-        width: 100%;
-        height: 100%;
-        padding: 0 0 4px 0;
-        border-radius: 8px;
-        border: none;
-        background-color: transparent;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .logoBtn:hover .logoutImg {
-        color: #595d62;
-        transition: stroke 0.3s ease;
-    }
-    .logoutImg {
-        width: 24px;
-        height: 28px;
-        color: #374F42;
-    }
-    .desktopOnly {
-        display: block;
-    }
+.activeLink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #374f42;
+}
+.userBlock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+.userWrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+.userName {
+  font-weight: 700;
+  font-size: 12px;
+  color: #374f42;
+}
+.logoutBlock {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.logoBtn {
+  all: unset;
+  width: 100%;
+  height: 100%;
+  padding: 0 0 4px 0;
+  border-radius: 8px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logoBtn:hover .logoutImg {
+  color: #595d62;
+  transition: stroke 0.3s ease;
+}
+.logoutImg {
+  width: 24px;
+  height: 28px;
+  color: #374f42;
+}
+.desktopOnly {
+  display: block;
+}
