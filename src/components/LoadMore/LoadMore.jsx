@@ -6,22 +6,35 @@ const LoadMore = ({ loadData, onDataLoaded, perPage = 12 }) => {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
-  const containerRef = useRef(null);
+  // const containerRef = useRef(null);
+  const buttonRef = useRef(null);
 
-  const scrollToBottom = () => {
-    setTimeout(() => {
-      if (containerRef.current) {
-        containerRef.current.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        });
-      }
-    }, 100);
-  };
+  // const scrollToBottom = () => {
+  //   setTimeout(() => {
+  //     if (containerRef.current) {
+  //       containerRef.current.scrollIntoView({
+  //         behavior: 'smooth',
+  //         block: 'start',
+  //       });
+  //     }
+  //   }, 100);
+  // };
+
+  // const scrollToNew = () => {
+  //   setTimeout(() => {
+  //     // if (containerRef.current) {
+  //       buttonRef.current.scrollIntoView({
+  //         behavior: 'smooth',
+  //         block: 'start',
+  //       });
+  //     // }
+  //   }, 100);
+  // };
 
   const handleClick = async () => {
     if (loading) return;
     const nextPage = page + 1;
+    const rect = buttonRef.current.get.getBoundingClientRect()
     //console.log('NExt Page', nextPage);
     setLoading(true);
 
@@ -35,7 +48,8 @@ const LoadMore = ({ loadData, onDataLoaded, perPage = 12 }) => {
 
       onDataLoaded(newItems);
       setPage(nextPage);
-      scrollToBottom();
+      // scrollToBottom();
+      scrollToNew()
     } catch (error) {
       console.error('LoadMore error:', error);
       setHasMore(false);
@@ -48,10 +62,13 @@ const LoadMore = ({ loadData, onDataLoaded, perPage = 12 }) => {
 
   return (
     <>
-      <div ref={containerRef} />
+      <div
+      // ref={containerRef}
+      />
       <div className={css.loadmore}>
         {hasMore && (
           <Button
+            ref={buttonRef}
             variant='fill'
             size='xl'
             onClick={handleClick}
