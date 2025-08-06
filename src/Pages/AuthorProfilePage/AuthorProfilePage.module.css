@@ -16,6 +16,7 @@
   width: 124px;
   height: 124px;
   border-radius: 50%;
+  object-fit: cover;
 }
 .authorInfo {
   max-width: 100%;
@@ -56,7 +57,7 @@
   }
 }
 @media screen and (min-width: 1440px) {
-	.nothing {
+  .nothing {
     margin-top: 8px;
   }
 }
