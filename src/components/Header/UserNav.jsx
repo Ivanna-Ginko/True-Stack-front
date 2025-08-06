@@ -4,7 +4,7 @@ import { Link, NavLink } from "react-router-dom";
 import divider from "../../assets/icons/divider.svg";
 import LogoutIcon from "../../assets/icons/exit.svg?react";
 import AppLink from "../AppLink/AppLink";
-import UserAvatar from "../UserAvatar/UserAvatar";
+// import UserAvatar from "../UserAvatar/UserAvatar";
 
 const UserNav = ({ user, openModal }) => {
   const navLink = ({ isActive }) => (isActive ? s.activeLink : s.navLink);
@@ -32,12 +32,13 @@ const UserNav = ({ user, openModal }) => {
           <div className={s.userBlock}>
             <div className={s.userWrapper}>
               <AppLink variant="link" to={`/authors/${user.id}`}>
-                <UserAvatar
-                  avatarUrl={user.avatarUrl}
-                  name={user.name}
-                  className={s.avatar}
-                  size={32}
-                />
+                {user.avatarUrl && (
+                  <img
+                    src={user.avatarUrl}
+                    alt={user.name}
+                    className={s.avatar}
+                  />
+                )}
                 <span className={s.userName}>{user?.name}</span>
               </AppLink>
             </div>
