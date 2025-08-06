@@ -31,12 +31,29 @@ const LoadMore = ({ loadData, onDataLoaded, perPage = 12 }) => {
   //   }, 100);
   // };
 
+  const getScrollToPosition = () => {
+    if (buttonRef.current) {
+      const button = buttonRef.current;
+      const rect = button.getBoundingClientRect();
+      const scrollToPos = rect.top + window.scrollY - 100;
+
+      return scrollToPos;
+    }
+  };
+
+  const scrollToPos = pos => {
+    setTimeout(() => {
+      window.scrollTo({ top: pos, behavior: 'auto' });
+    }, 100);
+  };
+
   const handleClick = async () => {
     if (loading) return;
     const nextPage = page + 1;
-    const rect = buttonRef.current.get.getBoundingClientRect()
     //console.log('NExt Page', nextPage);
     setLoading(true);
+    const positionToScrollTo = getScrollToPosition();
+    console.log(positionToScrollTo);
 
     try {
       const newItems = await loadData(nextPage);
@@ -49,7 +66,8 @@ const LoadMore = ({ loadData, onDataLoaded, perPage = 12 }) => {
       onDataLoaded(newItems);
       setPage(nextPage);
       // scrollToBottom();
-      scrollToNew()
+      // scrollToNew()
+      scrollToPos(positionToScrollTo);
     } catch (error) {
       console.error('LoadMore error:', error);
       setHasMore(false);
@@ -65,10 +83,12 @@ const LoadMore = ({ loadData, onDataLoaded, perPage = 12 }) => {
       <div
       // ref={containerRef}
       />
-      <div className={css.loadmore}>
+      <div
+        ref={buttonRef}
+        className={css.loadmore}
+      >
         {hasMore && (
           <Button
-            ref={buttonRef}
             variant='fill'
             size='xl'
             onClick={handleClick}
