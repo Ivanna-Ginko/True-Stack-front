@@ -63,7 +63,7 @@ const HomePage = () => {
 
       <div
         ref={aboutRef}
-        className={css.popularArticlesContainer}
+        className={css.aboutContainer}
       >
         {isAboutLoaded && <About />}
       </div>
