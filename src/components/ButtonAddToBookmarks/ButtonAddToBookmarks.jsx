@@ -12,6 +12,7 @@ const ButtonAddToBookmarks = ({
   variant = 'default',
   styleVariant = 'primary',
   isWideStyle = false,
+  refresh = () => {},
 }) => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -20,13 +21,16 @@ const ButtonAddToBookmarks = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Визначаємо, чи стаття збережена
+ 
   const isSaved =
     savedArticles && Array.isArray(savedArticles)
       ? savedArticles.some(id => String(id) === String(articleId))
       : variant === 'saved';
+  
+    const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
-  // console.log('ButtonAddToBookmarks - Render - articleId:', articleId, 'isSaved:', isSaved, 'savedArticles:', savedArticles);
 
   const toggleBookmark = async () => {
     if (!articleId) {
@@ -45,7 +49,6 @@ const ButtonAddToBookmarks = ({
       if (isSaved) {
         const result = await dispatch(removeArticleFromBookmarks(String(articleId))).unwrap();
         console.log('ButtonAddToBookmarks - toggleBookmark - removeArticleFromBookmarks result:', result);
-        // Оновлюємо savedArticles через getUserData
         const userData = await dispatch(getUserData()).unwrap();
         console.log('ButtonAddToBookmarks - toggleBookmark - getUserData result:', userData);
         toast.success('Article removed from bookmarks');
@@ -56,6 +59,7 @@ const ButtonAddToBookmarks = ({
         console.log('ButtonAddToBookmarks - toggleBookmark - getUserData result:', userData);
         toast.success('Article added to bookmarks');
       }
+      refresh(prev => !prev);
     } catch (error) {
       console.error('ButtonAddToBookmarks - toggleBookmark - Error:', error.response?.data || error.message);
       if (error.response?.status === 404) {
@@ -121,9 +125,9 @@ const ButtonAddToBookmarks = ({
 
       <ModalNotification
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title="Authorization Required"
-        text="To save this article, you need to log in first"
+        onClose={closeModal}
+        title="Error while saving"
+        text="To save this article, you need to authorize first"
         ErrorSave={true}
       />
     </>

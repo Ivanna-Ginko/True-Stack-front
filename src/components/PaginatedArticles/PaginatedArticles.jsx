@@ -14,6 +14,7 @@ function PaginatedArticles({
   selectedTab,
   isFirstLoadFinished,
   isMyPage,
+  refresh
 }) {
   const hasSecondPage = totalItems / perPage > 1;
   // console.log(hasSecondPage);
@@ -24,12 +25,13 @@ function PaginatedArticles({
       {isLoading && !articles.length && <Loader />}
       {articles.length > 0 && (
         <>
-          <ArticlesList articles={articles} user={user} />
+          <ArticlesList articles={articles} user={user} refresh={refresh} />
           {hasSecondPage && (
             <LoadMore
               loadData={loadArticles}
               onDataLoaded={() => {}}
               perPage={perPage}
+              
             />
           )}
         </>
