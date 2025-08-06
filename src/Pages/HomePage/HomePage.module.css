@@ -4,10 +4,12 @@
 
 .popularArticlesContainer {
   min-height: 2216px;
+  scroll-margin: 72px;
 }
 
 .topCreatorsContainer {
   min-height: 871px;
+  scroll-margin: 72px;
 }
 
 @media (min-width: 768px) {

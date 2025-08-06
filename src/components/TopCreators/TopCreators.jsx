@@ -37,7 +37,6 @@ const TopCreators = () => {
       <Container>
         <div
           className={css.tc_container}
-          id='topCreators'
         >
           <div className={css.tc_header}>
             <h2 className={css.tc_title}>Top Creators</h2>
