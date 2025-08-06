@@ -41,6 +41,10 @@ return `${day}.${month}.${year}`;
 };
 
 const isAuthor = user && user.id === idAuthor;
+
+const filteredArticles = articlesList
+    .filter(article => article._id !== id && article.author !== author);
+const displayedArticles = hideFourth ? filteredArticles.slice(0, 3) : filteredArticles;
 return (
 <div>
     {isError && <p className={s.error}>Something went wrong. Please try again later.</p>}
@@ -69,7 +73,7 @@ return (
             </li>
             ))
         ) : (
-            articlesList.map(article => (
+            displayedArticles.map(article => (
             <BlogCard
                 key={article._id}
                 title={article.title}
