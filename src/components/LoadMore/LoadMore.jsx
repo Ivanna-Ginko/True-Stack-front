@@ -6,16 +6,44 @@ const LoadMore = ({ loadData, onDataLoaded, perPage = 12 }) => {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
-  const containerRef = useRef(null);
+  // const containerRef = useRef(null);
+  const buttonRef = useRef(null);
 
-  const scrollToBottom = () => {
+  // const scrollToBottom = () => {
+  //   setTimeout(() => {
+  //     if (containerRef.current) {
+  //       containerRef.current.scrollIntoView({
+  //         behavior: 'smooth',
+  //         block: 'start',
+  //       });
+  //     }
+  //   }, 100);
+  // };
+
+  // const scrollToNew = () => {
+  //   setTimeout(() => {
+  //     // if (containerRef.current) {
+  //       buttonRef.current.scrollIntoView({
+  //         behavior: 'smooth',
+  //         block: 'start',
+  //       });
+  //     // }
+  //   }, 100);
+  // };
+
+  const getScrollToPosition = () => {
+    if (buttonRef.current) {
+      const button = buttonRef.current;
+      const rect = button.getBoundingClientRect();
+      const scrollToPos = rect.top + window.scrollY - 100;
+
+      return scrollToPos;
+    }
+  };
+
+  const scrollToPos = pos => {
     setTimeout(() => {
-      if (containerRef.current) {
-        containerRef.current.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        });
-      }
+      window.scrollTo({ top: pos, behavior: 'auto' });
     }, 100);
   };
 
@@ -24,6 +52,8 @@ const LoadMore = ({ loadData, onDataLoaded, perPage = 12 }) => {
     const nextPage = page + 1;
     //console.log('NExt Page', nextPage);
     setLoading(true);
+    const positionToScrollTo = getScrollToPosition();
+    console.log(positionToScrollTo);
 
     try {
       const newItems = await loadData(nextPage);
@@ -35,7 +65,9 @@ const LoadMore = ({ loadData, onDataLoaded, perPage = 12 }) => {
 
       onDataLoaded(newItems);
       setPage(nextPage);
-      scrollToBottom();
+      // scrollToBottom();
+      // scrollToNew()
+      scrollToPos(positionToScrollTo);
     } catch (error) {
       console.error('LoadMore error:', error);
       setHasMore(false);
@@ -48,8 +80,13 @@ const LoadMore = ({ loadData, onDataLoaded, perPage = 12 }) => {
 
   return (
     <>
-      <div ref={containerRef} />
-      <div className={css.loadmore}>
+      <div
+      // ref={containerRef}
+      />
+      <div
+        ref={buttonRef}
+        className={css.loadmore}
+      >
         {hasMore && (
           <Button
             variant='fill'
