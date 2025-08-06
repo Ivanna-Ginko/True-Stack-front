@@ -1,5 +1,5 @@
 import css from './ArticlesListSkeleton.module.css';
-import ArticlesItemSkeleton from '../ArticlesItemSkeleton.jsx/ArticlesItemSkeleton';
+import ArticlesItemSkeleton from '../ArticlesItemSkeleton/ArticlesItemSkeleton';
 
 const ArticlesListSkeleton = ({ articlesQuantity }) => {
   const articles = Array.from({length: articlesQuantity})
