@@ -34,7 +34,6 @@ const HomePage = () => {
   });
 
   useEffect(() => {
-    console.log({ aboutRef, isAboutInView, aboutEntry });
     if (isAboutInView) setIsAboutLoaded(true);
   }, [aboutRef, isAboutInView, aboutEntry]);
 

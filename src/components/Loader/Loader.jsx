@@ -10,7 +10,7 @@ export const Loader = ({
 }) => {
   if (variant === 'skeleton') {
     return (
-      <div
+      <span
         className={clsx(
           styles.skeleton,
           small && styles.small,

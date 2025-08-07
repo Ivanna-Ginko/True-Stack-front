@@ -48,15 +48,15 @@ const ButtonAddToBookmarks = ({
       setLoading(true);
       if (isSaved) {
         const result = await dispatch(removeArticleFromBookmarks(String(articleId))).unwrap();
-        console.log('ButtonAddToBookmarks - toggleBookmark - removeArticleFromBookmarks result:', result);
-        const userData = await dispatch(getUserData()).unwrap();
-        console.log('ButtonAddToBookmarks - toggleBookmark - getUserData result:', userData);
+        // console.log('ButtonAddToBookmarks - toggleBookmark - removeArticleFromBookmarks result:', result);
+        // const userData = await dispatch(getUserData()).unwrap();
+        // console.log('ButtonAddToBookmarks - toggleBookmark - getUserData result:', userData);
         toast.success('Article removed from bookmarks');
       } else {
         const result = await dispatch(addArticleToBookmarks(String(articleId))).unwrap();
-        console.log('ButtonAddToBookmarks - toggleBookmark - addArticleToBookmarks result:', result);
-        const userData = await dispatch(getUserData()).unwrap();
-        console.log('ButtonAddToBookmarks - toggleBookmark - getUserData result:', userData);
+        // console.log('ButtonAddToBookmarks - toggleBookmark - addArticleToBookmarks result:', result);
+        // const userData = await dispatch(getUserData()).unwrap();
+        // console.log('ButtonAddToBookmarks - toggleBookmark - getUserData result:', userData);
         toast.success('Article added to bookmarks');
       }
       refresh(prev => !prev);
@@ -100,7 +100,7 @@ const ButtonAddToBookmarks = ({
           <>
             {isWideStyle && (
               <span className={s.text}>
-                {isSaved ? 'Saved' : 'Save'}
+                {isSaved ? 'Unsave' : 'Save'}
               </span>
             )}
             <svg

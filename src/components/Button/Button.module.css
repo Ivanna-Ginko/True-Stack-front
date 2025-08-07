@@ -80,6 +80,7 @@
 
 .link {
   border: none;
+  width: unset;
   padding: 0;
   color: #374f42;
   background-color: transparent;

@@ -1,62 +1,59 @@
-.body{
-    border-radius: 32px;
-    padding: 32px 16px 40px 16px;
-    width: 361px;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 24px;
+.body {
+  border-radius: 32px;
+  padding: 32px 16px 40px 16px;
+  width: 361px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
 
-
-    background: #D1E0D8;
+  background: #d1e0d8;
 }
 
-.topBody{
-    display: flex;
-    flex-direction: column;
-    row-gap: 15px;
+.topBody {
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
 }
 
-.list{
-    padding-top: 15px;
-    display: flex;
-    flex-direction: column;
-    row-gap: 15px;
+.list {
+  padding-top: 15px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
 }
 
-.span{
-    font-weight: bold;
+.span {
+  font-weight: bold;
 }
 
-.spanAuthor{
-    text-decoration: underline;
+.spanAuthor {
+  text-decoration: underline;
 }
 
-.containerParagraph{
-    display: flex;
-    align-items: center;
+.containerParagraph {
+  display: flex;
+  align-items: center;
 }
-.containerLink{
-    margin: 2px;
-}
+/* .containerLink {
+} */
 
 .linkOverride {
-    color: black !important;
+  margin: 2px;
+  color: black;
 }
 
-.hideFourth li:nth-child(n+4) {
-    display: none;
+.hideFourth li:nth-child(n + 4) {
+  display: none;
 }
 @media only screen and (min-width: 768px) {
-    .body{
-        padding: 32px 32px 40px 32px;
-        width: 704px;
-    }
+  .body {
+    padding: 32px 32px 40px 32px;
+    width: 704px;
+  }
 }
 
 @media only screen and (min-width: 1440px) {
-    .body{
-
-        width: 393px;
-    }
-
+  .body {
+    width: 393px;
+  }
 }
