@@ -6,6 +6,8 @@ import ModalNotification from '../ModalErrorSave/ModalErrorSave';
 import { addArticleToBookmarks, removeArticleFromBookmarks, getUserData } from '../../redux/operations';
 import { selectSavedArticles, selectIsLoggedIn } from '../../redux/selectors';
 import s from './ButtonAddToBookmarks.module.css';
+import { Loader } from '../Loader/Loader';
+// import Skeleton from 'react-loading-skeleton';
 
 const ButtonAddToBookmarks = ({
   articleId,
@@ -95,7 +97,8 @@ const ButtonAddToBookmarks = ({
         aria-label={isSaved ? 'Remove from bookmarks' : 'Add to bookmarks'}
       >
         {loading ? (
-          <div className={s.loader}>Loading...</div>
+          // <Skeleton />
+          <Loader small={true}/>
         ) : (
           <>
             {isWideStyle && (
