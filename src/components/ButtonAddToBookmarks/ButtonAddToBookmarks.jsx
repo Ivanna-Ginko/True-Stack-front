@@ -6,6 +6,8 @@ import ModalNotification from '../ModalErrorSave/ModalErrorSave';
 import { addArticleToBookmarks, removeArticleFromBookmarks, getUserData } from '../../redux/operations';
 import { selectSavedArticles, selectIsLoggedIn } from '../../redux/selectors';
 import s from './ButtonAddToBookmarks.module.css';
+import { Loader } from '../Loader/Loader';
+// import Skeleton from 'react-loading-skeleton';
 
 const ButtonAddToBookmarks = ({
   articleId,
@@ -48,15 +50,15 @@ const ButtonAddToBookmarks = ({
       setLoading(true);
       if (isSaved) {
         const result = await dispatch(removeArticleFromBookmarks(String(articleId))).unwrap();
-        console.log('ButtonAddToBookmarks - toggleBookmark - removeArticleFromBookmarks result:', result);
-        const userData = await dispatch(getUserData()).unwrap();
-        console.log('ButtonAddToBookmarks - toggleBookmark - getUserData result:', userData);
+        // console.log('ButtonAddToBookmarks - toggleBookmark - removeArticleFromBookmarks result:', result);
+        // const userData = await dispatch(getUserData()).unwrap();
+        // console.log('ButtonAddToBookmarks - toggleBookmark - getUserData result:', userData);
         toast.success('Article removed from bookmarks');
       } else {
         const result = await dispatch(addArticleToBookmarks(String(articleId))).unwrap();
-        console.log('ButtonAddToBookmarks - toggleBookmark - addArticleToBookmarks result:', result);
-        const userData = await dispatch(getUserData()).unwrap();
-        console.log('ButtonAddToBookmarks - toggleBookmark - getUserData result:', userData);
+        // console.log('ButtonAddToBookmarks - toggleBookmark - addArticleToBookmarks result:', result);
+        // const userData = await dispatch(getUserData()).unwrap();
+        // console.log('ButtonAddToBookmarks - toggleBookmark - getUserData result:', userData);
         toast.success('Article added to bookmarks');
       }
       refresh(prev => !prev);
@@ -95,12 +97,13 @@ const ButtonAddToBookmarks = ({
         aria-label={isSaved ? 'Remove from bookmarks' : 'Add to bookmarks'}
       >
         {loading ? (
-          <div className={s.loader}>Loading...</div>
+          // <Skeleton />
+          <Loader small={true}/>
         ) : (
           <>
             {isWideStyle && (
               <span className={s.text}>
-                {isSaved ? 'Saved' : 'Save'}
+                {isSaved ? 'Unsave' : 'Save'}
               </span>
             )}
             <svg

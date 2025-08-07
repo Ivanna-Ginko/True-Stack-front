@@ -7,6 +7,7 @@ export default function AppLink({
   variant = 'fill',
   color = 'black',
   style,
+  className,
   to,
   onClick,
   children,
@@ -19,6 +20,7 @@ export default function AppLink({
         css[size],
         css[variant],
         css[color],
+        className
       )}
       style={style}
       onClick={onClick}
