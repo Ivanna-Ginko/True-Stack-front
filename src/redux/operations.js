@@ -12,9 +12,8 @@ export const registerUser = createAsyncThunk(
     try {
       const data = await api.registerUser(formData);
       const {
-        user: { _id: id, name, avatarUrl },
+        user: { _id: id, name, avatarUrl, savedArticles },
         accessToken,
-        savedArticles,
       } = data;
 
       api.setAuthorizationHeader(accessToken);
@@ -61,10 +60,10 @@ export const loginUser = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const data = await api.loginUser(formData);
+      console.log({ data });
       const {
-        user: { _id: id, name, avatarUrl },
+        user: { _id: id, name, avatarUrl, savedArticles },
         accessToken,
-        savedArticles,
       } = data;
 
       api.setAuthorizationHeader(accessToken);
