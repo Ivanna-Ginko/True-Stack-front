@@ -47,6 +47,9 @@ const RegisterForm = () => {
     }
   }, [location.state]);
 
+  const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  // /(^[a-zA-Z0-9_.]+[@]{1}[a-z0-9]+[\.][a-z]+$)/;
+
   const RegisterSchema = Yup.object({
     name: Yup.string()
       .min(2, "Name is too short")
@@ -55,6 +58,7 @@ const RegisterForm = () => {
     email: Yup.string()
       .email("Invalid email")
       .max(64, "Email is too long")
+      .matches(pattern, "Invalid email")
       .required("Required"),
     password: Yup.string()
       .min(8, "Password is too short")

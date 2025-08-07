@@ -11,8 +11,13 @@ import css from "./LoginForm.module.css";
 import hidePwd from "../../assets/icons/crossed-eye.svg";
 import showPwd from "../../assets/icons/eye.svg";
 
+const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
 const LoginSchema = Yup.object({
-  email: Yup.string().email("Wrong email").required("Required"),
+  email: Yup.string()
+    .email("Wrong email")
+    .matches(pattern, "Invalid email")
+    .required("Required"),
   password: Yup.string()
     .min(8, "Password is too short")
     .max(64, "Password is too long")
